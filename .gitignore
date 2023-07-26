@@ -13,3 +13,4 @@ opensource_git_commit.log
 .idea/
 *.json
 api/
+pre-commit
