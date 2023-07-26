@@ -1,0 +1,15 @@
+*.png
+*.h264
+*.mp4
+*.webm
+*.m4s
+*.m3u8
+*.mpd
+.DS_Store
+*.pyc
+e3po/log/
+opensource_git_commit.log
+*.sh
+.idea/
+*.json
+api/
