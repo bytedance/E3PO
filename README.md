@@ -1,14 +1,9 @@
 # Introduction
-E3PO is an **O**pen **P**latform for **3**60° video streaming simulation and **E**valuation, 
-which is named by reversing the order of OP3E. With unified video source and motion trace, 
-E3PO can simulate and compare different 360° video streaming approaches through providing an universal and open platform. 
-Particularly, comparison of 360° video preprocessing (projection and tiling), 
-streaming strategies (motion prediction and bitrate adaptation), evaluation (V-PSNR and bandwidth), 
-as well as visual results of different approaches can be conducted on E3PO. We hope it can achieve: 
+E3PO is an **O**pen **P**latform for **3**60° video streaming simulation and **E**valuation.
+E3PO is designed to support the simulation of a variety of 360° video streaming approaches that have been proposed so far, including projection based, tile based, or transcoding based. Particularly, E3PO allows users to convert 360° video into standarnd or customized projections, segment video into equal or adaptive sizes, implement customized motion prediction algorithms, apply different streaming strategies, and evaluate using any user-specific metrics. Most importantly, E3PO generats the actual visual sequences that will display on the user screen for each simulation. 
 
-- Help beginners get started faster.
-- Make it easier for researchers to implement and test their approaches.
-- Enable people to use more advanced algorithms.
+Therefore, E3PO provides a perfect solution to objectively compare the performance of different 360° video streaming approaches, using the same video content and same motion trace.
+
 
 
 # Framework
@@ -29,24 +24,24 @@ git clone https://github.com/bytedance/E3PO.git
 ```
 
 2. Video Source<br>
-Prepare an 8K, 30fps 360° video with equi-rectangular projection (ERP), rename and place it at /e3po/source/video/sample.mp4. 
-By default, the first 10 seconds of the video will be evaluated. To change the video parameters, please refer to [BasicTutorial](./docs/BasicTutorial.md).
+Prepare a 360° video, rename and place it at /e3po/source/video/sample.mp4. 
+By default, the 360° video is 8K, 30 fps, with equi-rectangular projection (ERP), and only the first 10 seconds of the video will be used. To change any parameters, please refer to [BasicTutorial](./docs/BasicTutorial.md).
 3. Motion Trace<br>
 Prepare a motion trace file (Similar to that downloaded from [360VidStr](https://github.com/360VidStr/A-large-dataset-of-360-video-user-behaviour/blob/main/AggregatedDataset/7.txt)), rename and place it at /e3po/source/motion_trace/motion_trace.log.
 
 
 
 ## Run scripts
-Taking the ERP approach as an example, executes the following steps.
-1. Run the [prepare_data.py](./e3po/prepare_data.py) script
+To simulate the streaming process, three python scripts need to be executed sequentially. For example, with the sample simulation E1 we have provided in the project: 
+1. Run the [prepare_data.py](./e3po/prepare_data.py) script (***video pre-processor*** module)
 ```
 python ./e3po/prepare_data.py -opt options/example/E1.yml
 ```
-2. Run the [make_decision.py](./e3po/make_decision.py) script
+2. Run the [make_decision.py](./e3po/make_decision.py) script (***streaming simulator*** module)
 ```
 python ./e3po/make_decision.py -opt options/example/E1.yml
 ```
-3. Run the [make_evaluation.py](./e3po/make_evaluation.py) script
+3. Run the [make_evaluation.py](./e3po/make_evaluation.py) script (***system evaluator*** module)
 ```
 python ./e3po/make_evaluation.py -opt options/example/E1.yml
 ```
@@ -75,7 +70,8 @@ Corresponding results can be found at
             |---E1_prepare_data.log
 ```
 
-We have implemented eight typical approaches on E3PO, with their detailed descriptions shown in the following table.
+## Examples
+We have implemented eight simple but typical approaches, with their detailed descriptions shown in the following table.
 
 |  Name             | Projection | Background Stream |  Tiling | Resolution |
 |  ----             | ----       | ----              | ----    | ----       |
@@ -98,7 +94,7 @@ For more details, please refer to [BasicTutorial](./docs/BasicTutorial.md).
 
 
 # Contributes
-We welcome more people to join us in maintaining and building E3PO. For ease of current stage management, users can submit their contributions to E3PO, provided that they meet the following two requirements:
+We welcome researchers to simulate their own streaming systems using E3PO and submit their implementation bakc to this project, so that the community can better compare the performance of different solutions. Users making contributions to E3PO shall meet the following two requirements:
 
 - The submitted code should be reviewed by the E3PO group.
 - The submitted code should follow the [GPL 2.0 License](./COPYING) adopted by E3PO.
