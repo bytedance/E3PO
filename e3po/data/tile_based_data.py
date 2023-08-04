@@ -219,7 +219,7 @@ class TileBasedData(BaseData):
                         return quality['tile_size']
                 self.logger.error(f"[get size error] tile_idx={tile_idx}, qp_level={qp_level} not found!")
                 exit(0)
-        self.logger.error(f"[get size error] tile_idx={tile_idx}, qp_level={qp_level} not found!")
+        self.logger.error(f"[get size error] tile_idx={tile_idx} not found!")
         exit(0)
 
     def get_background_size(self, *args):

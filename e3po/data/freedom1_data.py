@@ -299,7 +299,7 @@ class Freedom1Data(BaseData):
         vam_idx, qp_level = args
         while self.video_size[self.chunk_idx]['chunk_meta_data'][-1]['vam_idx'] < vam_idx:
             self.chunk_idx += 1
-            assert self.chunk_idx < len(self.video_size), f"[get size error] vam_size={vam_idx} not found!"
+            assert self.chunk_idx < len(self.video_size), f"[get size error] vam_idx={vam_idx} not found!"
         vams = self.video_size[self.chunk_idx]['chunk_meta_data']
         for vam in vams[1:]:
             if int(vam['vam_idx']) == vam_idx:
@@ -309,5 +309,5 @@ class Freedom1Data(BaseData):
                         return quality['vam_size']
                 self.logger.error(f"[get size error] vam_idx={vam_idx}, qp_level={qp_level} not found!")
                 exit(0)
-        self.logger.error(f"[get size error] vam_idx={vam_idx}, qp_level={qp_level} not found!")
+        self.logger.error(f"[get size error] vam_idx={vam_idx} not found!")
         exit(0)
