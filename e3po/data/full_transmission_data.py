@@ -130,7 +130,5 @@ class FullTransmissionData(BaseData):
         for chunk in chunks:
             if int(chunk['qp']) == qp_level:
                 return chunk['chunk_size']
-            self.logger.error(f"[get size error] chunk_idx={chunk_idx}, qp_level={qp_level} not found!")
-            exit(0)
         self.logger.error(f"[get size error] chunk_idx={chunk_idx}, qp_level={qp_level} not found!")
         exit(0)
