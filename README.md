@@ -1,6 +1,6 @@
 # Introduction
 E3PO is an **O**pen **P**latform for **3**60° video streaming simulation and **E**valuation.
-E3PO is designed to support the simulation of a variety of 360° video streaming approaches that have been proposed so far, including projection based, tile based, or transcoding based. Particularly, E3PO allows users to convert 360° video into standard or customized projections, segment video into equal or adaptive sizes, implement customized motion prediction algorithms, apply different streaming strategies, and evaluate using any user-specific metrics. Most importantly, E3PO generats the actual visual sequences that will display on the user screen for each simulation. 
+E3PO is designed to support the simulation of a variety of 360° video streaming approaches that have been proposed so far, including projection based, tile based, or transcoding based. Particularly, E3PO allows users to convert 360° video into standard or customized projections, segment video into equal or adaptive sizes, implement customized motion prediction algorithms, apply different streaming strategies, and evaluate using any user-specific metrics. Most importantly, E3PO generates the actual visual sequences that will display on the user screen for each simulation. 
 
 Therefore, E3PO provides a perfect solution to objectively compare the performance of different 360° video streaming approaches, using the same video content and same motion trace.
 
@@ -94,7 +94,7 @@ For more details, please refer to [BasicTutorial](./docs/BasicTutorial.md).
 
 
 # Contributes
-We welcome researchers to simulate their own streaming systems using E3PO and submit their implementation bakc to this project, so that the community can better compare the performance of different solutions. Users making contributions to E3PO shall meet the following two requirements:
+We welcome researchers to simulate their own streaming systems using E3PO and submit their implementation back to this project, so that the community can better compare the performance of different solutions. Users making contributions to E3PO shall meet the following two requirements:
 
 - The submitted code should be reviewed by the E3PO group.
 - The submitted code should follow the [GPL 2.0 License](./COPYING) adopted by E3PO.
