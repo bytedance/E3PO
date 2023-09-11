@@ -29,21 +29,14 @@ Download motion trace log, and place like:
 ```
 
 ### Modify the configuration yaml file
-The specific meaning of parameters can be found in [Config.md](./Config.md).<br>
-For all methods, you should specify the path to the local ffmpeg. 
-If your ffmpeg has a global path, you do not need to specify the ffmpeg path, 
-otherwise you need to specify the absolute path of the ffmpeg. 
-If you have different versions of ffmpeg, 
-it is best to specify the absolute path of the ffmpeg you are using:
+The specific meaning of parameters can be found in [Config.md](./Config.md). For all methods, you should specify the path to the local ffmpeg. If your ffmpeg has a global path, you do not need to specify the ffmpeg path, otherwise you need to specify the absolute path of the ffmpeg. If you have different versions of ffmpeg, it is best to specify the absolute path of the ffmpeg you are using:
 ```
 # The specific meaning of parameters can be found in docs/Config.md.
 ffmpeg:
   ffmpeg_path: ~
 ```
 
-Taking the ERP solution as an example, 
-if you use your own video, 
-you need to modify the following parameters in [E1.yml](../e3po/options/example/E1.yml):
+Taking the ERP solution as an example, if you use your own video, you need to modify the following parameters in [erp.yml](../e3po/approaches/erp/erp.yml):
 ```
 # The specific meaning of parameters can be found in docs/Config.md.
 video:
@@ -51,21 +44,21 @@ video:
   video_fps: 30
   origin:
     video_dir: ~
-    video_name: sample.mp4
+    video_name: video_1.mp4
     projection_mode: erp
     projection_type: ErpProjection
     ffmpeg_vf_parameter: e # For details, see: https://ffmpeg.org/ffmpeg-all.html#v360.
     height: 3840
     width: 7680
 ```
-There are still some parameters that should be specified before running [prepare_data.py](../e3po/prepare_data.py), 
-However, as the first example, you can choose to keep them as default:
+There are still some parameters that should be specified before running [make_preprocessing.py](../e3po/make_preprocessing.py). However, as the first example, you can choose to keep them as default:
 ```
 # The specific meaning of parameters can be found in docs/Config.md.
-test_group: sample
-method_name: E1
-data_type: TileBasedData
+test_group: group_1
+method_name: erp
+data_type: OnDemandData
 projection_type: ErpProjection
+evaluation_type: OnDemandEvaluation
 method_settings:
   chunk_duration: 1 # The following condition needs to be met: (60 mod chunk_duration) == 0. 
   tile_width_num: 6
@@ -93,36 +86,38 @@ ffmpeg:
   thread: 6
 ```
 
-### Run the script [prepare_data.py](../e3po/prepare_data.py)
+
+## Make Preprocessing
+### Run the script [make_preprocessing.py](../e3po/make_preprocessing.py)
 Taking the ERP solution as an example:
 ```
-python ./e3po/prepare_data.py -opt options/example/E1.yml
+python ./e3po/make_preprocessing.py -opt approaches/erp/erp.yml
 ```
 Then you'll see result in:
 ```
 |---e3po
     |---source
         |---video
-            |---[test group name]
-                |---[video name]
-                    |---[method name]
+            |---[group_1]
+                |---[video_1]
+                    |---[erp]
                         |---video_size.json
                         |---converted_[quality].mp4
     |---log
-        |---[test group name]
-            |---[method name]_prepare_data.log
+        |---[group_1]
+            |---[video_1]
+                |---[erp]
+                    |---erp_prepare_data.log  
 ```
 
 ## Make Decision
 The decision-making of the transcoding scheme will be completed during the data preparation phase.The following process is for the on demand solution.
 ### Modify the configuration yaml file
-Taking the ERP solution as an example, 
-Keep the previous parameters unchanged. The parameters you can modify in this step are as follows. 
-Except for the user log file that must indicate the file you are using, 
-you can choose to keep the other parameters as default：
+Taking the ERP solution as an example, and keep the previous parameters unchanged. The parameters you can modify in this step are as follows. 
+Except for the user log file that must indicate the file you are using, you can choose to keep the other parameters as default：
 ```
 # The specific meaning of parameters can be found in docs/Config.md.
-decision_type: TileBasedDecision
+decision_type: OnDemandDecision
 method_settings:
   hw_size: 2 # in seconds.
   pw_size: 1 # in chunks.
@@ -142,7 +137,7 @@ network_trace:
 ```
 python ./e3po/make_decision.py -opt options/example/E1.yml
 ```
-Then you'll see result in:
+Then you'll see results in:
 ```
 |---e3po
     |---result
@@ -156,16 +151,11 @@ Then you'll see result in:
 
 ## Evaluation
 ### Modify the configuration yaml file
-Taking the ERP solution as an example,  keep the previous parameters unchanged. 
-The parameters you can modify in this step are as follows. 
-You need to pay attention to whether you have installed the GPU version of Pytorch. 
-If GPU acceleration is not available, you need to set `use_gpu` to `False`. 
-In addition, you also need to decide whether to save the resulting image. 
-If each image is saved, there will be a certain storage cost, 
-and the corresponding parameter is `save_result_img_flag`. 
-`save_ground_truth_flag` suggests setting it to `True` because for the same set of tests, 
-ground truth images are often the same, and saving them can reduce the evaluation time. 
-You can choose to keep the default for other parameters:
+Taking the ERP solution as an example,  keep the previous parameters unchanged. The parameters you can modify in this step are as follows. 
+
+* You need to pay attention to whether you have installed the GPU version of Pytorch. If GPU acceleration is not available, you need to set `use_gpu` to `False`. 
+* In addition, you also need to decide whether to save the resulting image. If each image is saved, there will be a certain storage cost, and the corresponding parameter is `save_result_img_flag`. `save_ground_truth_flag` suggests setting it to `True` because for the same set of tests, ground truth images are often the same, and saving them can reduce the evaluation time.
+* You can choose to keep the default for other parameters:
 ```
 # The specific meaning of parameters can be found in docs/Config.md.
 evaluation_type: TileBasedEvaluation
@@ -188,21 +178,23 @@ metric:
 
 ### Run the script [make_evaluation.py](../e3po/make_evaluation.py)
 ```
-python ./e3po/make_evaluation.py -opt options/example/E1.yml
+python ./e3po/make_evaluation.py -opt approaches/erp/erp.yml
 ```
 Then you'll see result in:
 ```
 |---e3po
     |---result
-        |---[group name]
-            |---[method name]
-                |---evaluation.json
-                |---frames
-                    |---xxx.png
-                    |---output.mp4
+        |---[group_1]
+            |--[video_1]
+              |---[erp]
+                  |---evaluation.json
+                  |---frames
+                      |---xxx.png
+                      |---output.mp4
     |---log
-        |---[test group name]
-            |---[method name]_evaluation.log
+        |---[group_1]
+            |--[video_1]
+                |---erp_evaluation.log
 ```
 ## Customize methods
 See tutorial in [CustomScheme.md](./CustomScheme.md).
