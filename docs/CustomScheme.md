@@ -1,47 +1,43 @@
 # Custom Scheme
 We have provided some reference solutions, each of which includes: 
-data processing module, 
-projection mapping module, 
-decision module and evaluation module.
-Below, we will first introduce how to use the register to call various customized modules, 
-and then provide a simple example to illustrate which parts of the customization solution need to be implemented.
+* data processing module
+* projection module 
+* decision module
+
+Below, we will first introduce how to use the register to call various customized modules, and then provide a simple example to illustrate which parts of these customized solution should be implemented.
 
 ## How to use register
-Each module is dynamically instantiated through a register.
-We define registers for them in [utils/register.py](../e3po/utils/registry.py):
+Each module is dynamically instantiated through a register. E3PO defines registers for them in [utils/register.py](../e3po/utils/registry.py):
 ```
 data_registry = Registry('data_registry')
 decision_registry = Registry('decision_registry')
 evaluation_registry = Registry('evaluation_registry')
 projection_registry = Registry('projection_registry')
 ```
-Taking the tile based solution's data module as an example,
-You need to use a Python decorator to register your class:
+Taking the **data** module of on_demand mode as an example, E3PO uses a Python decorator to register your class: 
 ```
 from e3po.utils.registry import data_registry
 
 @data_registry.register()
-class TileBasedData(BaseData):
+class OnDemandData(BaseData):
     def __init__(self, opt):
-        super(TileBasedData, self).__init__(opt)
+        super(OnDemandData, self).__init__(opt)
         ...
 ```
-In addition, you also need to modify the end of the file name corresponding to this class to `_data.py`, 
-so that the file can be automatically import into the program by [data/__init__.py](../e3po/data/__init__.py).
-Then you can declare class objects in the following ways:
+In addition, you also need to modify the suffix of this class name as `_data.py`, such that this class can be automatically import into the program by [data/__init__.py](../e3po/data/__init__.py). Then E3PO declares class object as follows,
 ```
 from e3po.utils import get_opt
 from e3po.utils.registry import data_registry
 
 opt = get_opt() # read config file
-data = data_registry['TileBasedData'](opt)
+data = data_registry['OnDemandData'](opt)
 ```
-In fact, You only need to specify the class name in the configuration file:
+In fact, you only need to specify the class name in the configuration file,
 ```
-data_type: TileBasedData
-decision_type: TileBasedDecision
+data_type: OnDemandData
+decision_type: OnDemandDecision
 projection_type: ErpProjection
-evaluation_type: TileBasedEvaluation
+evaluation_type: OnDemandEvaluation
 ```
 Then declare the class object through the `build_[module name]` function in `[module name]/__init__.py`:
 ```
@@ -52,26 +48,21 @@ opt = get_opt()
 data = build_data(opt)
 ```
 
-## How to implement your  method
-We provide two types of solutions: on-demand solution and transcoding solution.
-Here are two examples to introduce how to implement your methods based on these two solutions.
+## How to implement your approach
+We provide two types of modes: on-demand mode and transcoding mode. Here are two examples to introduce how to implement your approach based on these two modes, respectively.
 
-### On-demand Solution
-We use Custom-EAC solution as an example to illustrate how to implement your on-demand solution.
-This requires the implementation of data module, projection module, decision module, and evaluation module. 
-The following will introduce these four modules in sequence.
+### On-demand Mode
+We use Custom-EAC approach as an example to illustrate how to implement your on-demand approach. This requires the implementation of **data** module, **projection** module, and **decision** module, which are described as follows.
 
 1. Data module<br>
-    Your class needs to inherit from `data.tile_based_data.TileBasedData` and override the corresponding functions within it.
-    More details can be viewed in file [data/tile_based_data.py](../e3po/data/tile_based_data.py),
-    here is a brief introduction to `TileBasedData`:
+    Your class needs to inherit from `data.tile_based_data.OnDemandData` and override the corresponding functions within it. More details can be viewed in file [data/tile_based_data.py](../e3po/data/on_demand_data.py). A brief introduction of `OnDemandData` is:
     ```
     @data_registry.register()
-    class TileBasedData(BaseData):
+    class OnDemandData(BaseData):
        def __init__(self, opt):
            ...
        def process_video(self):
-       # prepare_data.py will call this function. 
+       # make_preprocessing.py will call this function. 
            self._convert_ori_video() # Defined in BaseData, used to convert the original video format.
            self._generate_chunk()
            self._generate_tile()
@@ -93,12 +84,10 @@ The following will introduce these four modules in sequence.
        # Obtain the corresponding background video file size based on the given parameters.
            ...
     ```
-    Custom-EAC solution uses different tile segmentation methods, 
-    so it is necessary to rewrite some functions in `TileBasedData`.
-    Function details can be viewed in file [data/custom_eac_data.py](../e3po/data/custom_eac_data.py):
+    Custom-EAC approach uses customized tile segmentation methods, so it is necessary to rewrite some functions in `OnDemandData`. Function details can be viewed in file [approach/custom_eac/custom_eac_data.py](../e3po/approaches/custom_eac/custom_eac_data.py):
     ```
     @data_registry.register()
-    class CustomEacData(TileBasedData):
+    class CustomEacData(OnDemandData):
         def _convert_ori_video(self):
             ...
         def _generate_tile(self):
@@ -108,9 +97,7 @@ The following will introduce these four modules in sequence.
     ```
 
 2. Projection module<br>
-    Your class needs to inherit from `projection.tile_projection.TileProjection` and override the corresponding functions within it.
-    More details can be viewed in file [projection/tile_projection.py](../e3po/projection/tile_projection.py),
-    here is a brief introduction to `TileProjection`:
+    Your class needs to inherit from `projection.tile_projection.TileProjection` and override the corresponding functions within it. More details can be viewed in file [projection/tile_projection.py](../e3po/projection/tile_projection.py). A brief introduction of `TileProjection` is:
     ```
     @projection_registry.register()
     class TileProjection(BaseProjection):
@@ -134,9 +121,7 @@ The following will introduce these four modules in sequence.
         # Sampling coordinates required for generating FOV images.
             ...
     ```
-    Custom-EAC solution uses different tile segmentation methods and projection methods, 
-    so it is necessary to rewrite some functions in `TileProjection`.
-    Function details can be viewed in file [projection/custom_eac_projection.py](../e3po/projection/custom_eac_projection.py):
+    Custom-EAC approach uses different tile segmentation methods and projection methods, so it is necessary to rewrite some functions in `TileProjection`. Function details can be viewed in file [approaches/custom_eac/custom_eac_projection.py](../e3po/approaches/custom_eac/custom_eac_projection.py):
     ```
     @projection_registry.register()
     class CustomEacProjection(TileProjection):
@@ -149,16 +134,15 @@ The following will introduce these four modules in sequence.
         #  Due to the use of a special projection format, 
         #  this function is required to generate video frames during data preprocessing.
             ...
+        def generate_fov(self, *args):
+            ...
     ```
 
 3. Decision module<br>
-    Since this scheme does not change the decision-making method of tile type schemes, 
-    there is no need to rewrite any content.
-    Simply call class `decision.tile_decision.TileBasedDecision` directly is OK.
-    Here is a brief introduction to `TileBasedDecision`:
+    Your class needs to inherit from `decision.on_demand_decision.OnDemandDecision` and override the corresponding functions within it. More details can be viewed in file [decision/on_demand_decision.py](../e3po/decision/on_demand_decision.py). A brief introduction of `OnDemandDecision` is:
     ```
     @decision_registry.register()
-    class TileBasedDecision(BaseDecision):
+    class CustomEacDecision(OnDemandDecision):
         def __init__(self, opt):
             ...
         def push_hw(self, motion_ts, motion):
@@ -177,82 +161,65 @@ The following will introduce these four modules in sequence.
         # For each chunk that needs to be transmitted, determine its bitrate separately.
             ...
     ```
-   
 
-4. Evaluation module<br>
-    Since this scheme does not change the decision-making method of tile type schemes, 
-    there is no need to rewrite any content.
-    Simply call class `evaluation.tile_eval.TileBasedEvaluation` directly is OK.
-    Here is a brief introduction to `TileBasedEvaluation`:
-    ```
-    @evaluation_registry.register()
-    class TileBasedEvaluation(BaseEvaluation):
-    def __init__(self, opt):
-        ...
-    def _decision_to_playable(self):
-        # Calculate when the client can play what content and the transmission volume of each chunk based on decision information,
-        # network bandwidth, RTT, decision location, and rendering delay.
-        ...
-    def evaluate_motion(self, fov_ts, fov_direction):
-        # Evaluate a certain motion.
-        ...
-    def evaluate_misc(self):
-        # Summative evaluation.
-        ...
-    def _calculate_psnr_ssim(self, fov_direction, server_tile_list, img_index):
-        # Generate ground truth image and actual FOV image based on motion, and calculate PSNR and SSIM
-        ...
-    ```
-
-### Transcoding Solution
+### Transcoding Mode
 We use Freedom1 solution as an example to illustrate how to implement your transcoding solution.
-This requires the implementation of data module, projection module, decision module, and evaluation module. 
-The following will introduce these four modules in sequence.
+This requires the implementation of data module, projection module, and decision module. 
 
 1. Data module<br>
-    Your class needs to inherit from `data.based_data.BasedData` and override the corresponding functions within it.
-    More details can be viewed in file [data/based_data.py](../e3po/data/base_data.py),
-    here is a brief introduction to `BasedData`:
+    Your class needs to inherit from `data.transcoding_data.TranscodingData` and override the corresponding functions within it. More details can be viewed in file [data/transcoding_data.py](../e3po/data/transcoding_data.py), here is a brief introduction to `TranscodingData`:
     ```
     class BaseData:
-       def __init__(self, opt):
-           ...
-       def process_video(self):
-       # prepare_data.py will call this function. 
-           pass
-       def _convert_ori_video(self):
-       # Convert the original video format.
-           ...
-       def _del_intermediate_file(self, start_list, end_list):
-       # Delete intermediate files.
-           ... 
-       def get_size(self, *args):
-       # Obtain the corresponding video tile size based on the given parameters.
-           ...
-       def get_background_size(self, *args):
-       # Obtain the corresponding background video file size based on the given parameters.
-           ...
+        def __init__(self, opt):
+            ...
+        def process_video(self):
+            # prepare_data.py will call this function. 
+            pass
+        def _convert_ori_video(self):
+            """
+            This function implements the conversion of original video, with some given
+            transcoding parameters.
+            """
+            pass
+
+        def _generate_viewport(self):
+            """
+            This function generates the viewport content that would be transmitted to the
+            client, which should be implemented for each approach.
+            """
+            pass
+
+        def _generate_h264(self):
+            """
+            This function simulates the process of encoding the generated viewport content.
+            """
+            pass
+
+        def _get_viewport_size(self):
+            """
+            This function get the file size of encoded viewport content.
+            """
+            pass
     ```
-    Freedom1 solution need to rewrite some functions in `TileBasedData`.
-    Function details can be viewed in file [data/freedom1_data.py](../e3po/data/freedom1_data.py):
+    Freedom1 approach need to rewrite some functions in `TranscodingData`. Function details can be viewed in file [approaches/freedom1/freedom1_data.py](../e3po/approaches/freedom1/freedom1_data.py):
     ```
     @data_registry.register()
-    class CustomEacData(TileBasedData):
+    class Freedom1Data(TranscodingData):
         def _convert_ori_video(self):
             ...
         def process_video(self):
             self._convert_ori_video()
-            self._generate_vam()
+            self._generate_viewport()
             self._generate_h264()
-            self._get_vam_size()
+            self._get_viewport_size()
             self._del_intermediate_file(['converted'], ['.json'])
-        def _generate_vam(self):
+        def _generate_viewport(self):
         # Generate VAM images.
             ...
         def _generate_h264(self):
         # Generate videos using VAM images and extract H264 files.
             ...
-        def _get_vam_size(self):
+        def _get_viewport_size(self):
         # Read the file size of all h264 files and write them to the video_size.json in a fixed format.
             ..
         def get_size(self, *args):
@@ -261,9 +228,7 @@ The following will introduce these four modules in sequence.
     ```
 
 2. Projection module<br>
-    Your class needs to inherit from `projection.base_projection.BaseProjection` and override the corresponding functions within it.
-    More details can be viewed in file [projection/base_projection.py](../e3po/projection/base_projection.py),
-    here is a brief introduction to `BaseProjection`:
+    Your class needs to inherit from `projection.base_projection.BaseProjection` and override the corresponding functions within it. More details can be viewed in file [projection/base_projection.py](../e3po/projection/base_projection.py), here is a brief introduction to `BaseProjection`:
     ```
     class BaseProjection:
         def __init__(self, opt):
@@ -275,20 +240,19 @@ The following will introduce these four modules in sequence.
         def uv_to_coor(cls, *args):
         # Convert spherical coordinates to planar coordinates.
             pass
-        def get_fov(self, *args):
+        def generate_fov(self, *args):
         # Generate FOV image.
             ...
     ```
-    Freedom1 solution uses different tile segmentation methods and projection methods, 
-    so it is necessary to rewrite some functions in `BaseProjection`.
-    Function details can be viewed in file [projection/freedom1_projection.py](../e3po/projection/freedom1_projection.py):
+    Freedom1 approach uses different tile segmentation methods and projection methods, so it is necessary to rewrite some functions in `BaseProjection`.
+    Function details can be viewed in file [approaches/freedom1/freedom1_projection.py](../e3po/approaches/freedom1/freedom1_projection.py):
     ```
     @projection_registry.register()
     class Freedom1Projection(BaseProjection):
         @classmethod
         def uv_to_coor(cls, *args):
             ...
-        def get_fov(self, *args):
+        def generate_fov(self, *args):
             ...
         def _fov_result(self, fov_uv, server_motion)::
         # Sampling coordinates required for generating FOV images.
@@ -297,55 +261,3 @@ The following will introduce these four modules in sequence.
 
 3. Decision module<br>
     The decision for Freedom1 solution is completed in the data preprocessing stage.
-
-4. Evaluation module<br>
-    Your class needs to inherit from `evaluation.basl_eval.BaseEvaluation` and override the corresponding functions within it.
-    More details can be viewed in file [evaluation/base_eval.py](../e3po/evaluation/base_eval.py),
-    here is a brief introduction to `BaseEvaluation`:
-    ```
-    class BaseEvaluation:
-    def __init__(self, opt):
-        ...
-    def set_base_ts(self, base_ts):
-    # 
-        ...
-    def evaluate_motion(self, fov_ts, fov_direction):
-    # Evaluate a certain motion.
-        pass
-    def evaluate_misc(self):
-    # Summative evaluation.
-        ...
-    def _init_frame_extractor(self):
-    # Initialize frame extractor
-        ...
-    def _get_ground_truth_img(self, img_index, uv, fov_direction):
-    # Generate or read ground truth image.
-        ...
-    def extract_frame(self, projection_mode, quality, target_idx):
-    # Extract frame from video.
-        ...
-    def img2video(self, cmd, data=None):
-    # Convert FOV frames into video.
-        ...
-    ```
-    Freedom1 solution need to rewrite some functions in `BaseEvaluation`.
-    Function details can be viewed in file [evaluation/freedom1_eval.py](../e3po/evaluation/freedom1_eval.py):
-    ```
-    @evaluation_registry.register()
-    class Freedom1Evaluation(BaseEvaluation):
-    def __init__(self, opt):
-        ...
-    def _decision_to_playable(self):
-        # Calculate when the client can play what content and the transmission volume of each chunk based on decision information,
-        # network bandwidth, RTT, decision location, and rendering delay.
-        ...
-    def evaluate_motion(self, fov_ts, fov_direction):
-        # Evaluate a certain motion.
-        ...
-    def evaluate_misc(self):
-        # Summative evaluation.
-        ...
-    def _calculate_psnr_ssim(self, fov_direction, server_tile_list, img_index):
-        # Generate ground truth image and actual FOV image based on motion, and calculate PSNR and SSIM
-        ...
-    ```

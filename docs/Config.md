@@ -8,26 +8,26 @@
 We use yaml files for configuration.
 
 ## On-demand Solution Configuration
-Taking [E1.yml](../e3po/options/example/E1.yml) as an example:
+Taking [erp.yml](../e3po/approaches/erp/erp.yml) as an example: 
 ```yml
 #------------------------------------
 # The following are general settings
 #------------------------------------
 # Experiment group name. The processing results of different groups will be stored in their respective folders.
-test_group: example
+test_group: group_1
 # Name of the method to be tested.
-method_name: E1
+method_name: erp
 # The absolute path of this project, automatically obtained at runtime.
 project_path: ~
 # Use the class name defined in the `data` folder.
-data_type: TileBasedData
+data_type: OnDemandData
 # Use the class name defined in the `decision` folder.
-decision_type: TileBasedDecision
+decision_type: OnDemandDecision
 # The projection format of the target video.
 # Use the class name defined in the `projection` folder.
 projection_type: ErpProjection
 # Use the class name defined in the `evaluation` folder.
-evaluation_type: TileBasedEvaluation
+evaluation_type: OnDemandEvaluation
 
 #-------------------------------
 # The following are log settings
@@ -107,7 +107,7 @@ video:
     # The relative path of the original video compared to './source/video'.
     video_dir: ~
     # Original video full name.
-    video_name: sample.mp4
+    video_name: video_1.mp4
     # Alias for projection format of original video.
     projection_mode: erp
     # The projection format of original video.
@@ -186,15 +186,15 @@ metric:
 
 
 ## Transcoding Solution Configuration
-Taking [F1.yml](../e3po/options/example/F1.yml) as an example:
+Taking [freedom1.yml](../e3po/approaches/freedom1/freedom1.yml) as an example:
 ```yml
 #-----------------------------------
 # The following are general settings
 #-----------------------------------
 # Experiment group name. The processing results of different groups will be stored in their respective folders.
-test_group: example
+test_group: group_1
 # Name of the method to be tested.
-method_name: F1
+method_name: freedom1
 # The absolute path of this project, automatically obtained at runtime.
 project_path: ~
 # Use the class name defined in the `data` folder.
@@ -205,7 +205,7 @@ decision_type: ~
 # Use the class name defined in the `projection` folder.
 projection_type: Freedom1Projection # converted的投影格式
 # Use the class name defined in the `evaluation` folder.
-evaluation_type: Freedom1Evaluation
+evaluation_type: TranscodingEvaluation
 
 #-------------------------------
 # The following are log settings
@@ -272,7 +272,7 @@ video:
     # The relative path of the original video compared to './source/video'.
     video_dir: ~
     # Original video full name.
-    video_name: sample.mp4
+    video_name: video_1.mp4
     # Alias for projection format of original video.
     projection_mode: erp
     # The projection format of original video.
