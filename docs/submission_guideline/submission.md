@@ -63,7 +63,7 @@ For the on-demand mode, contestants should inherit the methods from decision/on_
 As shown in the figure below, we need to specify that the coordinate system used in E3PO is a [right-handed coordinate system](https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry/coordinate-systems.html). Accordingly, the [three-dimensional matrix rotation](https://en.wikipedia.org/wiki/Rotation_matrix) used in E3PO for processing perspective transformation is also based on a right-handed coordinate system. If contestants want to implement a custom projection method, the functions they need to modify should include:
 
 <div align=center>
-    <img src=./coordinates.png width=258 height= />
+    <img src=./coordinates.jpg width=258 height= />
 </div>
 
 ```
