@@ -14,7 +14,7 @@ Contestants can download [E3PO](https://github.com/bytedance/E3PO) from Github a
 
 For the four modules in the "star" folder mentioned above, the specific modifications needed for each module are described as follows:
 <div align=center>
-    <img src=./uml.jpg width=600 height= />
+    <img src=./uml.png width=600 height= />
 </div>
 ## star.yml
 This file is the configuration file for the contestant's approach. Besides the basic parameters, the contestant should specify the aforementioned several modules they have implemented in the star.yml file, for example:
@@ -133,10 +133,15 @@ Currently, we plan to evaluate all contestants' codes in two stages.
 
 **Stage 1:** Code development and testing stage. The challenge organizers will evaluate the submitted code every 3 days, sort all contestants' scores (including total scores and item scores) in descending order, and publish them in the official [topic group](./mmsys24gc_group.jpeg) for contestants to check their rankings and perform targeted optimization.
 
- $Rank$ | $Group\ name$ | $S$ | $VPSNR$ | $C_{b}$ | $C_{s}$ | $C_{c}$
- :-: | :-: | :-: | :-: | :-: | :-: | :-:
-1 |  |  |  |  |  |   
-... |  |  |  |  |  |   
+<center>
+
+| $Rank$ | $Group\ name$ | $S$ | $VPSNR$ | $C_b$ | $C_s$ | $C_c$ |
+|----------|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|------:|
+| 1   |    |    |
+| ... |    |    |
+
+</center>
+
 
 **Stage 2:** Final evaluation stage. After the challenge deadline, we will give final scores to all the received contestant codes. In order to ensure the fairness of the challenge results, we consider the following rules:
 - There are different test groups, such as 3 groups with different RTTs (100ms, 150ms, 300ms) and 3 groups with different video sets (different complexities). The final score of all contestants' codes will be the average of these 6 scores. The top 3 contestants with the highest final scores will respectively win the first, the second, and the third place in the challenge.
