@@ -21,7 +21,6 @@ import cv2
 import numpy as np
 import torch
 import torch.nn.functional as fun
-
 from .logger import get_logger
 
 

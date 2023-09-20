@@ -23,7 +23,6 @@ import yaml
 import os
 import sys
 import logging
-
 from .logger import get_logger
 
 
@@ -51,10 +50,13 @@ def get_opt():
                         help="Tile width num")
     parser.add_argument('-tile_h', '--tile_height_num', type=str, default=None,
                         help="Tile height num")
+    parser.add_argument('-t', '--video_duration', type=int, default=None,
+                        help="Video duration")
     args = parser.parse_args()
 
     # Read the configuration file and modify the configuration file information used for this run according to the command line input parameters (do not modify the file).
     project_dir = os.path.dirname(os.path.abspath(__file__)).split('utils')[0]
+
     with open(project_dir + args.opt, 'r', encoding='UTF-8') as f:
         # register the tag handler
         opt = yaml.safe_load(f.read())
@@ -66,13 +68,19 @@ def get_opt():
         if arg != 'opt' and getattr(args, arg):
             if arg in ['tile_width_num', 'tile_height_num']:
                 opt['method_settings'][arg] = getattr(args, arg)
-            if arg == 'method_name':
+            if arg in ['method_name']:
                 opt[arg] = getattr(args, arg)
+            if arg in ['video_duration']:
+                opt['video'][arg] = getattr(args, arg)
 
     # Initialize logger.
-    os.makedirs(osp.join(opt['project_path'], 'log', opt['test_group']), exist_ok=True)
+    os.makedirs(
+        osp.join(opt['project_path'], 'log', opt['test_group'], opt['video']['origin']['video_name'].split('.')[0]),
+        exist_ok=True)
     if opt['log']['save_log_file']:
-        log_file = osp.join(opt['project_path'], 'log', opt['test_group'], f"{opt['method_name']}_{os.path.basename(sys.modules['__main__'].__file__).split('.')[0]}.log")
+        log_file = osp.join(opt['project_path'], 'log', opt['test_group'],
+                            opt['video']['origin']['video_name'].split('.')[0],
+                            f"{opt['method_name']}_{os.path.basename(sys.modules['__main__'].__file__).split('.')[0]}.log")
         if os.path.exists(log_file):
             os.remove(log_file)
     else:
@@ -81,13 +89,15 @@ def get_opt():
     if not console_log_level:
         console_log_level = logging.INFO
     else:
-        assert console_log_level.lower() in ['notset', 'debug', 'info', 'warning', 'error', 'critical'], "[error] log_level wrong. It should be set to the value in [~, 'notset', 'debug', 'info', 'warning', 'error', 'critical']"
+        assert console_log_level.lower() in ['notset', 'debug', 'info', 'warning', 'error',
+                                             'critical'], "[error] log_level wrong. It should be set to the value in [~, 'notset', 'debug', 'info', 'warning', 'error', 'critical']"
         console_log_level = eval(f"logging.{console_log_level.upper()}")
     file_log_level = opt['log']['file_log_level']
     if not file_log_level:
         file_log_level = logging.DEBUG
     else:
-        assert file_log_level.lower() in ['notset', 'debug', 'info', 'warning', 'error', 'critical'], "[error] log_level wrong. It should be set to the value in [~, 'notset', 'debug', 'info', 'warning', 'error', 'critical']"
+        assert file_log_level.lower() in ['notset', 'debug', 'info', 'warning', 'error',
+                                          'critical'], "[error] log_level wrong. It should be set to the value in [~, 'notset', 'debug', 'info', 'warning', 'error', 'critical']"
         file_log_level = eval(f"logging.{file_log_level.upper()}")
     get_logger(log_file=log_file, console_log_level=console_log_level, file_log_level=file_log_level)
     return opt

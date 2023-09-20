@@ -18,6 +18,7 @@
 #    <https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html>
 
 import numpy as np
+import cv2
 
 from e3po.utils import get_logger
 
@@ -162,5 +163,8 @@ class BaseProjection:
     def uv_to_coor(cls, *args):
         pass
 
-    def get_fov(self, *args):
+    def uv_to_fov(self, *args):
+        pass
+
+    def generate_fov_coor(self, *args):
         pass

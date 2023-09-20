@@ -28,22 +28,21 @@ Prepare a 360° video, rename and place it at /e3po/source/video/sample.mp4.
 By default, the 360° video is 8K, 30 fps, with equi-rectangular projection (ERP), and only the first 10 seconds of the video will be used. To change any parameters, please refer to [BasicTutorial](./docs/BasicTutorial.md).
 3. Motion Trace<br>
 Prepare a motion trace file (Similar to that downloaded from [360VidStr](https://github.com/360VidStr/A-large-dataset-of-360-video-user-behaviour/blob/main/AggregatedDataset/7.txt)), rename and place it at /e3po/source/motion_trace/motion_trace.log.
-
-
+   
 
 ## Run scripts
-To simulate the streaming process, three python scripts need to be executed sequentially. For example, with the sample simulation E1 we have provided in the project: 
-1. Run the [prepare_data.py](./e3po/prepare_data.py) script (***video pre-processor*** module)
+To simulate the streaming process, three python scripts need to be executed sequentially. For example, with the sample simulation *custom_eac* we have provided in the project: 
+1. Run the [make_preprocessing.py](./e3po/make_preprocessing.py) script (***video pre-processor*** module)
 ```
-python ./e3po/prepare_data.py -opt options/example/E1.yml
+python ./e3po/make_preprocessing.py -opt approaches/custom_eac/custom_eac.yml
 ```
 2. Run the [make_decision.py](./e3po/make_decision.py) script (***streaming simulator*** module)
 ```
-python ./e3po/make_decision.py -opt options/example/E1.yml
+python ./e3po/make_decision.py -opt approaches/custom_eac/custom_eac.yml
 ```
 3. Run the [make_evaluation.py](./e3po/make_evaluation.py) script (***system evaluator*** module)
 ```
-python ./e3po/make_evaluation.py -opt options/example/E1.yml
+python ./e3po/make_evaluation.py -opt approaches/custom_eac/custom_eac.yml
 ```
 
 Corresponding results can be found at 
@@ -51,23 +50,26 @@ Corresponding results can be found at
 |---e3po
     |---source
         |---video
-            |---[example]
-                |---[sample]
-                    |---[E1]
+            |---group_*
+                |---video_*
+                    |---custom_eac
                         |---video_size.json
                         |---converted_29.mp4
     |---result
-        |---[example]
-            |---[E1]
-                |---decision.json
-                |---evaluation.json
-                |---frames
-                    |---xxx.png
-                    |---output.mp4
+        |---group_*
+            |---video_*
+                |---custom_eac
+                    |---decision.json
+                    |---evaluation.json
+                    |---frames
+                        |---xxx.png
+                        |---output.mp4
     |---log
-        |---[example]
-            |---E1_evaluation.log
-            |---E1_prepare_data.log
+        |---group_*
+            |---video_*
+                    |---custom_eac_make_decision.log
+                    |---custom_eac_evaluation.log
+                    |---custom_eac_make_preprocessing.log
 ```
 
 ## Examples

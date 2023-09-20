@@ -27,12 +27,15 @@ from e3po.utils.registry import projection_registry
 
 __all__ = ['build_projection']
 
-# Read all file names in 'projection' folder.
-# Then import all the projection modules that end with '_projection.py'
-eval_folder = os.path.dirname(os.path.abspath(__file__))
-for file_name in scan_file_name(eval_folder, '_projection.py'):
-    importlib.import_module(f'e3po.projection.{file_name}')
+# Read all file names in 'projection' folder. # Then import all the projection modules that end with '_projection.py'
+projection_folder = os.path.dirname(os.path.abspath(__file__))
+approaches_projection_folder = os.path.abspath(os.path.join(projection_folder, '..', 'approaches'))
 
+for file_name in scan_file_name(projection_folder, '_projection.py'):
+    importlib.import_module(f'e3po.projection.{file_name}')
+for file_name in scan_file_name(approaches_projection_folder, '_projection.py'):
+    approach_name = file_name[:-11]
+    importlib.import_module(f'e3po.approaches.{approach_name}.{file_name}')
 
 def build_projection(opt):
     """
@@ -58,7 +61,7 @@ def build_projection(opt):
     >> projection = build_projection(opt)
     """
     opt = deepcopy(opt)
-    assert opt['projection_type'], '[creat projection] Do not specify projection_type.'
+    assert opt['projection_type'], '[create projection] Do not specify projection_type.'
     projection = projection_registry[opt['projection_type']](opt)
-    get_logger().info(f'[creat projection] {projection.__class__.__name__} is created')
+    get_logger().info(f'[create projection] {projection.__class__.__name__} is created')
     return projection

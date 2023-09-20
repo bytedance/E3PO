@@ -22,6 +22,6 @@ from .data import *
 from .projection import *
 from .decision import *
 from .evaluation import *
-from .prepare_data import *
+from .make_preprocessing import *
 from .make_decision import *
 from .make_evaluation import *

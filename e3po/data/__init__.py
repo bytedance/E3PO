@@ -27,12 +27,16 @@ from e3po.utils.registry import data_registry
 
 __all__ = ['build_data']
 
-# Read all file names in 'data' folder.
-# Then import all the data modules that end with '_data.py'
-eval_folder = os.path.dirname(os.path.abspath(__file__))
-for file_name in scan_file_name(eval_folder, '_data.py'):
+# Read all file names in 'data' and 'approaches' folders. Then import all the data modules that end with '_data.py'
+data_folder = os.path.dirname(os.path.abspath(__file__))
+approaches_data_folder = os.path.abspath(os.path.join(data_folder, '..', 'approaches'))     # get the file path of basic data file
+
+for file_name in scan_file_name(data_folder, '_data.py'):
     importlib.import_module(f'e3po.data.{file_name}')
 
+for file_name in scan_file_name(approaches_data_folder, '_data.py'):                        # get the file path of customized data file
+    approach_name = file_name[:-5]
+    importlib.import_module(f'e3po.approaches.{approach_name}.{file_name}')
 
 def build_data(opt):
     """

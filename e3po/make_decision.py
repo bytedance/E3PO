@@ -43,7 +43,8 @@ if __name__ == '__main__':
     opt = get_opt()
     get_logger().info('[make decision] start')
     decision_result = make_decision(opt)
-    result_path = osp.join(opt['project_path'], 'result', opt['test_group'], opt['method_name'], 'decision.json')
+    result_path = osp.join(opt['project_path'], 'result', opt['test_group'],
+                           opt['video']['origin']['video_name'].split('.')[0], opt['method_name'], 'decision.json')
     write_json(decision_result, result_path)
     get_logger().info(f'[write json] path: {result_path}')
     get_logger().info('[make decision] end')
