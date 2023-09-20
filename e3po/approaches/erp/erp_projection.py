@@ -72,7 +72,7 @@ class ErpProjection(TileProjection):
         ----------
         *args :
         concat_img : ndarray
-            A array including the concatenated high-resolution tiles and low-resolution background image
+            An array including the concatenated high-resolution tiles and low-resolution background image
             (if there is a background stream).
         src_width: int
             The width of original full frame.
