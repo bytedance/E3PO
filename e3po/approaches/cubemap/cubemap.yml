@@ -1,0 +1,70 @@
+test_group: group_1
+method_name: cubemap
+project_path: ~
+data_type: OnDemandData
+decision_type: OnDemandDecision       # the on-demand type decision module
+projection_type: CubemapProjection
+evaluation_type: OnDemandEvaluation
+
+log:
+  save_log_file: True
+  console_log_level: ~
+  file_log_level: ~
+
+ffmpeg:
+  ffmpeg_path: ~
+  loglevel: error
+  thread: 6
+
+method_settings:
+  chunk_duration: 1 # The following condition needs to be met: (60 mod chunk_duration) == 0.
+  tile_width_num: 6
+  tile_height_num: 6
+  hw_size: 2
+  pw_size: 1
+  decision_location: client
+  decision_delay: 66
+  pre_download_duration: 3
+  background:
+    background_flag: False
+
+video:
+  video_duration: 10
+  video_fps: 30
+  rendering_delay: 10
+  origin:
+    video_dir: ~
+    video_name: video_2.mp4 # video_1.mp4
+    projection_mode: erp
+    projection_type: ErpProjection
+    ffmpeg_vf_parameter: e
+    height: 3840
+    width: 7680
+  converted:
+    quality_list: [29, 31]  # QP value
+    projection_mode: cubemap
+    ffmpeg_vf_parameter: "c3x2:cubic:out_forder='lfrdbu':out_frot='000313'"
+    height: 3840
+    width: 5760
+
+motion_trace:
+  motion_file: motion_trace.log
+  sample_frequency: 10
+  motion_frequency: 100
+  column_idx: 20
+
+network_trace:
+  rtt: 30
+  bandwidth: 100 # MBps
+
+metric:
+  range_fov: [89, 89]
+  fov_resolution: [1920, 1832] # h*w
+  sampling_size: [50, 50]
+  psnr_flag: True
+  ssim_flag: True
+  psnr_ssim_frequency: 1 # The following condition needs to be met: (video_fps mod psnr_ssim_frequency) == 0
+  use_gpu: False # Please set False when GPU acceleration is not possible, otherwise it will slow down the running speed.
+  save_ground_truth_flag: True
+  save_result_img_flag: True
+  inter_mode: bilinear

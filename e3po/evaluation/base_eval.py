@@ -67,7 +67,8 @@ class BaseEvaluation:
         self.save_ground_truth_flag = opt['metric']['save_ground_truth_flag']
         self.save_result_img_flag = opt['metric']['save_result_img_flag']
         self.ground_truth_img_path = osp.join(self.opt['project_path'], 'result', self.opt['test_group'],
-                                              'ground_truth')
+                                              self.opt['video']['origin']['video_name'].split('.')[0], 'ground_truth')
+
         if self.save_ground_truth_flag:
             os.makedirs(self.ground_truth_img_path, exist_ok=True)
         self.pipe = None
@@ -86,8 +87,8 @@ class BaseEvaluation:
             _opt['method_settings']['background']['background_flag'] = False
             self.origin_projection = build_projection(_opt)
 
-            self.result_img_path = osp.join(opt['project_path'], 'result', opt['test_group'], opt['method_name'],
-                                            'frames_w')
+            self.result_img_path = osp.join(opt['project_path'], 'result', opt['test_group'], opt['video']['origin']['video_name'].split('.')[0],
+                                            opt['method_name'], 'frames_w')
             if not self.background_flag:
                 self.result_img_path += 'o'
             if os.path.exists(self.result_img_path):
@@ -144,7 +145,7 @@ class BaseEvaluation:
 
     def _init_frame_extractor(self):
         """Initialize frame extractor."""
-        get_logger().info('[initialize frame extractor] start')
+        self.logger.info('[initialize frame extractor] start')
 
         video_path = osp.join(self.video_dir, self.opt['video']['origin']['video_name'])
         self.frame_extractor['ori_'] = cv2.VideoCapture()
@@ -167,7 +168,7 @@ class BaseEvaluation:
             self.frame_idx["background_"] = -1
             assert self.frame_extractor["background_"].open(video_path), f"[error] Can't read video[{video_path}]"
 
-        get_logger().info('[initialize frame extractor] end')
+        self.logger.info('[initialize frame extractor] end')
 
     def push_pre_downloaded_frame(self, fov_ts, fov_direction):
         """
@@ -199,7 +200,7 @@ class BaseEvaluation:
             fov_uv = None
 
         self.logger.debug(f'[evaluation] start get ground truth img')
-        ground_truth = self._get_ground_truth_img(img_index, fov_uv, fov_direction)
+        ground_truth = self._get_ground_truth_img(img_index, fov_uv)
         self.logger.debug(f'[evaluation] end get ground truth img')
 
         self.logger.debug(f'[evaluation] start push pre-downloaded frame')
@@ -207,7 +208,7 @@ class BaseEvaluation:
         self.logger.debug(f'[evaluation] end push pre-downloaded frame')
         return
 
-    def _get_ground_truth_img(self, img_index, uv, fov_direction):
+    def _get_ground_truth_img(self, img_index, uv):
         """
         Generate or read the specified ground truth image.
 
@@ -217,9 +218,6 @@ class BaseEvaluation:
             Frame index.
         uv : numpy.ndarray
             The spatial polar coordinates of the sampling points based on given FoV direction and resolution.
-        fov_direction : dict
-            FoV direction:
-                {'yaw': yaw, 'pitch': pitch, 'scale': scale}
 
         Returns
         -------
@@ -229,14 +227,20 @@ class BaseEvaluation:
         """
         ground_truth_img = osp.join(self.ground_truth_img_path, f"{img_index}.png")
         if not self.save_ground_truth_flag or not os.path.exists(ground_truth_img):
+            self.logger.debug('[evaluation] start extract frame')
             server_img = self.extract_frame('ori', '', img_index)
-            fov_tile_list, fov_pixel_tile_list = self.origin_projection.sphere_to_tile(fov_direction)
-            result = self.origin_projection.get_fov(server_img, self.opt['video']['origin']['width'],
-                                                    self.opt['video']['origin']['height'], uv, fov_tile_list)
+            self.logger.debug('[evaluation] end extract frame')
+            self.logger.debug('[evaluation] start generate fov')
+            result = self.origin_projection.uv_to_fov(server_img, uv)
+            self.logger.debug('[evaluation] end generate fov')
         else:
+            self.logger.debug('[evaluation] start read fov')
             result = np.array(cv2.imread(ground_truth_img))
+            self.logger.debug('[evaluation] end read fov')
         if self.save_ground_truth_flag and not os.path.exists(ground_truth_img):
+            self.logger.debug('[evaluation] start save fov')
             cv2.imwrite(ground_truth_img, result, [cv2.IMWRITE_JPEG_QUALITY, 100])
+            self.logger.debug('[evaluation] end save fov')
         return result
 
     def extract_frame(self, projection_mode, quality, target_idx):
@@ -258,19 +262,20 @@ class BaseEvaluation:
            Frame content.
         """
         ret = False
-        while self.frame_idx[f"{projection_mode}_{quality}"] < target_idx - 1:
-            ret = self.frame_extractor[f"{projection_mode}_{quality}"].grab()
+        key = f"{projection_mode}_{quality}"
+        while self.frame_idx[key] < target_idx - 1:
+            ret = self.frame_extractor[key].grab()
             if not ret:
                 break
-            self.frame_idx[f"{projection_mode}_{quality}"] += 1
-        if self.frame_idx[f"{projection_mode}_{quality}"] == target_idx - 1:
-            ret, frame = self.frame_extractor[f"{projection_mode}_{quality}"].read()
+            self.frame_idx[key] += 1
+        if self.frame_idx[key] == target_idx - 1:
+            ret, frame = self.frame_extractor[key].read()           # 抽取对应的 full frame
         if ret:
-            self.frame_idx[f"{projection_mode}_{quality}"] += 1
+            self.frame_idx[key] += 1
             frame = np.array(frame)
-            self.last_frame[f"{projection_mode}_{quality}"] = frame
+            self.last_frame[key] = frame
         else:
-            frame = self.last_frame[f"{projection_mode}_{quality}"]
+            frame = self.last_frame[key]
         return frame
 
     def img2video(self, cmd, data=None):

@@ -27,11 +27,17 @@ from e3po.utils.registry import decision_registry
 
 __all__ = ['build_decision']
 
-# Read all file names in 'decision' folder.
-# Then import all the decision modules that end with '_decision.py'
-eval_folder = os.path.dirname(os.path.abspath(__file__))
-for file_name in scan_file_name(eval_folder, '_decision.py'):
+# Read all file names in 'decision' folder. Then import all the decision modules that end with '_decision.py'
+decision_folder = os.path.dirname(os.path.abspath(__file__))
+approaches_decision_folder = os.path.abspath(os.path.join(decision_folder, '..', 'approaches'))
+
+for file_name in scan_file_name(decision_folder, '_decision.py'):
     importlib.import_module(f'e3po.decision.{file_name}')
+
+for file_name in scan_file_name(approaches_decision_folder, '_decision.py'):
+    approach_name = file_name[:-9]
+    importlib.import_module(f'e3po.approaches.{approach_name}.{file_name}')
+
 
 
 def build_decision(opt):

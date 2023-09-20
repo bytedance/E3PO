@@ -55,9 +55,11 @@ if __name__ == '__main__':
     get_logger().info('[evaluation] start')
     evaluation_result = make_evaluation(opt)
     if opt['method_settings']['background']['background_flag']:
-        result_path = osp.join(opt['project_path'], 'result', opt['test_group'], opt['method_name'], 'evaluation_w.json')
+        result_path = osp.join(opt['project_path'], 'result', opt['test_group'], opt['video']['origin']['video_name'].split('.')[0],
+                               opt['method_name'], 'evaluation_w.json')
     else:
-        result_path = osp.join(opt['project_path'], 'result', opt['test_group'], opt['method_name'], 'evaluation_wo.json')
+        result_path = osp.join(opt['project_path'], 'result', opt['test_group'], opt['video']['origin']['video_name'].split('.')[0],
+                               opt['method_name'], 'evaluation_wo.json')
     write_json(evaluation_result, result_path)
     get_logger().info(f'[write json] path: {result_path}')
     get_logger().info('[evaluation] end')

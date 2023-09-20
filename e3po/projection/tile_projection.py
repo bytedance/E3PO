@@ -45,6 +45,8 @@ class TileProjection(BaseProjection):
         self.converted_height = int(opt['video']['converted']['height'])
         self.tile_width_num = int(opt['method_settings']['tile_width_num'])
         self.tile_height_num = int(opt['method_settings']['tile_height_num'])
+        self.quality_list = opt['video']['converted']['quality_list']
+
 
     def sphere_to_tile(self, fov_ypr):
         """
@@ -63,7 +65,7 @@ class TileProjection(BaseProjection):
         -------
         list
             [tile_list, pixel_tile_list].
-            tile_list : The tile set corresponding to this set of sampling points,
+            tile_list : The tile set corresponding to this set of sampling points.
             pixel_tile_list : Corresponding tile number for each sampling point.
         """
         yaw = float(fov_ypr['yaw'])
@@ -77,6 +79,29 @@ class TileProjection(BaseProjection):
     @classmethod
     def uv_to_coor(cls, *args):
         pass
+
+    def uv_to_fov(self, img, fov_uv):
+        src_height, src_width = img.shape[:2]
+        inter_mode = self.opt['metric']['inter_mode']
+        if inter_mode == 'bilinear':
+            inter_order = cv2.INTER_LINEAR
+        elif inter_mode == 'nearest':
+            inter_order = cv2.INTER_NEAREST
+        elif inter_mode == 'cubic':
+            inter_order = cv2.INTER_CUBIC
+        elif inter_mode == 'area':
+            inter_order = cv2.INTER_AREA
+        elif inter_mode == 'lanczos4':
+            inter_order = cv2.INTER_LANCZOS4
+        else:
+            raise NotImplementedError('unknown mode')
+
+        pixel_coord = self.uv_to_coor(fov_uv, src_width, src_height)
+        dstMap_u, dstMap_v = cv2.convertMaps(pixel_coord[0].astype(np.float32), pixel_coord[1].astype(np.float32),
+                                             cv2.CV_16SC2)
+        fov_img = cv2.remap(img, dstMap_u, dstMap_v, inter_order)
+
+        return fov_img
 
     def _coord_to_tile(self, pixel_coord, w, h):
         """
@@ -99,45 +124,15 @@ class TileProjection(BaseProjection):
             pixel_tile_list : Corresponding tile number for each sampling point.
         """
         coor_x, coor_y = pixel_coord
-        pixel_tile_list = ((coor_y // (h // self.tile_height_num)) * self.tile_width_num) + (
-                coor_x // (w // self.tile_width_num))
+        pixel_tile_list = ((coor_y // (h // self.tile_height_num)) * self.tile_width_num) \
+                          + (coor_x // (w // self.tile_width_num))
 
         tile_list = np.unique(pixel_tile_list)
         return tile_list, pixel_tile_list
 
-    def get_fov(self, *args):
-        """
-        Generate FoV images for client viewing.
 
-        Returns
-        -------
-        numpy.ndarray
-            FoV images for client viewing.
-        """
-        concat_img, src_width, src_height, fov_uv, server_tile_list = args
-        inter_mode = self.opt['metric']['inter_mode']
-        if inter_mode == 'bilinear':
-            inter_order = cv2.INTER_LINEAR
-        elif inter_mode == 'nearest':
-            inter_order = cv2.INTER_NEAREST
-        elif inter_mode == 'cubic':
-            inter_order = cv2.INTER_CUBIC
-        elif inter_mode == 'area':
-            inter_order = cv2.INTER_AREA
-        elif inter_mode == 'lanczos4':
-            inter_order = cv2.INTER_LANCZOS4
-        else:
-            raise NotImplementedError('unknown mode')
 
-        pixel_coord = self.uv_to_coor(fov_uv, src_width, src_height)
-        tile_list, client_tile_list = self._coord_to_tile(pixel_coord, src_width, src_height)
-        coor_x_arr, coor_y_arr = self._fov_result(fov_uv, src_width, src_height, client_tile_list, server_tile_list)
-        dst_map_u, dst_map_v = cv2.convertMaps(coor_x_arr.astype(np.float32), coor_y_arr.astype(np.float32), cv2.CV_16SC2)
-        fov_result = cv2.remap(concat_img, dst_map_u, dst_map_v, inter_order)
-
-        return fov_result
-
-    def _fov_result(self, fov_uv, w, h, client_tile_list, server_tile_list):
+    def _fov_result(self, fov_uv, w, h, client_tile_list, server_tile_list, server_qp_list):
         """
         Calculate each point in FoV image should be sampled from which coordinate of the transmitted content.
 
@@ -152,7 +147,9 @@ class TileProjection(BaseProjection):
         client_tile_list : list
             The tile number corresponding to each pixel in FoV
         server_tile_list : list
-            Transferred tile set.
+            Transmitted tile set from the server.
+        server_qp_list: list
+            The corresponding qp values of the server_tile_list.
 
         Returns
         -------
@@ -163,18 +160,29 @@ class TileProjection(BaseProjection):
         coor_x_arr = np.zeros((fov_uv.shape[:2]), np.float32)
         coor_y_arr = np.zeros((fov_uv.shape[:2]), np.float32)
 
-        in_server_mask = np.isin(client_tile_list, server_tile_list)
-        in_server_coor_x, in_server_coor_y = self.uv_to_coor(fov_uv[in_server_mask], w, h)
-        coor_x_arr[in_server_mask], coor_y_arr[in_server_mask] = in_server_coor_x.reshape(
-            (-1,)), in_server_coor_y.reshape((-1,))
+        set_server_qp_list = set(server_qp_list)                            # transform the server_qp_list to set format, remove duplicates
+        for qp_value in set_server_qp_list:
+            qp_idx = self.quality_list.index(qp_value)
+            server_qp_mask = np.isin(server_qp_list, qp_value)
+            server_tile_list_qp = np.array(server_tile_list)[server_qp_mask]
+            in_server_mask = np.isin(client_tile_list, server_tile_list_qp)
+            in_server_coor_x, in_server_coor_y = self.uv_to_coor(fov_uv[in_server_mask], w, h)
+            coor_x_arr[in_server_mask], coor_y_arr[in_server_mask] = w * qp_idx + in_server_coor_x.reshape((-1,)), \
+                                                                     in_server_coor_y.reshape((-1,))
 
         if self.opt['method_settings']['background']['background_flag']:
             background_w = self.opt['method_settings']['background']['width']
             background_h = self.opt['method_settings']['background']['height']
             out_server_mask = (in_server_mask == False)
 
-            out_server_coor_x, out_server_coor_y = projection_registry[self.opt['method_settings']['background']['projection_type']].uv_to_coor(fov_uv[out_server_mask], background_w, background_h)
-            coor_x_arr[out_server_mask], coor_y_arr[out_server_mask] = w + out_server_coor_x.reshape(
-                (-1,)), out_server_coor_y.reshape((-1,))
+            out_server_coor_x, out_server_coor_y = projection_registry[self.opt['method_settings']['background']
+                                                    ['projection_type']].uv_to_coor(fov_uv[out_server_mask], background_w, background_h)
+            coor_x_arr[out_server_mask], coor_y_arr[out_server_mask] = w*len(self.quality_list) + out_server_coor_x.reshape((-1,)), \
+                                                                       out_server_coor_y.reshape((-1,))
 
         return coor_x_arr, coor_y_arr
+
+
+    def generate_fov_coor(self, *args):
+        """This function should be implemented by each contestant in their own projection file."""
+        pass

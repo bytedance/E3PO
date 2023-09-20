@@ -1,4 +1,4 @@
-# E3PO, an open platform for 360˚ video streaming simulation and evaluation.
+﻿# E3PO, an open platform for 360˚ video streaming simulation and evaluation.
 # Copyright 2023 ByteDance Ltd. and/or its affiliates
 #
 # This file is part of E3PO.
@@ -17,28 +17,15 @@
 # along with this program; if not, see:
 #    <https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html>
 
-from .options import get_opt
-from .motion_trace import pre_processing_client_log
-from .misc import scan_file_name, write_json, calc_theta_hat, calc_mapUV
-from .logger import get_logger
-from .psnr_ssim import calculate_psnr_ssim
+import add_e3po_to_enviroment
+from e3po.data import build_data
+from e3po.utils import get_opt, get_logger
 
-__all__ = [
-    # options.py
-    'get_opt',
+if __name__ == '__main__':
+    opt = get_opt()
+    get_logger().info('[preprocessing data] start')
+    data = build_data(opt)
+    data.process_video()
+    get_logger().info('[preprocessing data] end')
 
-    # motion_trace.py
-    'pre_processing_client_log',
 
-    # misc.py
-    'scan_file_name',
-    'write_json',
-    'calc_theta_hat',
-    'calc_mapUV',
-
-    # logger.py
-    'get_logger',
-
-    # psnr_ssim.py
-    'calculate_psnr_ssim',
-]
