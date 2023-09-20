@@ -14,7 +14,7 @@ Contestants can download [E3PO](https://github.com/bytedance/E3PO) from Github a
 
 For the four modules in the "star" folder mentioned above, the specific modifications needed for each module are described as follows:
 <div align=center>
-    <img src=./uml.png width=600 height= />
+    <img src=./uml.jpg width=600 height= />
 </div>
 ## star.yml
 This file is the configuration file for the contestant's approach. Besides the basic parameters, the contestant should specify the aforementioned several modules they have implemented in the star.yml file, for example:
