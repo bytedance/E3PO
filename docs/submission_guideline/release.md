@@ -2,8 +2,8 @@
     Organized and sponsored by 
 </center>
 <div align=center>
-    <img src=./bytedance.png width=200 height= /> 
-    <img src=./PICO_logo.png width=200 height= />
+    <img src=./bytedance.jpg width=200 height= /> 
+    <img src=./PICO_logo.jpg width=200 height= />
 </div>
 
 # Challenge Description
