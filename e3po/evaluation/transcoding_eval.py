@@ -57,9 +57,9 @@ class TranscodingEvaluation(BaseEvaluation):
         self.scale_factors = {k: eval(v) for k, v in opt['method_settings']['scale_factors'].items()}
         self.sampling_num = opt['metric']['sampling_size'][0] * opt['metric']['sampling_size'][1]
         self.range_num = opt['metric']['range_fov'][0] * opt['metric']['range_fov'][1]
-        self.gc_w1 = 0.5    #gc_score weight value
-        self.gc_w2 = 0.25
-        self.gc_w3 = 0.25
+        self.gc_w1 = 0.09    #gc_score weight value
+        self.gc_w2 = 0.000015
+        self.gc_w3 = opt['video']['video_duration'] / 3600.0    # (s)
 
     def _decision_to_playable(self):
         """Calculate the playable timestamp of each VAM on the client, and read the transmission amount of each chunk"""
@@ -305,15 +305,15 @@ class TranscodingEvaluation(BaseEvaluation):
         #     for qp_idx in range(len(vam_storge_data)):
         #         total_storage += vam_storge_data[qp_idx]['vam_size']
 
-        total_bandwidth = round(total_bandwidth / 1000 / 1000, 6)   # MB
+        total_bandwidth = round(total_bandwidth / 1000 / 1000 / 1000, 6)   # GB
 
-        total_storage = round((total_storage + background_storage) / 1000 / 1000, 6)   # MB
+        total_storage = round((total_storage + background_storage) / 1000 / 1000 / 1000, 6)   # GB
 
-        total_computation = 20 if self.use_gpu else 0          # TODO: the final parameter is to be determined
+        total_computation = 1.204 if self.use_gpu else 0
 
         vpsnr = round(np.average(self.psnr), 3)
 
-        w_1, w_2, w_3 = self.gc_w1, self.gc_w2, self.gc_w3     # TODO: the final parameter is to be determined
+        w_1, w_2, w_3 = self.gc_w1, self.gc_w2, self.gc_w3
         gc_score = vpsnr / (w_1 * total_bandwidth + w_2 * total_storage + w_3 * total_computation)
 
         return gc_score
