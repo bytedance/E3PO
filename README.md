@@ -68,7 +68,7 @@ Corresponding results can be found at
         |---group_*
             |---video_*
                     |---custom_eac_make_decision.log
-                    |---custom_eac_evaluation.log
+                    |---custom_eac_make_evaluation.log
                     |---custom_eac_make_preprocessing.log
 ```
 
