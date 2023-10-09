@@ -79,6 +79,8 @@ class Freedom1Projection(BaseProjection):
         xx = rot_a[0] * x + rot_a[1] * y + rot_a[2] * z
         yy = rot_b[0] * x + rot_b[1] * y + rot_b[2] * z
         zz = rot_c[0] * x + rot_c[1] * y + rot_c[2] * z
+        xx = np.clip(xx, -1, 1)
+        yy = np.clip(yy, -1, 1)
         zz = np.clip(zz, -1, 1)
 
         u = np.arctan2(yy, xx)
