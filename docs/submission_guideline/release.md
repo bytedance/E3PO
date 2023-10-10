@@ -19,8 +19,7 @@ Contestants shall design and implement a 360-degree video on-demand streaming so
 
 
 We define a performance metric score as follows: 
-$$S=\frac{VPSNR}{w_1*C_b+w_2*C_s + w_3*C_c}$$
-Note that E3PO automatically measures performance metrics and calculates $S$ for each simulation.  We will provide 8K panoramic video sequences as well as real users' head motion trace data for contestants' testing and final evaluation.
+$$S=\frac{VPSNR}{w_1*C_b+w_2*C_s + w_3*C_c}$$ For the weights in the metric scores, we referred to the pricing table on the AWS official website. Specifically, $w_1=0.09$, $w_2=0.000015$, $w_3=t$, and $C_c = 0.000334$, where $t$ represents the duration of the video playback in seconds. Note that E3PO automatically measures performance metrics and calculates $S$ for each simulation.  We will provide 8K panoramic video sequences as well as real users' head motion trace data for contestants' testing and final evaluation.
 
 
 # Important Dates
