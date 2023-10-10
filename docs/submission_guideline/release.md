@@ -2,8 +2,7 @@
     Organized and sponsored by 
 </center>
 <div align=center>
-    <img src=./bytedance.jpg height= 50 />
-    <img src=./PICO_logo.jpg height= 80 />
+    <img src=./bytedance.jpg height= 60 />
 </div>
 
 # Challenge Description
@@ -25,10 +24,6 @@ Note that E3PO automatically measures performance metrics and calculates $S$ for
 
 
 # Important Dates
- Challenge Relase | Register by | Upload by | Notifications on | Camera-Ready due
- :-: | :-: | :-: | :-: | :-: | :-:
-| Sep. 11th, 2023 | Jan. 12th, 2024 | Feb. 5th, 2024 | Feb. 16th, 2024 | Mar. 1th, 2024
-
 | Challenge Relase | Register by | Upload by | Notifications on | Camera-Ready due |
 |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
 | Sep. 11th, 2023   |  Jan. 12th, 2024  |   Feb. 5th, 2024 | Feb. 16th, 2024 | Mar. 1th, 2024
