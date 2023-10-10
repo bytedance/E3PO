@@ -2,7 +2,7 @@
     Organized and sponsored by 
 </center>
 <div align=center>
-    <img src=./bytedance.jpg height= 80 /> 
+    <img src=./bytedance.jpg height= 50 />
     <img src=./PICO_logo.jpg height= 80 />
 </div>
 
@@ -19,20 +19,19 @@ Contestants shall design and implement a 360-degree video on-demand streaming so
 - $C_c$: the computation cost for some solutions that require real-time processing or transcoding
 
 
-
-
-
 We define a performance metric score as follows: 
 $$S=\frac{VPSNR}{w_1*C_b+w_2*C_s + w_3*C_c}$$
 Note that E3PO automatically measures performance metrics and calculates $S$ for each simulation.  We will provide 8K panoramic video sequences as well as real users' head motion trace data for contestants' testing and final evaluation.
 
 
 # Important Dates
- - | Challenge Relase | Register by | Upload by | Notifications on | Camera-Ready due
+ Challenge Relase | Register by | Upload by | Notifications on | Camera-Ready due
  :-: | :-: | :-: | :-: | :-: | :-:
-MMSys Challenge24 | Sep. 11th | Jan. 12th | Feb. 5th | Feb. 16th | Mar. 1th
+| Sep. 11th, 2023 | Jan. 12th, 2024 | Feb. 5th, 2024 | Feb. 16th, 2024 | Mar. 1th, 2024
 
-
+| Challenge Relase | Register by | Upload by | Notifications on | Camera-Ready due |
+|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
+| Sep. 11th, 2023   |  Jan. 12th, 2024  |   Feb. 5th, 2024 | Feb. 16th, 2024 | Mar. 1th, 2024
 
 # Registration
 This challenge is open to any individual, academic or commercial institution (except ByteDance employees). Interested individuals are welcome to participate as a team. Each team can have one or more members (up to 4). Each individual can only be part of one team. The organizers reserve the right to disqualify any participant for misleading information or inappropriate behavior during the challenge.
