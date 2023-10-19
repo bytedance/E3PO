@@ -19,13 +19,15 @@ Contestants shall design and implement a 360-degree video on-demand streaming so
 
 
 We define a performance metric score as follows: 
-$$S=\frac{VPSNR}{w_1*C_b+w_2*C_s + w_3*C_c}$$ For the weights in the metric score, we referred to the pricing table on the [AWS](https://aws.amazon.com/) official website. Specifically, $w_1=0.09$, $w_2=0.000015$, $w_3=t$, and $C_c = 0.000334$, where $t$ represents the duration of the video playback in seconds. Please note that the unit for $C_b$ and $C_s$ is GB. Additionally, E3PO automatically measures performance metrics and calculates $S$ for each simulation.  We will provide 8K panoramic video sequences as well as real users' head motion trace data for contestants' testing and final evaluation.
+$$S=\frac{VPSNR}{w_1*C_b+w_2*C_s + w_3*C_c}$$ For the weights in the metric score, we referred to the pricing table on the [AWS](https://aws.amazon.com/) official website. Specifically, $w_1=0.09$, $w_2=0.000015$, $w_3=t$, and $C_c = 0.000334$, where $t$ represents the duration of the video playback in seconds, and the unit for $C_b$ and $C_s$ is GB. 
+
+Note that E3PO automatically measures performance metrics and calculates $S$ for each simulation. We provide [8K panoramic video sequences as well as real users' head motion trace](https://bytedance.feishu.cn/drive/folder/QQgJfhxs7lor3xdb0WGcTYMsnPb?from=space_personal_filelist) data for contestants' testing and final evaluation.
 
 
 # Important Dates
 | Challenge Relase | Register by | Upload by | Notifications on | Camera-Ready due |
 |:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-| Sep. 11th, 2023   |  Jan. 12th, 2024  |   Feb. 5th, 2024 | Feb. 16th, 2024 | Mar. 1th, 2024
+| Sep. 11th, 2023   |  Jan. 12th, 2024  |   Feb. 5th, 2024 | Feb. 16th, 2024 | Mar. 1st, 2024
 
 # Registration
 This challenge is open to any individual, academic or commercial institution (except ByteDance employees). Interested individuals are welcome to participate as a team. Each team can have one or more members (up to 4). Each individual can only be part of one team. The organizers reserve the right to disqualify any participant for misleading information or inappropriate behavior during the challenge.
