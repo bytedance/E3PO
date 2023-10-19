@@ -60,6 +60,7 @@ class OnDemandDecision(BaseDecision):
         self.base_ts = -1               # Starting timestamp of historical window data
         self.hw = deque()               # Queue for storing historical window data
         self.projection = build_projection(opt)
+        self.tmp_result = {}            # To support more granular decisions
 
     def push_hw(self, motion_ts, motion):
         """
@@ -92,23 +93,28 @@ class OnDemandDecision(BaseDecision):
         result = []
         if self.next_download_idx >= self.video_duration / self.chunk_duration:
             return result
+
+        predicted_record = self._predict_motion_tile()
+        tile_record = self._tile_decision(predicted_record)
+        bitrate_record = self._bitrate_decision(tile_record)
+
+        for i in range(self.pw_size):
+            tmp_tiles = tile_record[i]
+            for j in range(len(tmp_tiles)):
+                if tmp_tiles[j] not in self.tmp_result.keys():
+                    self.tmp_result[tmp_tiles[j]] = bitrate_record[i][j]
+
         if list(self.hw)[-1][0] >= self.base_ts + self.next_download_idx * self.chunk_duration * 1000 - self.decision_delay:
-            predicted_record = self._predict_motion_tile()
-            tile_record = self._tile_decision(predicted_record)
-            bitrate_record = self._bitrate_decision(tile_record)
             for i in range(self.pw_size):
                 tmp_pw = {'chunk_idx': self.next_download_idx, 'decision_data': [{'pw_ts': list(self.hw)[-1][0]}]}
-                tmp_tiles = tile_record[i]
-
-                # If the tile range is irregular, the tile can be modified_ List content to describe the scope of tiles,
-                # and custom functions are needed to parse the modified tiles_list in the future.
-                for j in range(len(tmp_tiles)):
-                    tmp_pw['decision_data'].append({'tile_idx': tmp_tiles[j], 'tile_bitrate': bitrate_record[i][j]})
-
+                for tile_idx in self.tmp_result.keys():
+                    tmp_pw['decision_data'].append({'tile_idx': tile_idx, 'tile_bitrate': self.tmp_result[tile_idx]})
                 result.append(tmp_pw)
+                self.tmp_result = {}
                 self.next_download_idx += 1
 
         return result
+
 
     def _predict_motion_tile(self):
         """
