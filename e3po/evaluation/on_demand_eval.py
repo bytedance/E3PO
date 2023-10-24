@@ -130,7 +130,7 @@ class OnDemandEvaluation(BaseEvaluation):
         tmp_psnr_ssim_flag = (self.psnr_flag or self.ssim_flag) and \
                              (img_index - self.base_frame_idx) % self.psnr_ssim_frequency == 0
 
-        if self.playable_record[chunk_idx]['tile_list'][0]['playable_ts'] > fov_ts:        # fixme, check this logic
+        if self.playable_record[chunk_idx]['tile_list'][0]['playable_ts'] > fov_ts:        # there should be content for current frame
             self.logger.info(
                 f"[evaluation] no content to play at {fov_ts}. chunk_idx: {chunk_idx}, playable_record_ts: {self.playable_record[chunk_idx]['ts']}")
             if self.save_result_img_flag and os.path.exists(osp.join(self.result_img_path, f"{img_index - 1}.png")):
