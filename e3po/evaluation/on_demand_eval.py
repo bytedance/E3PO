@@ -53,9 +53,9 @@ class OnDemandEvaluation(BaseEvaluation):
         self.base_frame_idx = int(self.pre_download_duration * self.video_fps // 1000.0)
         self.data = build_data(opt)
         self.playable_record = self._decision_to_playable()         # Transform the decision.json file into playable_record
-        self.gc_w1 = 0.09    # gc_score weight value
+        self.gc_w1 = 0.09                                           # gc_score weight value
         self.gc_w2 = 0.000015
-        self.gc_w3 = opt['video']['video_duration'] / 3600.0    # (s)
+        self.gc_w3 = opt['video']['video_duration'] / 3600.0        # (s)
 
     def _decision_to_playable(self):
         """Calculate the playable timestamp of each chunk on the client, and read the transmission amount of each chunk"""
@@ -111,10 +111,10 @@ class OnDemandEvaluation(BaseEvaluation):
         self.last_img_index = img_index
 
         chunk_idx = (fov_ts - self.base_ts) // (self.chunk_duration * 1000)
-        tmp_psnr_ssim_flag = (self.psnr_flag or self.ssim_flag) and (
-                    img_index - self.base_frame_idx) % self.psnr_ssim_frequency == 0
+        tmp_psnr_ssim_flag = (self.psnr_flag or self.ssim_flag) and \
+                             (img_index - self.base_frame_idx) % self.psnr_ssim_frequency == 0
 
-        if self.playable_record[chunk_idx]['ts'] > fov_ts:
+        if self.playable_record[chunk_idx]['tile_list'][0]['playable_ts'] > fov_ts:        # fixme, check this logic
             self.logger.info(
                 f"[evaluation] no content to play at {fov_ts}. chunk_idx: {chunk_idx}, playable_record_ts: {self.playable_record[chunk_idx]['ts']}")
             if self.save_result_img_flag and os.path.exists(osp.join(self.result_img_path, f"{img_index - 1}.png")):
@@ -128,11 +128,7 @@ class OnDemandEvaluation(BaseEvaluation):
 
         fov_tile_list, fov_pixel_tile_list = self.projection.sphere_to_tile(fov_direction)
 
-        server_tile_list = []
-        server_qp_list = []
-        for item in self.playable_record[chunk_idx]['tile_list']:
-            server_tile_list.append(item['tile_idx'])
-            server_qp_list.append(item['tile_bitrate'])
+        server_tile_list, server_qp_list = self._get_server_data(fov_ts)
 
         if len(np.setdiff1d(fov_tile_list, server_tile_list)) == 0:
             location = 'in'
@@ -351,6 +347,28 @@ class OnDemandEvaluation(BaseEvaluation):
 
         return fov_result
 
+    def _get_server_data(self, fov_ts):
+        """
+        Parameters
+        ----------
+        fov_ts: the timestamp of current fov frame
+
+        Returns
+        -------
+        server_tile_list_: the available tiles at current timestamp
+        server_qp_list_: the corresponding qp of available tiles
+
+        """
+        server_tile_list_ = []
+        server_qp_list_ = []
+        chunk_idx = (fov_ts - self.base_ts) // (self.chunk_duration * 1000)
+        tile_list = self.playable_record[chunk_idx]['tile_list']
+        for tile in tile_list:
+            if tile['playable_ts'] < fov_ts:
+                server_tile_list_.append(tile['tile_idx'])
+                server_qp_list_.append(tile['tile_bitrate'])
+
+        return np.array(server_tile_list_), np.array(server_qp_list_)
 
     def calculate_gc_score(self, total_bandwidth, background_storage):
         """
