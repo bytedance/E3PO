@@ -73,14 +73,30 @@ class OnDemandEvaluation(BaseEvaluation):
             decision_record = json.load(f)
 
         playable_record = {}
+        last_chunk_idx = -1
+        last_chunk_size = -1
         for row in decision_record:
+            chunk_idx = row['chunk_idx']
             chunk_size = 0
             for tile in row['decision_data'][1:]:
                 chunk_size += self.data.get_size(row['chunk_idx'], int(tile['tile_idx']), tile['tile_bitrate'])
             download_delay = chunk_size / bandwidth / 1000
-            tmp_ts = row['decision_data'][0]['pw_ts'] + download_delay + rtt + rendering_delay
-            playable_record[row['chunk_idx']] = {'ts': tmp_ts, 'chunk_size': chunk_size,
-                                                 'tile_list': list(row['decision_data'][1:])}
+            playable_ts = row['decision_data'][0]['pw_ts'] + download_delay + rtt + rendering_delay
+            if chunk_idx != last_chunk_idx:     # new chunk
+                tmp_playable_record = []
+                for tile in row['decision_data'][1:]:
+                    tmp_playable_record.append({'playable_ts': playable_ts, 'tile_idx': int(tile['tile_idx']),
+                                                'tile_bitrate': tile['tile_bitrate']})
+                playable_record[row['chunk_idx']] = {'chunk_size': chunk_size, 'tile_list': tmp_playable_record}
+                last_chunk_idx = chunk_idx
+                last_chunk_size = chunk_size
+            else:                               # same chunk
+                chunk_size += last_chunk_size
+                last_chunk_size = chunk_size
+                for tile in row['decision_data'][1:]:
+                    playable_record[chunk_idx]['tile_list'].append({'playable_ts': playable_ts, 'tile_idx': int(tile['tile_idx']),
+                                                                    'tile_bitrate': tile['tile_bitrate']})
+                playable_record[chunk_idx]['chunk_size'] = chunk_size
 
         self.logger.info("[decision to playable] end")
         return playable_record
