@@ -60,7 +60,10 @@ class OnDemandDecision(BaseDecision):
         self.base_ts = -1               # Starting timestamp of historical window data
         self.hw = deque()               # Queue for storing historical window data
         self.projection = build_projection(opt)
+
         self.tmp_result = {}            # To support more granular decisions
+        self.tmp_decision_result = {}   # To support more granular decisions
+        self.pre_download_duration = settings['pre_download_duration']
 
     def push_hw(self, motion_ts, motion):
         """
@@ -83,7 +86,8 @@ class OnDemandDecision(BaseDecision):
 
     def decision(self):
         """
-        Determine whether to make a decision based on historical information and return decision results
+        Determine whether to make a decision based on historical information and return decision results.
+        Once there returns new tiles, it would be written into JSON file.
 
         Returns
         -------
@@ -94,6 +98,29 @@ class OnDemandDecision(BaseDecision):
         if self.next_download_idx >= self.video_duration / self.chunk_duration:
             return result
 
+        # skipping the pre-download time
+        if list(self.hw)[-1][0] >= self.base_ts + self.pre_download_duration * 1000 - self.decision_delay:
+            decision_result = self._transmission_strategy()
+            if len(decision_result) != 0:
+                tmp_pw = {'chunk_idx': self.next_download_idx, 'decision_data': [{'pw_ts': list(self.hw)[-1][0]}]}
+                for i in range(len(decision_result)):
+                    tmp_pw['decision_data'].append(decision_result[i])
+                result.append(tmp_pw)
+
+        if list(self.hw)[-1][0] >= self.base_ts + self.next_download_idx * self.chunk_duration * 1000 - self.decision_delay:
+            self.next_download_idx += 1
+            self.tmp_decision_result = {}
+
+        return result
+
+    def _transmission_strategy(self):
+        """
+        Self defined transmission strategy, including prediction, tile selection, adaptive bitrate.
+        Returns
+        -------
+        list, newly added tiles with its format as: ["tile_idx"， "tile_bitrate"]
+        """
+        decision_result = []
         predicted_record = self._predict_motion_tile()
         tile_record = self._tile_decision(predicted_record)
         bitrate_record = self._bitrate_decision(tile_record)
@@ -101,19 +128,11 @@ class OnDemandDecision(BaseDecision):
         for i in range(self.pw_size):
             tmp_tiles = tile_record[i]
             for j in range(len(tmp_tiles)):
-                if tmp_tiles[j] not in self.tmp_result.keys():
-                    self.tmp_result[tmp_tiles[j]] = bitrate_record[i][j]
+                if tmp_tiles[j] not in self.tmp_decision_result.keys():
+                    self.tmp_decision_result[tmp_tiles[j]] = bitrate_record[i][j]
+                    decision_result.append({'tile_idx': tmp_tiles[j], 'tile_bitrate': bitrate_record[i][j]})
+        return decision_result
 
-        if list(self.hw)[-1][0] >= self.base_ts + self.next_download_idx * self.chunk_duration * 1000 - self.decision_delay:
-            for i in range(self.pw_size):
-                tmp_pw = {'chunk_idx': self.next_download_idx, 'decision_data': [{'pw_ts': list(self.hw)[-1][0]}]}
-                for tile_idx in self.tmp_result.keys():
-                    tmp_pw['decision_data'].append({'tile_idx': tile_idx, 'tile_bitrate': self.tmp_result[tile_idx]})
-                result.append(tmp_pw)
-                self.tmp_result = {}
-                self.next_download_idx += 1
-
-        return result
 
     def _predict_motion_tile(self):
         """
