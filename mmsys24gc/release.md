@@ -2,7 +2,7 @@
     Organized and sponsored by 
 </center>
 <div align=center>
-    <img src=./bytedance.jpg height= 60 />
+    <img src=bytedance.jpg height= 60 />
 </div>
 
 # Challenge Description
@@ -19,6 +19,7 @@ Contestants shall design and implement a 360-degree video on-demand streaming so
 
 
 We define a performance metric score as follows: 
+
 $$S=\frac{VPSNR}{w_1*C_b+w_2*C_s + w_3*C_c}$$
 
 For the weights in the metric score, we referred to the pricing table on the [AWS](https://aws.amazon.com/) official website. Specifically, $w_1=0.09$, $w_2=0.000015$, $w_3=t$, and $C_c = 0.000334$, where $t$ represents the duration of the video playback in seconds, and the unit for $C_b$ and $C_s$ is GB. 
@@ -37,7 +38,7 @@ This challenge is open to any individual, academic or commercial institution (ex
 We offer two registration options for the challenge: (1) fill out the [registration form](https://wenjuan.feishu.cn/m?t=s3fCWQuPlLPi-it3o), (2) send your registration information to the organizer's email address. Once we receive your information, we will confirm your registration. *Please note that we only accept submissions from registered teams.*
 
 
-After registration, please download and sign up with Lark and join the [topic group](./mmsys24gc_group.jpeg) for all future updates of the challenge and Q&A. 
+After registration, please download and sign up with Lark and join the [topic group](mmsys24gc_group.jpeg) for all future updates of the challenge and Q&A. 
 
 
 # Submission

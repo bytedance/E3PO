@@ -14,7 +14,7 @@ Contestants can download [E3PO](https://github.com/bytedance/E3PO) from Github a
 
 For the four modules in the "star" folder mentioned above, the specific modifications needed for each module are described as follows:
 <div align=center>
-    <img src=./uml.jpg width=600 height= />
+    <img src=uml.jpg width=600 height= />
 </div>
 ## star.yml
 This file is the configuration file for the contestant's approach. Besides the basic parameters, the contestant should specify the aforementioned several modules they have implemented in the star.yml file, for example:
@@ -36,7 +36,7 @@ It should be distinguished whether it is the on-demand or transcoding mode, then
 Taking the $4\times6$ tiling of ERP format as an example, the final partition result is shown as the following figure. The index of the first tile from the left is 0, and the index of the tiles to the right and below gradually increases.
 
 <div align=center>
-    <img src=./tiling.jpg width=258 height= />
+    <img src=tiling.jpg width=258 height= />
 </div>
 
 - transcosding
@@ -63,7 +63,7 @@ For the on-demand mode, contestants should inherit the methods from decision/on_
 As shown in the figure below, we need to specify that the coordinate system used in E3PO is a [right-handed coordinate system](https://www.scratchapixel.com/lessons/mathematics-physics-for-computer-graphics/geometry/coordinate-systems.html). Accordingly, the [three-dimensional matrix rotation](https://en.wikipedia.org/wiki/Rotation_matrix) used in E3PO for processing perspective transformation is also based on a right-handed coordinate system. If contestants want to implement a custom projection method, the functions they need to modify should include:
 
 <div align=center>
-    <img src=./coordinates.jpg width=258 height= />
+    <img src=coordinates.jpg width=258 height= />
 </div>
 
 ```
@@ -75,7 +75,7 @@ As shown in the figure below, we need to specify that the coordinate system used
 The contestants only needs to return the pixel coordinates of the FoV on the concatenated image in the generate_fov_coor() function based on their custom projection and tiling methods. The format of the concatenated image is shown below, with panoramic frames of different quality levels placed from left to right. If there is a background stream, the low-resolution frame of the background stream will be placed in the last column, and the area where the background stream frame that is not as large as the panoramic frame will be set as [0, 0, 0].
 
 <div align=center>
-    <img src=./concat_img.jpg width=600 height= />
+    <img src=concat_img.jpg width=600 height= />
 </div>
 
 In E3PO, contestants only need to modify one or several above-mentioned files to implement their solution. It is worth mentioning that to ensure fairness for all contestants, we specify that everyone uses the same encoding parameters, such as the same GoP size, using only I/P frames and not using B frames, as well as the same preset parameters. Except for the files mentioned above, contestants generally should not make modifications to other files. If there is a need for modifying the general system code of E3PO, please submit requests to the github repository [E3PO](https://github.com/bytedance/E3PO).
@@ -131,7 +131,7 @@ We mainly consider two parts for algorithm scoring, i.e., user viewing quality a
 ```
 Currently, we plan to evaluate all contestants' codes in two stages.
 
-**Stage 1:** Code development and testing stage. The challenge organizers will evaluate the submitted code every 3 days, sort all contestants' scores (including total scores and item scores) in descending order, and publish them in the official [topic group](./mmsys24gc_group.jpeg) for contestants to check their rankings and perform targeted optimization.
+**Stage 1:** Code development and testing stage. The challenge organizers will evaluate the submitted code every 3 days, sort all contestants' scores (including total scores and item scores) in descending order, and publish them in the official [topic group](mmsys24gc_group.jpeg) for contestants to check their rankings and perform targeted optimization.
 
 <center>
 
