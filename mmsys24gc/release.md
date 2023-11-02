@@ -20,7 +20,7 @@ Contestants shall design and implement a 360-degree video on-demand streaming so
 
 We define a performance metric score as follows: 
 
-$$S=\frac{VPSNR}{w_1*C_b+w_2*C_s + w_3*C_c}$$
+$S=\frac{VPSNR}{w_1*C_b+w_2*C_s + w_3*C_c}$
 
 For the weights in the metric score, we referred to the pricing table on the [AWS](https://aws.amazon.com/) official website. Specifically, $w_1=0.09$, $w_2=0.000015$, $w_3=t$, and $C_c = 0.000334$, where $t$ represents the duration of the video playback in seconds, and the unit for $C_b$ and $C_s$ is GB. 
 
@@ -35,7 +35,7 @@ Note that E3PO automatically measures performance metrics and calculates $S$ for
 # Registration
 This challenge is open to any individual, academic or commercial institution (except ByteDance employees). Interested individuals are welcome to participate as a team. Each team can have one or more members (up to 4). Each individual can only be part of one team. The organizers reserve the right to disqualify any participant for misleading information or inappropriate behavior during the challenge.
 
-We offer two registration options for the challenge: (1) fill out the [registration form](https://wenjuan.feishu.cn/m?t=s3fCWQuPlLPi-it3o), (2) send your registration information to the organizer's email address. Once we receive your information, we will confirm your registration. *Please note that we only accept submissions from registered teams.*
+We offer two registration options for the challenge: (1) fill out the [registration form](https://wenjuan.feishu.cn/m?t=s3fCWQuPlLPi-it3o), (2) send your registration information to the organizer's email. Once we receive your information, we will confirm your registration. *Please note that we only accept submissions from registered teams.*
 
 
 After registration, please download and sign up with Lark and join the [topic group](mmsys24gc_group.jpeg) for all future updates of the challenge and Q&A. 
