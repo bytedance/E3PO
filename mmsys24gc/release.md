@@ -28,7 +28,7 @@ We define a performance metric score as follows:
 
 For the weights in the metric score, we referred to the pricing table on the [AWS](https://aws.amazon.com/) official website. Specifically, $w_1=0.09$, $w_2=0.000015$, $w_3=t$, and $C_c = 0.000334$, where $t$ represents the duration of the video playback in seconds, and the unit for $C_b$ and $C_s$ is GB. 
 
-Note that E3PO automatically measures performance metrics and calculates $S$ for each simulation. We provide [8K panoramic video sequences as well as real users' head motion trace]() data for contestants' testing and final evaluation.
+Note that E3PO automatically measures performance metrics and calculates $S$ for each simulation. We provide [8K panoramic video sequences as well as real users' head motion trace](https://bytedance.feishu.cn/drive/folder/QQgJfhxs7lor3xdb0WGcTYMsnPb?from=space_personal_filelist) data for contestants' testing and final evaluation.
 
 
 # Important Dates
