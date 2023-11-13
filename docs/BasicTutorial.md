@@ -135,7 +135,7 @@ network_trace:
 
 ### Run the script [make_decision.py](../e3po/make_decision.py)
 ```
-python ./e3po/make_decision.py -opt options/example/E1.yml
+python ./e3po/make_decision.py -opt approaches/erp/erp.yml
 ```
 Then you'll see results in:
 ```
