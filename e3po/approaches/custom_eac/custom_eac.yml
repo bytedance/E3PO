@@ -53,10 +53,10 @@ video:
     width: 5760
 
 motion_trace:
-  motion_file: motion_trace.log
-  sample_frequency: 10
+  motion_file: release_video_1.txt
+  sample_frequency: 100
   motion_frequency: 100
-  column_idx: 20
+  column_idx: 1
 
 network_trace:
   rtt: 30
