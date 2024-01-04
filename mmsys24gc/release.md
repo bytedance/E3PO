@@ -34,11 +34,12 @@ Note that E3PO automatically measures performance metrics and calculates $S$ for
 # Important Dates
 <div align="center">
 
-| Challenge Relase | Register by | Upload by | Notifications on | Camera-Ready due |
-|:-------------:|:-------------:|:-------------:|:-------------:|:-------------:|
-| Sep. 11th, 2023   |  Jan. 12th, 2024  |   Feb. 5th, 2024 | Feb. 16th, 2024 | Mar. 1st, 2024
+| Challenge Relase |   Register by   |    Upload by    | Notifications on | Camera-Ready due |
+|:-------------:|:---------------:|:---------------:|:----------------:|:-------------:|
+| Sep. 11th, 2023   | Jan. 19th, 2024 | Feb. 26th, 2024 |  Mar. 1st, 2024  | Mar. 8st, 2024
 
 </div>
+
 
 # Registration
 This challenge is open to any individual, academic or commercial institution (Bytedance employees can also register, but they are not allowed to participate in the awards). Interested individuals are welcome to participate as a team. Each team can have one or more members (up to 4). Each individual can only be part of one team. The organizers reserve the right to disqualify any participant for misleading information or inappropriate behavior during the challenge.
