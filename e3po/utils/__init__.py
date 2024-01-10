@@ -19,9 +19,11 @@
 
 from .options import get_opt
 from .motion_trace import pre_processing_client_log
-from .misc import scan_file_name, write_json, calc_theta_hat, calc_mapUV
+from .misc import scan_file_name, update_motion, save_video_frame, generate_dst_frame_uri
 from .logger import get_logger
+from .json import write_evaluation_json, read_decision_json, read_video_json, get_video_json_size
 from .psnr_ssim import calculate_psnr_ssim
+from .evaluation_utilities import extract_frame
 
 __all__ = [
     # options.py
@@ -32,13 +34,19 @@ __all__ = [
 
     # misc.py
     'scan_file_name',
-    'write_json',
-    'calc_theta_hat',
-    'calc_mapUV',
+    'write_evaluation_json',
+    'update_motion',
+    'save_video_frame',
+    'generate_dst_frame_uri',
+
+    # json.py
+    'read_decision_json',
+    'read_video_json',
+    'get_video_json_size',
+
+    # eval_utilities.py
+    'extract_frame',
 
     # logger.py
     'get_logger',
-
-    # psnr_ssim.py
-    'calculate_psnr_ssim',
 ]

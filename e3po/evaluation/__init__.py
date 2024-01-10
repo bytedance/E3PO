@@ -24,11 +24,9 @@ import os
 from e3po.utils import scan_file_name, get_logger
 from e3po.utils.registry import evaluation_registry
 
-
 __all__ = ['build_evaluation']
 
-# Read all file names in 'evaluation' folder.
-# Then import all the evaluation modules that end with '_eval.py'
+# Read all file names in 'evaluation' folder. Then import all the evaluation modules that end with '_eval.py'
 eval_folder = os.path.dirname(os.path.abspath(__file__))
 for file_name in scan_file_name(eval_folder, '_eval.py'):
     importlib.import_module(f'e3po.evaluation.{file_name}')
@@ -41,7 +39,7 @@ def build_evaluation(opt):
     Parameters
     ----------
     opt : dict
-        It must contain a key named: 'evaluation_type'
+        It must contain a key named: 'approach_type'
 
     Returns
     -------
@@ -58,7 +56,13 @@ def build_evaluation(opt):
     >> evaluation = build_evaluation(opt)
     """
     opt = deepcopy(opt)
-    assert opt['evaluation_type'], '[creat evaluation] Do not specify evaluation_type.'
-    evaluation = evaluation_registry[opt['evaluation_type']](opt)
-    get_logger().info(f'[creat evaluation] {evaluation.__class__.__name__} is created')
+    assert opt['approach_type'], '[create evaluation] Do not specify data_type.'
+    if opt['approach_type'] == 'on_demand':
+        approach_data = 'OnDemandEvaluation'
+    elif opt['approach_type'] == 'transcoding':
+        approach_data = 'TranscodingEvaluation'
+    else:
+        raise ValueError("error when read the approach mode, which should be on_demand or transcoding!")
+    evaluation = evaluation_registry[approach_data](opt)
+    get_logger().info(f'[create evaluation] {evaluation.__class__.__name__} is created')
     return evaluation

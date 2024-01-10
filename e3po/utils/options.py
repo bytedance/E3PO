@@ -42,57 +42,54 @@ def get_opt():
     """
     # Read the command line input parameter.
     parser = argparse.ArgumentParser()
-    parser.add_argument('-opt', type=str, required=True,
-                        help="Path to option YAML file.")
-    parser.add_argument('-method_name', type=str, default=None,
-                        help="test method name")
-    parser.add_argument('-tile_w', '--tile_width_num', type=str, default=None,
-                        help="Tile width num")
-    parser.add_argument('-tile_h', '--tile_height_num', type=str, default=None,
-                        help="Tile height num")
-    parser.add_argument('-t', '--video_duration', type=int, default=None,
-                        help="Video duration")
+    parser.add_argument('-approach_name', type=str, required=True,
+                        help="test approach name")
+    parser.add_argument('-approach_type', type=str, required=True,
+                        help="approach type")
     args = parser.parse_args()
 
-    # Read the configuration file and modify the configuration file information used for this run according to the command line input parameters (do not modify the file).
     project_dir = os.path.dirname(os.path.abspath(__file__)).split('utils')[0]
-
-    with open(project_dir + args.opt, 'r', encoding='UTF-8') as f:
-        # register the tag handler
+    opt_path = 'e3po.yml'
+    with open(project_dir + opt_path, 'r', encoding='UTF-8') as f:
         opt = yaml.safe_load(f.read())
+
+    opt['approach_name'] = args.approach_name
+    opt['approach_type'] = args.approach_type
     opt['project_path'] = project_dir[:-1]
-    if not opt['video']['origin']['video_dir']:
-        opt['video']['origin']['video_dir'] = osp.join(project_dir[:-1], 'source', 'video')
-    opt['motion_trace']['motion_file'] = osp.join(project_dir[:-1], 'source', 'motion_trace', opt['motion_trace']['motion_file'])
-    for arg in vars(args):
-        if arg != 'opt' and getattr(args, arg):
-            if arg in ['tile_width_num', 'tile_height_num']:
-                opt['method_settings'][arg] = getattr(args, arg)
-            if arg in ['method_name']:
-                opt[arg] = getattr(args, arg)
-            if arg in ['video_duration']:
-                opt['video'][arg] = getattr(args, arg)
+
+    if not opt['e3po_settings']['video']['origin']['video_dir']:
+        opt['e3po_settings']['video']['origin']['video_dir'] = osp.join(project_dir[:-1], 'source', 'video')
+    opt['e3po_settings']['motion_trace']['motion_file'] = \
+        osp.join(project_dir[:-1], 'source', 'motion_trace', opt['e3po_settings']['motion_trace']['motion_file'])
 
     # Initialize logger.
-    os.makedirs(
-        osp.join(opt['project_path'], 'log', opt['test_group'], opt['video']['origin']['video_name'].split('.')[0]),
-        exist_ok=True)
-    if opt['log']['save_log_file']:
-        log_file = osp.join(opt['project_path'], 'log', opt['test_group'],
-                            opt['video']['origin']['video_name'].split('.')[0],
-                            f"{opt['method_name']}_{os.path.basename(sys.modules['__main__'].__file__).split('.')[0]}.log")
+    os.makedirs(osp.join(
+        opt['project_path'],
+        'log',
+        opt['test_group'],
+        opt['e3po_settings']['video']['origin']['video_name'].split('.')[0]),
+        exist_ok=True
+    )
+    if opt['e3po_settings']['log']['save_log_file']:
+        log_file = osp.join(
+            opt['project_path'],
+            'log',
+            opt['test_group'],
+            opt['e3po_settings']['video']['origin']['video_name'].split('.')[0],
+            f"{opt['approach_name']}_{os.path.basename(sys.modules['__main__'].__file__).split('.')[0]}.log"
+        )
         if os.path.exists(log_file):
             os.remove(log_file)
     else:
         log_file = None
-    console_log_level = opt['log']['console_log_level']
+    console_log_level = opt['e3po_settings']['log']['console_log_level']
     if not console_log_level:
         console_log_level = logging.INFO
     else:
         assert console_log_level.lower() in ['notset', 'debug', 'info', 'warning', 'error',
                                              'critical'], "[error] log_level wrong. It should be set to the value in [~, 'notset', 'debug', 'info', 'warning', 'error', 'critical']"
         console_log_level = eval(f"logging.{console_log_level.upper()}")
-    file_log_level = opt['log']['file_log_level']
+    file_log_level = opt['e3po_settings']['log']['file_log_level']
     if not file_log_level:
         file_log_level = logging.DEBUG
     else:
@@ -100,4 +97,5 @@ def get_opt():
                                           'critical'], "[error] log_level wrong. It should be set to the value in [~, 'notset', 'debug', 'info', 'warning', 'error', 'critical']"
         file_log_level = eval(f"logging.{file_log_level.upper()}")
     get_logger(log_file=log_file, console_log_level=console_log_level, file_log_level=file_log_level)
+
     return opt

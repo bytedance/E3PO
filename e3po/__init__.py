@@ -19,7 +19,6 @@
 
 from .utils import *
 from .data import *
-from .projection import *
 from .decision import *
 from .evaluation import *
 from .make_preprocessing import *

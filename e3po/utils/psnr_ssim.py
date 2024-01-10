@@ -24,15 +24,15 @@ import torch.nn.functional as fun
 from .logger import get_logger
 
 
-def calculate_psnr_ssim(img1, img2, use_cuda_flag=False, psnr_flag=True, ssim_flag=True):
+def calculate_psnr_ssim(img1_uri, img2_uri, use_cuda_flag=False, psnr_flag=True, ssim_flag=True):
     """
     Calculate PSNR (Peak Signal-to-Noise Ratio) or/and SSIM (structural similarity) for two input images.
 
     Parameters
     ----------
-    img1 : ndarray
+    img1_uri : ndarray
         The range of each pixel value is [0, 255].
-    img2 : ndarray
+    img2_uri : ndarray
         The range of each pixel value is [0, 255].
     use_cuda_flag : bool
         Whether to use cuda to accelerate operations.
@@ -46,6 +46,8 @@ def calculate_psnr_ssim(img1, img2, use_cuda_flag=False, psnr_flag=True, ssim_fl
     list
         [psnr, ssim]
     """
+    img1 = np.array(cv2.imread(img1_uri))
+    img2 = np.array(cv2.imread(img2_uri))
     assert img1.shape == img2.shape, f'[error] Input images have different shapes: {img1.shape}, {img2.shape}!'
     psnr = 0
     ssim = 0

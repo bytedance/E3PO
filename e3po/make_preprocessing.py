@@ -17,7 +17,7 @@
 # along with this program; if not, see:
 #    <https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html>
 
-import add_e3po_to_enviroment
+import add_e3po_to_environment
 from e3po.data import build_data
 from e3po.utils import get_opt, get_logger
 
@@ -25,7 +25,5 @@ if __name__ == '__main__':
     opt = get_opt()
     get_logger().info('[preprocessing data] start')
     data = build_data(opt)
-    data.process_video()
+    data.make_preprocessing()
     get_logger().info('[preprocessing data] end')
-
-

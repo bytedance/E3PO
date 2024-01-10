@@ -18,6 +18,8 @@
 #    <https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html>
 
 from e3po.utils import get_logger
+import os.path as osp
+import os
 
 
 class BaseDecision:
@@ -38,28 +40,34 @@ class BaseDecision:
     def __init__(self, opt):
         self.opt = opt
         self.logger = get_logger()
+        self.test_group = opt['test_group']
+        self.system_opt = opt['e3po_settings']
 
-    def push_hw(self, motion_ts, motion):
-        """
-        Push input data into the queue self.hw.
+        self.ori_video_dir = self.system_opt['video']['origin']['video_dir']
+        self.ori_video_name = self.system_opt['video']['origin']['video_name']
+        self.approach_folder_name = self.opt['approach_name']
+        self.approach_name = self.opt['approach_name']
+        self.approach_module_name = f"e3po.approaches.{self.approach_folder_name}.{self.approach_name}_approach"
 
-        Parameters
-        ----------
-        motion_ts : int
-            Motion timestamp.
-        motion : dict
-            Motion description information:
-                {'yaw': yaw, 'pitch': pitch, 'scale': scale}
-        """
-        pass
+        self.source_folder = osp.join(
+            self.ori_video_dir,
+            self.test_group,
+            self.ori_video_name.split('.')[0],
+            self.approach_folder_name
+        )
+        self.decision_json_uri = osp.join(
+            opt['project_path'],
+            'result',
+            opt['test_group'],
+            self.ori_video_name.split('.')[0],
+            self.approach_folder_name,
+            'decision.json'
+        )
+        try:
+            if osp.exists(self.decision_json_uri):
+                os.remove(self.decision_json_uri)
+        except Exception as e:
+            print(f"An error occurred while deleting the json file {self.decision_json_uri}: {e}")
 
-    def decision(self):
-        """
-        Determine whether to make a decision based on historical information and return decision results
+        self.ori_video_uri = osp.join(self.ori_video_dir, self.ori_video_name)
 
-        Returns
-        -------
-        list
-            Decision result list, which may be empty list.
-        """
-        pass

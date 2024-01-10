@@ -17,193 +17,82 @@
 # along with this program; if not, see:
 #    <https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html>
 
-from collections import deque
-from copy import deepcopy
-
+import importlib
 from e3po.utils.registry import decision_registry
 from .base_decision import BaseDecision
-from e3po.projection import build_projection
+from e3po.utils.json import read_video_json
+import os.path as osp
+from e3po.utils import pre_processing_client_log
+from e3po.utils.json import write_decision_json
+from e3po.utils.misc import generate_motion_clock
+from e3po.utils.misc import update_motion
 
 
 @decision_registry.register()
 class OnDemandDecision(BaseDecision):
     """
-    On-demand decision, which is suitable for tile-based approaches.
+    On-demand decision, which is suitable for on_demand approaches.
 
     Parameters
     ----------
     opt : dict
         Configurations.
-
-    Notes
-    -----
-    Almost all class public attributes are directly read or indirectly processed from the yaml configuration file.
-    Their specific meanings can be found in 'docs/Config.md'.
     """
 
     def __init__(self, opt):
         super(OnDemandDecision, self).__init__(opt)
-        settings = opt['method_settings']
-        self.decision_location = settings['decision_location'].lower()
-        assert self.decision_location in ['client', 'server'], "[error] decision_location wrong. It should be set to the value in ['client', 'server']"
-        self.decision_delay = settings['decision_delay']
-        self.chunk_duration = settings['chunk_duration']
-        self.next_download_idx = settings['pre_download_duration'] / self.chunk_duration
-        assert self.next_download_idx % 1 == 0, f"pre_download_duration error!"
-        self.next_download_idx = int(self.next_download_idx)
-        self.hw_size = settings['hw_size'] * 1000
-        self.pw_size = settings['pw_size']
-        self.video_duration = opt['video']['video_duration']
-        self.quality_list = opt['video']['converted']['quality_list']
-        self.rtt = opt['network_trace']['rtt'] * 0.5 if self.decision_location == 'server' else 0
+        self.video_duration = self.system_opt['video']['video_duration']
+        self.pre_download_duration = int(
+            self.system_opt['network_trace']['pre_download_duration'] * 1000
+        )
+        self.base_ts = -1                  # starting timestamp of historical window
 
-        self.base_ts = -1               # Starting timestamp of historical window data
-        self.hw = deque()               # Queue for storing historical window data
-        self.projection = build_projection(opt)
+        # read json files
+        video_size_json_uri = osp.join(self.source_folder, 'video_size.json')
+        self.video_size = read_video_json(video_size_json_uri)
 
-        self.tmp_result = {}            # To support more granular decisions
-        self.tmp_decision_result = {}   # To support more granular decisions
-        self.pre_download_duration = settings['pre_download_duration']
+        # user related parameters
+        self.network_stats = [{
+            'rtt': self.system_opt['network_trace']['rtt'],
+            'bandwidth': self.system_opt['network_trace']['bandwidth'],
+            'curr_ts': -1
+        }]
+        self.video_info = {
+            'width': self.system_opt['video']['origin']['width'],
+            'height': self.system_opt['video']['origin']['height'],
+            'projection': self.system_opt['video']['origin']['projection_mode'],
+            'duration': self.system_opt['video']['video_duration'],
+            'chunk_duration': self.system_opt['video']['chunk_duration'],
+            'pre_download_duration': self.pre_download_duration,
+            'range_fov': self.system_opt['metric']['range_fov']
+        }
 
-    def push_hw(self, motion_ts, motion):
+    def make_decision(self):
         """
-        Push input data into the queue self.hw.
-
-        Parameters
-        ----------
-        motion_ts : int
-            Motion timestamp.
-        motion : dict
-            Motion description information:
-                {'yaw': yaw, 'pitch': pitch, 'scale': scale}
-        """
-        motion_ts += self.rtt
-        if self.base_ts == -1:
-            self.base_ts = motion_ts
-        self.hw.append((motion_ts, motion))
-        if list(self.hw)[-1][0] - list(self.hw)[0][0] > self.hw_size:
-            self.hw.popleft()
-
-    def decision(self):
-        """
-        Determine whether to make a decision based on historical information and return decision results.
-        Once there returns new tiles, it would be written into JSON file.
+        Performing download decision for on_demand approaches, and recording the decision results into JSON file.
 
         Returns
         -------
-        list
-            Decision result list, which may be empty list.
+            None
         """
-        result = []
-        if self.next_download_idx >= self.video_duration / self.chunk_duration:
-            return result
 
-        # skipping the pre-download time
-        if list(self.hw)[-1][0] >= self.base_ts + self.pre_download_duration * 1000 - self.decision_delay:
-            decision_result = self._transmission_strategy()
-            if len(decision_result) != 0:
-                tmp_pw = {'chunk_idx': self.next_download_idx, 'decision_data': [{'pw_ts': list(self.hw)[-1][0]}]}
-                for i in range(len(decision_result)):
-                    tmp_pw['decision_data'].append(decision_result[i])
-                result.append(tmp_pw)
+        curr_ts = 0
+        motion_history = []
+        motion_record = pre_processing_client_log(self.system_opt)
+        motion_clock = generate_motion_clock(self, motion_record)
 
-        if list(self.hw)[-1][0] >= self.base_ts + self.next_download_idx * self.chunk_duration * 1000 - self.decision_delay:
-            self.next_download_idx += 1
-            self.tmp_decision_result = {}
+        approach = importlib.import_module(self.approach_module_name)
+        user_data = None
+        # pre_download_duration
+        motion_history = update_motion(0, curr_ts, motion_history, motion_record[0])
+        dl_list, user_data = approach.download_decision(self.network_stats, motion_history, self.video_size, curr_ts, user_data, self.video_info)
+        write_decision_json(self.decision_json_uri, curr_ts, dl_list)
 
-        return result
+        # after pre_download_duration
+        for motion_ts in motion_clock:
+            curr_ts = motion_ts + self.pre_download_duration
+            motion_history = update_motion(motion_ts, curr_ts, motion_history, motion_record[motion_ts])
+            dl_list, user_data = approach.download_decision(self.network_stats, motion_history, self.video_size, curr_ts, user_data, self.video_info)
+            write_decision_json(self.decision_json_uri, curr_ts, dl_list)
 
-    def _transmission_strategy(self):
-        """
-        Self defined transmission strategy, including prediction, tile selection, adaptive bitrate.
-        Returns
-        -------
-        list, newly added tiles with its format as: ["tile_idx"， "tile_bitrate"]
-        """
-        decision_result = []
-        predicted_record = self._predict_motion_tile()
-        tile_record = self._tile_decision(predicted_record)
-        bitrate_record = self._bitrate_decision(tile_record)
-
-        for i in range(self.pw_size):
-            tmp_tiles = tile_record[i]
-            for j in range(len(tmp_tiles)):
-                if tmp_tiles[j] not in self.tmp_decision_result.keys():
-                    self.tmp_decision_result[tmp_tiles[j]] = bitrate_record[i][j]
-                    decision_result.append({'tile_idx': tmp_tiles[j], 'tile_bitrate': bitrate_record[i][j]})
-        return decision_result
-
-
-    def _predict_motion_tile(self):
-        """
-        Predict pw record based on the given hw and pw values and hw record.
-
-        Returns
-        -------
-        list
-            The predicted record list, which sequentially store the predicted motion of the future pw chunks.
-             Each motion dictionary is stored in the following format:
-                {'yaw ': yaw,' pitch ': pitch,' scale ': scale}
-        """
-        # Use exponential smoothing to predict the angle of each motion within pw for yaw and pitch.
-        a = 0.3  # Parameters for exponential smoothing prediction
-        predicted_motion = list(self.hw)[0][1]
-        for motion_record in list(self.hw)[1:]:
-            predicted_motion['yaw'] = a * predicted_motion['yaw'] + (1-a) * motion_record[1]['yaw']
-            predicted_motion['pitch'] = a * predicted_motion['pitch'] + (1-a) * motion_record[1]['pitch']
-            predicted_motion['scale'] = a * predicted_motion['scale'] + (1-a) * motion_record[1]['scale']
-
-        # The current prediction method implemented is to use the same predicted motion for all chunks in pw.
-        predicted_record = []
-        for i in range(self.pw_size):
-            predicted_record.append(deepcopy(predicted_motion))
-
-        return predicted_record
-
-
-    def _tile_decision(self, predicted_record):
-        """
-        Determine the tile range to be transmitted for each chunk within pw based on the predicted record.
-
-        Parameters
-        ----------
-        predicted_record : list
-            The predicted record list.
-
-        Returns
-        -------
-        list
-            Tile record list, storing the tile sequence number to be transmitted for each chunk of the future pw chunks of the decision.
-        """
-        # The current tile decision method is to sample the fov range corresponding to the predicted motion of each chunk,
-        # and the union of the tile sets mapped by these sampling points is the tile set to be transmitted.
-        tile_record = []
-        for predicted_motion in predicted_record:
-            tmp_tile_list, tmp_pixel_tile_list = self.projection.sphere_to_tile(predicted_motion)
-            tile_record.append(tmp_tile_list)
-
-        return tile_record
-
-
-    def _bitrate_decision(self, tile_record):
-        """
-        Determine the bitrate for each tile of each chunk to be transmitted.
-
-        Parameters
-        ----------
-        tile_record : list
-            The tile record list.
-
-        Returns
-        -------
-        list
-            Bitrate list, storing the bitrate for each tile of each chunk to be transmitted.
-        """
-        bitrate_record = []
-        for tiles in tile_record:
-            tmp_bitrate = []
-            for _ in tiles:
-                tmp_bitrate.append(min(self.quality_list))
-            bitrate_record.append(tmp_bitrate)
-
-        return bitrate_record
+        self.logger.info(f"on_demand decision end.")

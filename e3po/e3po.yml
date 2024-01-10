@@ -1,0 +1,57 @@
+# This is e3po system configuration file, which should not be changed.
+
+test_group: group_1                       # experiment group name, simulation results will be stored in their respective folders
+project_path: ~
+
+e3po_settings:
+  video:                                  # ------------------ The following are video settings ------------------- #
+    video_duration: 10                    # video duration, in second
+    chunk_duration: 2                     # chunk duration, in second
+    video_fps: 30                         # video framerate, frames per second
+    origin:
+      video_dir: ~                        # relative path of the original video compared to './source/video'
+      video_name: release_video_1.mp4     # original video full name
+      projection_mode: erp                # equirectangular, projection format of original video
+      height: 3840                        # original video pixel width
+      width: 7680                         # original video pixel height
+  encoding_params:                        # ------------------ The following are encoding settings ---------------- #
+    encoder: libx264                      # encoder type in ffmpeg
+    qp_list: [29]                         # qp value
+    preset: faster                        # preset parameter
+    video_fps: 30                         # video framerate
+    gop: 30                               # group of pictures
+    bf: 0                                 # B frame in ffmpeg
+  motion_trace:                           # ---------------- The following are motion trace settings ---------------- #
+    motion_file: release_video_1.txt      # full name of motion trace file
+    sample_frequency: 100                 # the sample frequency of motion trace file
+    motion_frequency: 100                 # the update frequency of e3po
+    column_idx: 1                         # the user index in the log file
+  network_trace:                          # ---------------- The following are network trace settings --------------- #
+    rtt: 30                               # Round-Trip Time, in milliseconds
+    bandwidth: 100                        # in MBps
+    rendering_delay: 10                   # rendering delay of each frame, in millisecond
+    pre_download_duration: 0.3            # in second
+  log:                                    # --------------------- The following are log settings -------------------- #
+    save_log_file: True                   # whether to save log file
+    console_log_level: ~                  # log level of command line output, defalut: info
+    file_log_level: ~                     # log level of log file records, defalut: debug
+  ffmpeg:                                 # ------------------- The following are ffmpeg settings ------------------- #
+    ffmpeg_path: ~                        # absolute path, if there are different versions of ffmpeg, please specify the absolute path of the ffmpeg
+    loglevel: error                       # log level of ffmpeg
+    thread: 6                             # number of threads running ffmpeg
+  metric:                                 # ------------------- The following are metirc settings ------------------- #
+    range_fov: [ 89, 89 ]                 # fov range, [height,width] in degree
+    fov_resolution: [ 1920, 1832 ]        # fov resolution, [height, width]
+    psnr_flag: True                       # whether to calculate psnr. When (psnr_flag || ssim_flag) == True, the FoV video will be created and saved
+    ssim_flag: True                       # whether to calculate ssim. When (psnr_flag || ssim_flag) == True, the FoV video will be created and saved
+    psnr_ssim_frequency: 1                # the following condition needs to be met: (video_fps mod psnr_ssim_frequency) == 0
+    use_gpu: False                        # please set False when GPU acceleration is not available
+    save_benchmark_flag: True             # whether to save ground truth images
+    save_result_img_flag: True            # whether to save result FoV images
+    inter_mode: bilinear                  # interpolation mode 
+    gc_w1: 0.09                           # parameter w1 for calculating grand challenge score
+    gc_w2: 0.000015                       # parameter w2 for calculating grand challenge score
+    gc_w3:                                # parameter w3 for calculating grand challenge score
+
+
+

@@ -18,8 +18,8 @@
 #    <https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html>
 
 import os
-import json
-import numpy as np
+import cv2
+import os.path as osp
 
 
 def scan_file_name(dir_path, suffix=None):
@@ -43,90 +43,120 @@ def scan_file_name(dir_path, suffix=None):
         if suffix is None:
             result += [os.path.splitext(os.path.basename(file)) for file in files if not file.startswith('.')]
         else:
-            result += [os.path.splitext(os.path.basename(file))[0] for file in files if not file.startswith('.') and file.endswith(suffix)]
+            result += [os.path.splitext(os.path.basename(file))[0] for file in files if
+                       not file.startswith('.') and file.endswith(suffix)]
     return result
 
 
-def write_json(result, json_path):
+def generate_motion_clock(settings, motion_record):
     """
-    Write result to json file in json_path
+    Generate client-side clock, based on the motion trace
 
     Parameters
     ----------
-    result : list
-        In json format
-    json_path : str
-        Absolute path of json file.
+    settings: dict
+        system configuration information
+    motion_record: list
+        motion trace
+
+    Returns
+    -------
+    motion_clock: list
+        generated motion clock, each item represents a system timestamp
     """
-    fpath, _ = os.path.split(json_path)
-    os.makedirs(fpath, exist_ok=True)
-    if os.path.exists(json_path):
-        os.remove(json_path)
-    with open(json_path, "w", encoding='utf-8') as f:
-        json.dump(result, f, indent=2, sort_keys=True)
 
-def calc_theta_hat(vam_size, vam_degW, vam_degH):
-    rot_camera_inv = np.array([[0, 1, 0], [-1, 0, 0], [0, 0, 1]])
-    vam_w, vam_h = vam_size
+    video_duration = settings.system_opt['video']['video_duration'] * 1000
+    client_ts = list(motion_record.keys())
+    max_motion_ts = video_duration if client_ts[-1] > video_duration else client_ts[-1]
+    system_interval = int(1000 / settings.system_opt['motion_trace']['motion_frequency'])
+    motion_clock = list(range(0, max_motion_ts, system_interval))
 
-    u = (0 + 0.5) * 2 * np.tan(vam_degW / 2) / vam_w
-    v = (0 + 0.5) * 2 * np.tan(vam_degH / 2) / vam_h
+    return motion_clock
 
-    # calculate the corresponding 3D coordinate (x, y, z), mapped from the positive X-axis
-    x_scale = 1.0
-    y_scale = -u + np.tan(vam_degW / 2)
-    z_scale = -v + np.tan(vam_degH / 2)
 
-    # mapping the point to the unit spherical surface
-    x_hat = x_scale / np.sqrt(x_scale * x_scale + y_scale * y_scale + z_scale * z_scale)
-    y_hat = y_scale / np.sqrt(x_scale * x_scale + y_scale * y_scale + z_scale * z_scale)
-    z_hat = z_scale / np.sqrt(x_scale * x_scale + y_scale * y_scale + z_scale * z_scale)
+def update_motion(motion_ts, curr_ts, motion_history, motion_record):
+    """
+    Update the motion information.
 
-    Sphere_xyz = np.array([x_hat, y_hat, z_hat])
-    xyz_rotation_px = np.dot(rot_camera_inv, Sphere_xyz)    # matrix dot product
-    phi = np.arctan2(xyz_rotation_px[1], xyz_rotation_px[0])
-    theta = np.pi / 2 - np.arcsin(xyz_rotation_px[2])       # theta represents the angle between the point and the z axis
+    Parameters
+    ----------
+    motion_ts: int
+        motion timestamp
+    curr_ts: int
+        current system timestamp
+    motion_history: list
+        record historical motion information
+    motion_record: dict
+        head movement, with format {yaw, pitch, roll}
 
-    phi_hat_px = np.arccos(np.cos(np.pi / 2 - phi) * np.cos(np.pi / 2 - theta))
-    theta_hat_px = np.arcsin(np.sin(np.pi / 2 - theta) / np.sin(phi_hat_px))
+    Returns
+    -------
+    motion_history: list
+        updated historical motion information
+    """
 
-    return theta_hat_px * 180 / np.pi
+    motion_info = {
+        'motion_ts': motion_ts,
+        'system_ts': curr_ts,
+        'motion_record': motion_record
+    }
+    motion_history.append(motion_info)
 
-def calc_mapUV(phi_3d, theta_3d, vam_ypr, src_size):
-    def phi_theta_2xyz(phi_theta):
-        x1 = np.sin(phi_theta[1]) * np.cos(phi_theta[0])
-        y1 = np.sin(phi_theta[1]) * np.sin(phi_theta[0])
-        z1 = np.cos(phi_theta[1])
-        zxy = [x1, y1, z1]
-        return zxy
+    return motion_history
 
-    erp_height, erp_width = src_size
 
-    # calculate the spherical coordinate
-    xyz_temp = phi_theta_2xyz([phi_3d, theta_3d])
-    x, y, z = xyz_temp[0], xyz_temp[1], xyz_temp[2]
+def save_video_frame(dst_video_frame_uri, dst_video_frame):
+    """
+    Write video frame to image file
 
-    # rotation angles
-    a, b, r = vam_ypr
+    Parameters
+    ----------
+    dst_video_frame_uri: str
+        the path of destination frame
+    dst_video_frame: array
+        the video frame content
 
-    # rotation matrix
-    rot_a = np.array([np.cos(a) * np.cos(b), np.cos(a) * np.sin(b) * np.sin(r) - np.sin(a) * np.cos(r),
-                      np.cos(a) * np.sin(b) * np.cos(r) + np.sin(a) * np.sin(r)])
-    rot_b = np.array([np.sin(a) * np.cos(b), np.sin(a) * np.sin(b) * np.sin(r) + np.cos(a) * np.cos(r),
-                      np.sin(a) * np.sin(b) * np.cos(r) - np.cos(a) * np.sin(r)])
-    rot_c = np.array([-np.sin(b), np.cos(b) * np.sin(r), np.cos(b) * np.cos(r)])
+    Returns
+    -------
+        None
+    """
 
-    # rotate the image to the correct place
-    xx = rot_a[0] * x + rot_a[1] * y + rot_a[2] * z
-    yy = rot_b[0] * x + rot_b[1] * y + rot_b[2] * z
-    zz = rot_c[0] * x + rot_c[1] * y + rot_c[2] * z
-    xx = np.clip(xx, -1, 1)
-    yy = np.clip(yy, -1, 1)
-    zz = np.clip(zz, -1, 1)
+    cv2.imwrite(dst_video_frame_uri, dst_video_frame, [cv2.IMWRITE_JPEG_QUALITY, 100])
 
-    map_u = ((np.arctan2(yy, xx) + 2 * np.pi) % (2 * np.pi)) / (2 * np.pi) * erp_width - 0.5
-    map_v = np.arccos(zz) * erp_height / np.pi - 0.5
 
-    map_u = np.clip(map_u, 0, erp_width - 1)
-    map_v = np.clip(map_v, 0, erp_height - 1)
-    return map_u, map_v
+def generate_dst_frame_uri(result_img_path, img_idx):
+    """
+    Generates the uri of the video frame, with given image index
+
+    Parameters
+    ----------
+    result_img_path: str
+        the path for storing generated images
+    img_idx: int
+        the image index
+
+    Returns
+    -------
+    dst_video_frame_uri
+        the uri of generated video frame
+    """
+
+    dst_video_frame_uri = osp.join(result_img_path, f"{img_idx}.png")
+    return dst_video_frame_uri
+
+
+def get_video_size(dst_video_uri):
+    """
+    Get the video size after transcoding
+
+    Parameters
+    ----------
+    dst_video_uri: str
+
+    Returns
+    -------
+    video_size: int
+    """
+
+    video_size = os.path.getsize(dst_video_uri)
+    return video_size
