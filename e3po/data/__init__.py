@@ -29,14 +29,10 @@ __all__ = ['build_data']
 
 # Read all file names in 'data' and 'approaches' folders. Then import all the data modules that end with '_data.py'
 data_folder = os.path.dirname(os.path.abspath(__file__))
-approaches_data_folder = os.path.abspath(os.path.join(data_folder, '..', 'approaches'))     # get the file path of basic data file
 
 for file_name in scan_file_name(data_folder, '_data.py'):
     importlib.import_module(f'e3po.data.{file_name}')
 
-for file_name in scan_file_name(approaches_data_folder, '_data.py'):                        # get the file path of customized data file
-    approach_name = file_name[:-5]
-    importlib.import_module(f'e3po.approaches.{approach_name}.{file_name}')
 
 def build_data(opt):
     """
@@ -45,7 +41,7 @@ def build_data(opt):
     Parameters
     ----------
     opt : dict
-        It must contain a key named: 'data_type'
+        It must contain keys named: 'approach_type'
 
     Returns
     -------
@@ -62,7 +58,13 @@ def build_data(opt):
     >> data = build_data(opt)
     """
     opt = deepcopy(opt)
-    assert opt['data_type'], '[creat data] Do not specify data_type.'
-    data = data_registry[opt['data_type']](opt)
+    assert opt['approach_type'], '[create data] Do not specify data_type.'
+    if opt['approach_type'] == 'on_demand':
+        approach_data = 'OnDemandData'
+    elif opt['approach_type'] == 'transcoding':
+        approach_data = 'TranscodingData'
+    else:
+        raise ValueError("error when read the approach mode, which should be on_demand or transcoding!")
+    data = data_registry[approach_data](opt)
     get_logger().info(f'[create data] {data.__class__.__name__} is created')
     return data

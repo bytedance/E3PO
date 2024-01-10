@@ -1,6 +1,5 @@
 # Introduction
-E3PO is an **O**pen **P**latform for **3**60° video streaming simulation and **E**valuation.
-E3PO is designed to support the simulation of a variety of 360° video streaming approaches that have been proposed so far, including projection based, tile based, or transcoding based. Particularly, E3PO allows users to convert 360° video into standard or customized projections, segment video into equal or adaptive sizes, implement customized motion prediction algorithms, apply different streaming strategies, and evaluate using any user-specific metrics. Most importantly, E3PO generates the actual visual sequences that will display on the user screen for each simulation. 
+E3PO is an **O**pen **P**latform for **3**60° video streaming simulation and **E**valuation. E3PO is designed to support the simulation of a variety of 360° video streaming approaches that have been proposed so far, including projection based, tile based, or transcoding based. Particularly, E3PO allows users to convert 360° video into standard or customized projections, segment video into equal or adaptive sizes, implement customized motion prediction algorithms, apply different streaming strategies, and evaluate using any user-specific metrics. Most importantly, E3PO generates the actual visual sequences that will display on the user screen for each simulation. 
 
 Therefore, E3PO provides a perfect solution to objectively compare the performance of different 360° video streaming approaches, using the same video content and same motion trace.
 
@@ -24,52 +23,75 @@ git clone https://github.com/bytedance/E3PO.git
 ```
 
 2. Video Source<br>
-Prepare a 360° video, rename and place it at /e3po/source/video/sample.mp4. 
-By default, the 360° video is 8K, 30 fps, with equi-rectangular projection (ERP), and only the first 10 seconds of the video will be used. To change any parameters, please refer to [BasicTutorial](./docs/BasicTutorial.md).
-3. Motion Trace<br>
-Prepare a motion trace file (Similar to that downloaded from [360VidStr](https://github.com/360VidStr/A-large-dataset-of-360-video-user-behaviour/blob/main/AggregatedDataset/7.txt)), rename and place it at /e3po/source/motion_trace/motion_trace.log.
-   
+Prepare a 360° video (which is not included in E3PO repo), rename and place it at /e3po/source/video/[sample].mp4. Note that the file name and video attributions should match the configurations listed in e3po/e3po.yml.  We have provided a sample video for particpants of 2024 MMSys Grand Challenge.
 
-## Run scripts
-To simulate the streaming process, three python scripts need to be executed sequentially. For example, with the sample simulation *custom_eac* we have provided in the project: 
-1. Run the [make_preprocessing.py](./e3po/make_preprocessing.py) script (***video pre-processor*** module)
+
+3. Motion Trace<br>
+Prepare a motion trace file and place it at /e3po/source/motion_trace/[motion_trace].log. Note that E3PO has provided a sample file. If you want to use a different one, you can generate one similarly to that from [360VidStr](https://github.com/360VidStr/A-large-dataset-of-360-video-user-behaviour/blob/main/AggregatedDataset/7.txt).
+
+
+## Execute commands
+To simulate the streaming process, three terminal commands need to be executed sequentially. For example, with the sample simulation E1 we have provided in the project, the following commands should be executed. Note that the approach name as well as the approach type (on_demand or transcoding) should be specified.
+
+1. Run the [make_preprocessing.py](e3po/make_preprocessing.py) script (***video pre-processor*** module)
 ```
-python ./e3po/make_preprocessing.py -opt approaches/custom_eac/custom_eac.yml
+python ./e3po/make_preprocessing.py -approach_name erp -approach_type on_demand
 ```
+Corresponding results can be found at
+```
+|---e3po
+    |---source
+        |---video
+            |---[group_*]
+                |---[video_*]
+                    |---[erp]
+                        |---video_size.json
+                        |---dst_video_folder
+                            |---chunk_***_tile_***.mp4
+    |---log
+        |---[group_*]
+            |---[video_*]
+                |---erp_make_preprocessing.log
+```
+
 2. Run the [make_decision.py](./e3po/make_decision.py) script (***streaming simulator*** module)
 ```
-python ./e3po/make_decision.py -opt approaches/custom_eac/custom_eac.yml
+python ./e3po/make_decision.py -approach_name erp -approach_type on_demand
 ```
+Corresponding results can be found at
+```
+|---e3po
+    |---result
+        |---[group_*]
+            |---[video_*]
+                |---[erp]
+                    |---decision.json
+    |---log
+        |---[group_*]
+            |---[video_*]
+                |---erp_make_decision.log
+```
+
 3. Run the [make_evaluation.py](./e3po/make_evaluation.py) script (***system evaluator*** module)
 ```
-python ./e3po/make_evaluation.py -opt approaches/custom_eac/custom_eac.yml
+python ./e3po/make_evaluation.py -approach_name erp -approach_type on_demand
 ```
 
 Corresponding results can be found at 
 ```
 |---e3po
-    |---source
-        |---video
-            |---group_*
-                |---video_*
-                    |---custom_eac
-                        |---video_size.json
-                        |---converted_29.mp4
     |---result
-        |---group_*
-            |---video_*
-                |---custom_eac
-                    |---decision.json
+        |---[group_*]
+            |---[video_*]
+                |---[erp]
                     |---evaluation.json
-                    |---frames
+                    |---output_frames
                         |---xxx.png
                         |---output.mp4
     |---log
-        |---group_*
-            |---video_*
-                    |---custom_eac_make_decision.log
-                    |---custom_eac_make_evaluation.log
-                    |---custom_eac_make_preprocessing.log
+        |---[group_*]
+            |---[video_*]
+                |---erp_make_evaluation.log
 ```
 
 ## Examples
@@ -92,7 +114,7 @@ The visual comparison results of these eight approaches are illustrated as the f
 ![](/docs/comparison.jpg "comparison_results")
 
 
-For more details, please refer to [BasicTutorial](./docs/BasicTutorial.md).
+For more details, please refer to [Tutorial.md](./docs/Tutorial.md).
 
 
 # Contributes
@@ -103,5 +125,4 @@ We welcome researchers to simulate their own streaming systems using E3PO and su
 
 
 # License
-
 [GPL 2.0 License](./COPYING)

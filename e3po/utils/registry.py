@@ -68,4 +68,3 @@ class Registry:
 data_registry = Registry('data_registry')
 decision_registry = Registry('decision_registry')
 evaluation_registry = Registry('evaluation_registry')
-projection_registry = Registry('projection_registry')

@@ -29,15 +29,9 @@ __all__ = ['build_decision']
 
 # Read all file names in 'decision' folder. Then import all the decision modules that end with '_decision.py'
 decision_folder = os.path.dirname(os.path.abspath(__file__))
-approaches_decision_folder = os.path.abspath(os.path.join(decision_folder, '..', 'approaches'))
 
 for file_name in scan_file_name(decision_folder, '_decision.py'):
     importlib.import_module(f'e3po.decision.{file_name}')
-
-for file_name in scan_file_name(approaches_decision_folder, '_decision.py'):
-    approach_name = file_name[:-9]
-    importlib.import_module(f'e3po.approaches.{approach_name}.{file_name}')
-
 
 
 def build_decision(opt):
@@ -47,7 +41,7 @@ def build_decision(opt):
     Parameters
     ----------
     opt : dict
-        It must contain a key named: 'decision_type'
+        It must contain a key named: 'approach_type'
 
     Returns
     -------
@@ -64,7 +58,13 @@ def build_decision(opt):
     >> decision = build_decision(opt)
     """
     opt = deepcopy(opt)
-    assert opt['decision_type'], '[creat decision] Do not specify decision_type.'
-    decision = decision_registry[opt['decision_type']](opt)
-    get_logger().info(f'[creat decision] {decision.__class__.__name__} is created')
+    assert opt['approach_type'], '[create decision] Do not specify data_type.'
+    if opt['approach_type'] == 'on_demand':
+        approach_data = 'OnDemandDecision'
+    elif opt['approach_type'] == 'transcoding':
+        approach_data = 'TranscodingDecision'
+    else:
+        raise ValueError("error when read the approach mode, which should be on_demand or transcoding!")
+    decision = decision_registry[approach_data](opt)
+    get_logger().info(f'[create decision] {decision.__class__.__name__} is created')
     return decision

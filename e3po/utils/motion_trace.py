@@ -95,7 +95,8 @@ def read_client_log(client_log_path, interval, client_log_user_index):
                     scale = 4
                 else:
                     scale = 2
-                client_record[i * interval + 2000] = {'yaw': float(line_yaw[i]), 'pitch': float(line_pitch[i]), 'scale': scale}
+                client_record[i * interval] = {'yaw': float(line_yaw[i]), 'pitch': float(line_pitch[i]), 'roll': 0, 'scale': scale}
+
     return client_record
 
 
