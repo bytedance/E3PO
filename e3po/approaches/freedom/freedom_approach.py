@@ -23,6 +23,7 @@ import numpy as np
 import yaml
 from e3po.utils import get_logger
 from e3po.utils.projection_utilities import fov_to_3d_polar_coord
+from e3po.utils.json import get_tile_info
 
 
 def video_analysis(user_data, video_info):
@@ -186,7 +187,7 @@ def transcode_video(curr_video_frame, curr_frame_idx, network_stats, motion_hist
     return vam_frame, user_video_spec, user_data
 
 
-def generate_display_result(curr_display_frames, current_display_chunks, curr_fov, dst_video_frame_uri, frame_idx, user_data, video_info):
+def generate_display_result(curr_display_frames, current_display_chunks, curr_fov, dst_video_frame_uri, frame_idx, video_size, user_data, video_info):
     """
     Generate the required fov images for the freedom approach
 
@@ -202,6 +203,8 @@ def generate_display_result(curr_display_frames, current_display_chunks, curr_fo
         the uri of generated fov frame
     frame_idx: int
         frame index of current display frame
+    video_size: dict
+        the video.json file generated after video preprocessing
     user_data: dict
         user related parameters and information
     video_info: dict
@@ -217,10 +220,11 @@ def generate_display_result(curr_display_frames, current_display_chunks, curr_fo
         user_data = init_user(user_data, video_info)
 
     client_fov = [float(curr_fov['curr_motion']['yaw']), float(-curr_fov['curr_motion']['pitch']), 0]
+    server_fov = get_server_fov(video_size, frame_idx)
 
     # generate client image
     _3d_polar_coord = fov_to_3d_polar_coord(client_fov, curr_fov['range_fov'], curr_fov['fov_resolution'])
-    coord_x_arr, coord_y_arr = _3d_polar_coord_to_pixel_coord(_3d_polar_coord, curr_fov['curr_motion'], user_data)
+    coord_x_arr, coord_y_arr = _3d_polar_coord_to_pixel_coord(_3d_polar_coord, server_fov, user_data)
     fov_result = generate_fov_img(curr_display_frames[0], coord_x_arr, coord_y_arr)
 
     # write the calculated fov image into file
@@ -228,6 +232,33 @@ def generate_display_result(curr_display_frames, current_display_chunks, curr_fo
     get_logger().debug(f'[evaluation] end get display img {frame_idx}')
 
     return user_data
+
+
+def get_server_fov(video_size, frame_idx):
+    """
+    Get motion information of the corresponding vam frame
+    Parameters
+    ----------
+    video_size
+    frame_idx
+
+    Returns
+    -------
+
+    """
+    tile_id = f"chunk_{str(frame_idx).zfill(4)}_tile_{str(1).zfill(3)}"
+
+    tile_info = get_tile_info(video_size, tile_id)
+
+    segment_info = tile_info['user_video_spec']['segment_info']
+
+    server_motion = {
+        "pitch": segment_info["pitch"],
+        "yaw": segment_info["yaw"],
+        "scale": segment_info["scale"]
+    }
+
+    return server_motion
 
 
 def generate_fov_img(curr_display_frame, coor_x_arr, coor_y_arr):

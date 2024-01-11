@@ -197,6 +197,31 @@ def get_video_json_size(video_size, chunk_idx, tile_id):
     return tile_size
 
 
+def get_tile_info(video_size, tile_id):
+    """
+    Read the corresponding tile information from video_size.json
+
+    Parameters
+    ----------
+    video_size: dict
+        video size of preprocessed video
+    tile_id: str
+        tile id, indicates which tile should be located
+
+    Returns
+    -------
+    tile_info: dict
+        the corresponding tile information
+    """
+
+    try:
+        tile_info = video_size[tile_id]
+    except KeyError:
+        raise Exception(f"[get size error] tile_id={tile_id} not found!")
+
+    return tile_info
+
+
 def update_video_json(video_json_path, dst_video_sizes):
     """
     For transcoding approach, update the video size
