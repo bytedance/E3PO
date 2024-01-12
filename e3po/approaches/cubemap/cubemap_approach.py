@@ -105,6 +105,8 @@ def read_config():
             "height": opt['background']['height'],
             "background_projection_mode": opt['background']['projection_mode']
         }
+    else:
+        background_info = {}
 
     motion_history_size = opt['video']['hw_size'] * 1000
     motino_prediction_size = opt['video']['pw_size']

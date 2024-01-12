@@ -73,7 +73,7 @@ class TranscodingEvaluation(BaseEvaluation):
             curr_display_frames = get_curr_display_frames(self, current_display_chunks, curr_ts, frame_idx)
             dst_video_frame_uri = generate_dst_frame_uri(self.result_img_path, frame_idx)
             curr_fov = update_curr_fov(self.curr_fov, motion_record[motion_ts])
-            user_data = approach.generate_display_result(curr_display_frames, current_display_chunks, curr_fov, dst_video_frame_uri, frame_idx, user_data, self.video_info)
+            user_data = approach.generate_display_result(curr_display_frames, current_display_chunks, curr_fov, dst_video_frame_uri, frame_idx, video_size, user_data, self.video_info)
             dst_benchmark_frame_uri = generate_benchmark_result(self, curr_fov, frame_idx)
             psnr, ssim = calculate_psnr_ssim(dst_benchmark_frame_uri, dst_video_frame_uri, self.use_gpu, self.psnr_flag, self.ssim_flag)
             self.psnr.append(psnr)
