@@ -36,7 +36,7 @@ Note that E3PO automatically measures performance metrics and calculates $S$ for
 
 | Challenge Relase |   Register by   |    Upload by    | Notifications on | Camera-Ready due |
 |:-------------:|:---------------:|:---------------:|:----------------:|:-------------:|
-| Sep. 11th, 2023   | Jan. 19th, 2024 | Feb. 26th, 2024 |  Mar. 1st, 2024  | Mar. 8st, 2024
+| September 11, 2023  | January 26, 2024 | February 26, 2024 |  March 8, 2024  | March 15, 2024
 
 </div>
 
