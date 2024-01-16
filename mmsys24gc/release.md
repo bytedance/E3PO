@@ -28,7 +28,7 @@ We define a performance metric score as follows:
 
 For the weights in the metric score, we referred to the pricing table on the [AWS](https://aws.amazon.com/) official website. Specifically, $w_1=0.09$, $w_2=0.000015$, $w_3=t$, and $C_c = 0.000334$, where $t$ represents the duration of the video playback in seconds, and the unit for $C_b$ and $C_s$ is GB. 
 
-Note that E3PO automatically measures performance metrics and calculates $S$ for each simulation. We provide [8K panoramic video sequences as well as real users' head motion trace](https://bytedance.feishu.cn/drive/folder/QQgJfhxs7lor3xdb0WGcTYMsnPb?from=space_personal_filelist) data for contestants' testing and final evaluation.
+Note that E3PO automatically measures performance metrics and calculates $S$ for each simulation. We provide [8K panoramic video sequences as well as real users' head motion trace]() data for contestants' testing and final evaluation.
 
 
 # Important Dates
@@ -40,16 +40,15 @@ Note that E3PO automatically measures performance metrics and calculates $S$ for
 
 </div>
 
-
 # Registration
-This challenge is open to any individual, academic or commercial institution (Bytedance employees can also register, but they are not allowed to participate in the awards). Interested individuals are welcome to participate as a team. Each team can have one or more members (up to 4). Each individual can only be part of one team. The organizers reserve the right to disqualify any participant for misleading information or inappropriate behavior during the challenge.
+This challenge is open to any individual, academic or commercial institution. Interested individuals are welcome to participate as a team. Each team can have one or more members (up to 4). Each individual can only be part of one team. The organizers reserve the right to disqualify any participant for misleading information or inappropriate behavior during the challenge.
 
-Participants can register for this grand challenge by either filling out the [**registration form**](https://wenjuan.feishu.cn/m?t=s3fCWQuPlLPi-it3o) or sending their registration information to the organizer via email. Once we receive your information, we will confirm your registration. Please note that we only accept submissions from registered teams. After registration, please download and sign up with Lark and join the [**topic group**](mmsys24gc_group.jpeg) for all future updates of the challenge and Q&A. 
+Participants can register for this grand challenge by either filling out the [**registration form**](https://wenjuan.feishu.cn/m?t=s3fCWQuPlLPi-it3o) or sending their registration information to the organizer via email. Once we receive your information, we will confirm your registration. Please note that we only accept submissions from registered teams. After registration, please download and sign up with Lark and join the [**discussion group**](mmsys24gc_group.jpeg) for all future updates of the challenge and Q&A. 
 
 For the submission guidelines, please refer to [**MMSys2024 Submission Guidelines**](https://github.com/bytedance/E3PO/blob/main/mmsys24gc/submission.md)
 
 # Awards
-The top three teams will be eligible to have their technical papers included in MMSys proceedings providing the paper passes the quality review before the camera-ready deadline and the author pays the full conference registration. Meanwhile, all winning teams will receive a cash prize sponsored by ByteDance, as presented in the table below. Additionally, all teams with final submissions shall receive gifts from ByteDance.
+The teams ranking top three in the final evaluation win the challenge. All winning teams will receive a cash prize sponsored by ByteDance, as presented in the table below. Meanwhile, all winning teams are expected to publish their technical papers in MMSys proceedings (providing the paper passes the quality review before the camera-ready deadline), participate the conference to present their solutions, and pay the full conference registration. Teams that fail to meet these expectations are considered to give up the awards. 
 
 <div align="center">
 
