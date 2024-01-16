@@ -261,8 +261,8 @@ def erp_to_3d_polar_coord(dst_resolution):
     u = np.tile(u_tmp, (v_tmp.shape[0], 1))
     v = np.tile(v_tmp, (u_tmp.shape[0], 1)).transpose()
 
-    phi = (u - 0.5) * (2 * np.pi)
-    theta = (0.5 - v) * np.pi
+    phi = u * (2 * np.pi) / 2
+    theta = -v * np.pi / 2
 
     _3d_polar_coord = np.concatenate([phi, theta], axis=-1)
 
