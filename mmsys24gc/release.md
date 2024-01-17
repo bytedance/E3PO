@@ -20,13 +20,20 @@ Contestants shall design and implement a 360-degree video on-demand streaming so
 - $C_c$: the computation cost for some solutions that require real-time processing or transcoding
 
 
-We define a performance metric score as follows:
+We define a performance metric score as follows. The denominator of the formula can be considered as a Lagrangian variant of the rate-distortion optimization problem, and its physical interpretation is to minimize the distortion and cost simultaneously.
+
 <div align=center>
-    <img src=./formula.jpg width=300 height= />
+    <img src=./formula.jpg width=400 height= />
 </div>
 
+The weight coefficients $\alpha = 0.06$ and $\beta=10$ are used to control the distortion and cost, respectively. Meanwhile, for the weights $w_1=0.09$, $w_2=0.000015$, $w_3=t$, and $C_c = 0.000334$ in the cost, we referred to the pricing table on the [AWS](https://aws.amazon.com/) official website, where $t$ represents the duration of the video playback in seconds, and the unit for $C_b$ and $C_s$ is GB.
 
-For the weights in the metric score, we referred to the pricing table on the [AWS](https://aws.amazon.com/) official website. Specifically, $w_1=0.09$, $w_2=0.000015$, $w_3=t$, and $C_c = 0.000334$, where $t$ represents the duration of the video playback in seconds, and the unit for $C_b$ and $C_s$ is GB. 
+[//]: # (<div align=center>)
+
+[//]: # (    <img src=./formula.jpg width=300 height= />)
+
+[//]: # (</div>)
+<!-- For the weights in the metric score, we referred to the pricing table on the [AWS](https://aws.amazon.com/) official website. Specifically, $w_1=0.09$, $w_2=0.000015$, $w_3=t$, and $C_c = 0.000334$, where $t$ represents the duration of the video playback in seconds, and the unit for $C_b$ and $C_s$ is GB.  -->
 
 Note that E3PO automatically measures performance metrics and calculates $S$ for each simulation. We provide [8K panoramic video sequences as well as real users' head motion trace]() data for contestants' testing and final evaluation.
 
