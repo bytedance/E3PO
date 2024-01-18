@@ -52,6 +52,9 @@ e3po_settings:
     gc_w1: 0.09                           # parameter w1 for calculating grand challenge score
     gc_w2: 0.000015                       # parameter w2 for calculating grand challenge score
     gc_w3:                                # parameter w3 for calculating grand challenge score
+    gc_alpha: 0.006                       # parameter alpha for calculating grand challenge score
+    gc_beta: 10                           # parameter beta for calculating grand challenge score
+
 
 
 

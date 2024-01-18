@@ -20,10 +20,9 @@ E3PO is a platform to simulate and evaluate user-implemented 360 video streaming
 
 **Chunk:** 360 video is temporarily divided into smaller chunks for on-demand pre-processing (tile generation). The default value of the configurable chunk duration is 2 seconds. All video tiles generated in the on-demand mode shall have the same chunk duration, except the last chunk of the video may have a shorter duration. A chunk is also the basic unit for video tile encoding. Each chunk contains one or more entire GOP, which means each video tile should start with an I-frame. It is important to point out that for the transcoding mode, 360 video is processed and transcoded at frame level and thus the concept of "chunk" in transcoding mode refers to just a single video frame. 
 
-
 **Tile:** In the on-demand mode, each 360 video chunk is passed to user's simulation logic to generate one or more tiles. The term "tile" is originally used when the 360 video is spatially segmented into multiple non-overlapping pieces. In our system, we expand the term to refer to any user generated video chunks. For example, tile generation techniques may include resizing, changing projection, pixels re-organization, overlapping segmentation, and more. In transcoding mode, we also use "tile" to refer to the transcoding result frame. 
 
-**Motion Trace:** The trace contains the head movement data collected from the real users' VR headset. Each motion trace sample contains {ts, pitch, yaw, roll}. ts is the timestamp for sample collection and ts=0 is aligned with the playback of the first video frame.  Pitch ranges from [$-\pi/2， \pi/2$] and yaw ranges from [$0， 2\pi$] (roll is not currently used in our dataset and you may assume roll=0). Pitch=0 and yaw=$\pi$ means the viewer is currently looking at the center of the 360 video. 
+**Motion Trace:** The trace contains the head movement data collected from the real users' VR headset. Each motion trace sample contains {ts, pitch, yaw, roll}. ts is the timestamp for sample collection and ts=0 is aligned with the playback of the first video frame.  Pitch ranges from [$-\pi/2， \pi/2$] and yaw ranges from [$0， 2\pi$] (roll is not currently used in our dataset and you may assume roll=0). Pitch=0 and yaw=0 means the viewer is currently looking at the center of the 360 video. 
 
 
 # Design a new 360 video streaming solution

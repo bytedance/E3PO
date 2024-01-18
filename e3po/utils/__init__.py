@@ -22,7 +22,7 @@ from .motion_trace import pre_processing_client_log
 from .misc import scan_file_name, update_motion, save_video_frame, generate_dst_frame_uri
 from .logger import get_logger
 from .json import write_evaluation_json, read_decision_json, read_video_json, get_video_json_size
-from .psnr_ssim import calculate_psnr_ssim
+from .psnr_ssim import calculate_psnr_ssim_mse
 from .evaluation_utilities import extract_frame
 
 __all__ = [

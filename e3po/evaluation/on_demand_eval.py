@@ -21,7 +21,7 @@ import importlib
 from e3po.utils.registry import evaluation_registry
 from e3po.utils import pre_processing_client_log, write_evaluation_json
 from e3po.utils.json import read_decision_json, read_video_json
-from e3po.utils.psnr_ssim import calculate_psnr_ssim
+from e3po.utils.psnr_ssim import calculate_psnr_ssim_mse
 from .base_eval import BaseEvaluation
 from e3po.utils.evaluation_utilities import *
 from e3po.utils.misc import generate_motion_clock, generate_dst_frame_uri
@@ -75,10 +75,11 @@ class OnDemandEvaluation(BaseEvaluation):
             curr_fov = update_curr_fov(self.curr_fov, motion_record[motion_ts])
             user_data = approach.generate_display_result(curr_display_frames, current_display_chunks, curr_fov, dst_video_frame_uri, frame_idx, video_size, user_data, self.video_info)
             dst_benchmark_frame_uri = generate_benchmark_result(self, curr_fov, frame_idx)
-            psnr, ssim = calculate_psnr_ssim(dst_benchmark_frame_uri, dst_video_frame_uri, self.use_gpu, self.psnr_flag, self.ssim_flag)
+            psnr, ssim, mse = calculate_psnr_ssim_mse(dst_benchmark_frame_uri, dst_video_frame_uri, self.use_gpu, self.psnr_flag, self.ssim_flag)
             self.psnr.append(psnr)
             self.ssim.append(ssim)
-            evaluation_result.append([{'frame_idx': frame_idx, 'psnr': psnr, 'ssim': ssim, 'yaw': curr_fov['curr_motion']['yaw'], 'pitch': curr_fov['curr_motion']['pitch']}])
+            self.mse.append(mse)
+            evaluation_result.append([{'frame_idx': frame_idx, 'psnr': psnr, 'ssim': ssim, 'mse': mse, 'yaw': curr_fov['curr_motion']['yaw'], 'pitch': curr_fov['curr_motion']['pitch']}])
         encode_display_video(self)
         evaluation_result += evaluate_misc(self, arrival_list, video_size)
         write_evaluation_json(evaluation_result, self.evaluation_json_path)
