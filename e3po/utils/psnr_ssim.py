@@ -24,7 +24,7 @@ import torch.nn.functional as fun
 from .logger import get_logger
 
 
-def calculate_psnr_ssim(img1_uri, img2_uri, use_cuda_flag=False, psnr_flag=True, ssim_flag=True):
+def calculate_psnr_ssim_mse(img1_uri, img2_uri, use_cuda_flag=False, psnr_flag=True, ssim_flag=True):
     """
     Calculate PSNR (Peak Signal-to-Noise Ratio) or/and SSIM (structural similarity) for two input images.
 
@@ -51,6 +51,7 @@ def calculate_psnr_ssim(img1_uri, img2_uri, use_cuda_flag=False, psnr_flag=True,
     assert img1.shape == img2.shape, f'[error] Input images have different shapes: {img1.shape}, {img2.shape}!'
     psnr = 0
     ssim = 0
+    mse = 0
     _logger = get_logger()
     if use_cuda_flag:
         img1 = torch.from_numpy(img1.transpose(2, 0, 1)).float()
@@ -87,7 +88,7 @@ def calculate_psnr_ssim(img1_uri, img2_uri, use_cuda_flag=False, psnr_flag=True,
                 ssims.append(_cal_ssim(img1[..., i], img2[..., i]))
             ssim = np.array(ssims).mean()
             _logger.debug(f'[evaluation] end cal ssim')
-    return psnr, ssim
+    return psnr, ssim, mse
 
 
 def _cal_ssim(img1, img2):
