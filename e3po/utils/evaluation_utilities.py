@@ -294,7 +294,7 @@ def calculate_gc_score(settings, total_bw, video_size):
     if settings.opt['approach_type'] == 'on_demand':
         total_calc = 0
     elif settings.opt['approach_type'] == 'transcoding':
-        total_calc = 1.204
+        total_calc = settings.video_info['duration']    # (s)
         total_storage = 0
     else:
         raise ValueError("error when read the approach mode!")
@@ -302,16 +302,17 @@ def calculate_gc_score(settings, total_bw, video_size):
     mse = round(np.average(settings.mse), 3)
     w_1 = settings.gc_metrics['gc_w1']
     w_2 = settings.gc_metrics['gc_w2']
-    w_3 = settings.gc_metrics['gc_w3']  # (s)
+    w_3 = settings.gc_metrics['gc_w3']
     alpha = settings.gc_metrics['gc_alpha']
     beta = settings.gc_metrics['gc_beta']
 
     gc_score = 1 / (alpha * mse + beta * (w_1*total_bw + w_2*total_storage + w_3*total_calc))
+    cost = [w_1*total_bw, w_2*total_storage, w_3*total_calc]
 
-    return gc_score
+    return gc_score, cost
 
 
-def write_dict(settings, max_bandwidth, total_size, gc_score, avg_psnr, avg_ssim, avg_mse):
+def write_dict(settings, max_bandwidth, total_size, gc_score, cost, avg_psnr, avg_ssim, avg_mse):
     """
     Organize the calculated results into the required dictionary format
 
@@ -332,6 +333,7 @@ def write_dict(settings, max_bandwidth, total_size, gc_score, avg_psnr, avg_ssim
         "AVG PSNR": f"{avg_psnr}dB",
         "AVG SSIM": f"{avg_ssim}",
         "AVG MSE": f"{avg_mse}",
+        "Cost": f"{cost}",
         'Total transfer size': f"{total_transfer_size}MB",
         'GC Score': f"{gc_score}"
     }
@@ -454,7 +456,7 @@ def evaluate_misc(settings, arrival_list, video_size):
     avg_ssim = round(np.average(settings.ssim), 3)
     avg_mse = round(np.average(settings.mse), 3)
 
-    gc_score = calculate_gc_score(settings, total_size, video_size)
-    misc_dict = write_dict(settings, max_bandwidth, total_size, gc_score, avg_psnr, avg_ssim, avg_mse)
+    gc_score, cost = calculate_gc_score(settings, total_size, video_size)
+    misc_dict = write_dict(settings, max_bandwidth, total_size, gc_score, cost, avg_psnr, avg_ssim, avg_mse)
 
     return [misc_dict]

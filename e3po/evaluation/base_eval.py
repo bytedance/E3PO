@@ -133,7 +133,7 @@ class BaseEvaluation:
         self.gc_metrics = {
             'gc_w1': self.system_opt['metric']['gc_w1'],
             'gc_w2': self.system_opt['metric']['gc_w2'],
-            'gc_w3': self.system_opt['video']['video_duration'] / 3600.0,
+            'gc_w3': self.system_opt['metric']['gc_w3'],
             'gc_alpha': self.system_opt['metric']['gc_alpha'],
             'gc_beta': self.system_opt['metric']['gc_beta'],
         }
