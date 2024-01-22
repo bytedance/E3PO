@@ -15,9 +15,9 @@ To foster advancements in 360-degree video on-demand streaming, ByteDance presen
 
 # Task
 Contestants shall design and implement a 360-degree video on-demand streaming solution using E3PO. The goal of the solution is to deliver the best user viewing quality using the least system resources. We use the objective video quality of user's actual viewing area on the terminal device, measured by $MSE$ to evaluate the user viewing quality. In terms of system recources, we consider three major costs:
-- $C_b$: the bandwidth cost of streaming all data from the server to user
-- $C_s$: the storage cost of storing video data on the server
-- $C_c$: the computation cost for some solutions that require real-time processing or transcoding
+- $w_1 * C_b$: the bandwidth cost of streaming all data from the server to user
+- $w_2*C_s$: the storage cost of storing video data on the server
+- $w_3*C_c$: the computation cost for some solutions that require real-time processing or transcoding
 
 
 We define a performance metric score as follows. The denominator of the formula can be considered as a Lagrangian variant of the rate-distortion optimization problem, and its physical interpretation is to minimize the distortion and cost simultaneously.
@@ -26,7 +26,7 @@ We define a performance metric score as follows. The denominator of the formula 
     <img src=./formula.jpg width=400 height= />
 </div>
 
-The weight coefficients $\alpha = 0.006$ and $\beta=10$ ($\alpha$ and $\beta$ may changes for different test video sequences) are used to control the distortion and cost, respectively. Meanwhile, for the weights $w_1=0.09$, $w_2=0.000015$, $w_3=t$, and $C_c = 0.000334$ in the cost, we referred to the pricing table on the [AWS](https://aws.amazon.com/) official website, where $t$ represents the duration of the video playback in seconds, and the unit for $C_b$ and $C_s$ is GB.
+The weight coefficients $\alpha = 0.006$ and $\beta=10$ ($\alpha$ and $\beta$ may changes for different test video sequences) are used to control the distortion and cost, respectively. Meanwhile, for the weights $w_1=0.09$, $w_2=0.000015$, and $w_3=0.000334$ in the cost, we referred to the pricing table on the [AWS](https://aws.amazon.com/) official website. The unit for $C_b$ and $C_s$ is GB, and $C_c$ represents the duration of the video playback in seconds.
 
 Note that E3PO automatically measures performance metrics and calculates $S$ for each simulation. We provide [8K panoramic video sequences as well as real users' head motion trace]() data for contestants' testing and final evaluation.
 
