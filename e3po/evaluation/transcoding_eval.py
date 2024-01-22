@@ -79,7 +79,7 @@ class TranscodingEvaluation(BaseEvaluation):
             self.psnr.append(psnr)
             self.ssim.append(ssim)
             self.mse.append(mse)
-            evaluation_result.append([{'frame_idx': frame_idx, 'psnr': psnr, 'ssim': ssim, 'mse': mse, 'yaw': curr_fov['curr_motion']['yaw'], 'pitch': curr_fov['curr_motion']['pitch']}])
+            evaluation_result.append([{'frame_idx': frame_idx, 'psnr': psnr, 'ssim': ssim, 'mse': mse, 'yaw': curr_fov['curr_motion']['yaw'], 'pitch': curr_fov['curr_motion']['pitch'], 'motion_ts': motion_ts}])
         encode_display_video(self)
         evaluation_result.append(evaluate_misc(self, arrival_list, video_size))
         write_evaluation_json(evaluation_result, self.evaluation_json_path)

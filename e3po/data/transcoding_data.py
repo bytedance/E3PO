@@ -85,7 +85,7 @@ class TranscodingData(BaseData):
         motion_history = []
         motion_history = update_motion(0, 0, motion_history, motion_record[0])
         last_frame_idx = -1
-        pre_downlode_duration = self.rtt / 2
+        pre_downlode_duration = self.rtt
         update_interval = int(1000 / self.system_opt['motion_trace']['motion_frequency'])
 
         # pre_download_duration
@@ -103,8 +103,9 @@ class TranscodingData(BaseData):
 
         # after pre_download_duration
         for motion_ts in motion_clock:
-            motion_history = update_motion(motion_ts, motion_ts, motion_history, motion_record[motion_ts])
-            curr_frame_idx = int((motion_ts + pre_downlode_duration) * self.video_info['video_fps'] // 1000.0)
+            curr_ts = motion_ts + pre_downlode_duration
+            motion_history = update_motion(motion_ts, curr_ts, motion_history, motion_record[motion_ts])
+            curr_frame_idx = int(curr_ts * self.video_info['video_fps'] // 1000.0)
             if curr_frame_idx >= int(self.video_info['video_fps']) * int(self.video_info['duration']):
                 continue
             if curr_frame_idx == last_frame_idx:

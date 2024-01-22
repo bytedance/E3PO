@@ -14,7 +14,7 @@ To foster advancements in 360-degree video on-demand streaming, ByteDance presen
 
 
 # Task
-Contestants shall design and implement a 360-degree video on-demand streaming solution using E3PO. The goal of the solution is to deliver the best user viewing quality using the least system resources. We use the objective video quality of user's actual viewing area on the terminal device, measured by [Viewport PSNR](https://web.archive.org/web/20160909173146id_/http://web.stanford.edu:80/~harilaks/pdfs/2015_ISMAR.pdf) (denoted as $VPSNR$ in this challenge) to evaluate the user viewing quality. In terms of system recources, we consider three major costs:
+Contestants shall design and implement a 360-degree video on-demand streaming solution using E3PO. The goal of the solution is to deliver the best user viewing quality using the least system resources. We use the objective video quality of user's actual viewing area on the terminal device, measured by $MSE$ to evaluate the user viewing quality. In terms of system recources, we consider three major costs:
 - $C_b$: the bandwidth cost of streaming all data from the server to user
 - $C_s$: the storage cost of storing video data on the server
 - $C_c$: the computation cost for some solutions that require real-time processing or transcoding
