@@ -19,7 +19,7 @@ e3po_settings:
     qp_list: [29]                         # qp value
     preset: faster                        # preset parameter
     video_fps: 30                         # video framerate
-    gop: 30                               # group of pictures
+    gop: 60                               # group of pictures
     bf: 0                                 # B frame in ffmpeg
   motion_trace:                           # ---------------- The following are motion trace settings ---------------- #
     motion_file: release_video_1.txt      # full name of motion trace file
