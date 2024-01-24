@@ -28,7 +28,7 @@ We define a performance metric score as follows. The denominator of the formula 
 
 The weight coefficients $\alpha = 0.006$ and $\beta=10$ ($\alpha$ and $\beta$ may changes for different test video sequences) are used to control the distortion and cost, respectively. Meanwhile, for the weights $w_1=0.09$, $w_2=0.000015$, and $w_3=0.000334$ in the cost, we referred to the pricing table on the [AWS](https://aws.amazon.com/) official website. The unit for $C_b$ and $C_s$ is GB, and $C_c$ represents the duration of the video playback in seconds.
 
-Note that E3PO automatically measures performance metrics and calculates $S$ for each simulation. We provide [8K panoramic video sequences as well as real users' head motion trace]() data for contestants' testing and final evaluation.
+Note that E3PO automatically measures performance metrics and calculates $S$ for each simulation. We provide [**8K panoramic video sequences as well as real users' head motion trace**](https://bytedance.larkoffice.com/drive/folder/QQgJfhxs7lor3xdb0WGcTYMsnPb) data for contestants' testing and final evaluation.
 
 
 # Important Dates
