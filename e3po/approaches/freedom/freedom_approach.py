@@ -22,7 +22,7 @@ import cv2
 import numpy as np
 import yaml
 from e3po.utils import get_logger
-from e3po.utils.projection_utilities import fov_to_3d_polar_coord, _3d_polar_coord_to_pixel_coord
+from e3po.utils.projection_utilities import fov_to_3d_polar_coord
 from e3po.utils.json import get_tile_info
 
 
@@ -181,9 +181,7 @@ def transcode_video(curr_video_frame, curr_frame_idx, network_stats, motion_hist
 
     user_video_spec = {
         'segment_info': {'yaw': yaw, 'pitch': pitch, 'scale': scale},
-        'tile_info': {'chunk_idx': curr_frame_idx, 'tile_idx': 1},
-        'curr_ts': motion_history[-1]['system_ts'],
-        'motion_ts': motion_history[-1]['motion_ts']
+        'tile_info': {'chunk_idx': curr_frame_idx, 'tile_idx': 1}
     }
 
     return vam_frame, user_video_spec, user_data
@@ -224,16 +222,10 @@ def generate_display_result(curr_display_frames, current_display_chunks, curr_fo
     client_fov = [float(curr_fov['curr_motion']['yaw']), float(curr_fov['curr_motion']['pitch']), 0]
     server_fov = get_server_fov(video_size, frame_idx)
 
-    # render vam to the sphere
-    ori_erp_img = vam_2_ori_erp(curr_display_frames[0], server_fov, user_data)
-
-    # generate the client image
+    # generate client image
     _3d_polar_coord = fov_to_3d_polar_coord(client_fov, curr_fov['range_fov'], curr_fov['fov_resolution'])
-    pixel_coord = _3d_polar_coord_to_pixel_coord(_3d_polar_coord, 'erp', [3840, 7680])
-
-    dstMap_u, dstMap_v = cv2.convertMaps(pixel_coord[0].astype(np.float32), pixel_coord[1].astype(np.float32),
-                                         cv2.CV_16SC2)
-    fov_result = cv2.remap(ori_erp_img, dstMap_u, dstMap_v, cv2.INTER_LINEAR)
+    coord_x_arr, coord_y_arr = _3d_polar_coord_to_pixel_coord(_3d_polar_coord, server_fov, user_data)
+    fov_result = generate_fov_img(curr_display_frames[0], coord_x_arr, coord_y_arr)
 
     # write the calculated fov image into file
     cv2.imwrite(dst_video_frame_uri, fov_result, [cv2.IMWRITE_JPEG_QUALITY, 100])
@@ -269,83 +261,90 @@ def get_server_fov(video_size, frame_idx):
     return server_motion
 
 
-def recover_erp_img(vam_image, erp_height, erp_width, scale_factor):
+def generate_fov_img(curr_display_frame, coor_x_arr, coor_y_arr):
     """
-    Generate the rotated erp image, from which the vam is cropped
+    Generate fov image from the current available frame
+
     Parameters
     ----------
-    vam_image: current available viewport image
-    erp_height: original erp height
-    erp_width: original erp weight
-    scale_factor: parameter for scaling the original erp frame
+    curr_display_frame: array
+        current available frame, i.e., vam in freedom approach
+    coor_x_arr: array
+        horizontal pixel coordinates
+    coor_y_arr: array
+        vertical pixel coordinates
 
     Returns
     -------
-    the recovered erp image
+    fov_result: array
+        the generated fov frame result
     """
-    scaled_erp_height, scaled_erp_width = int(erp_height * scale_factor), int(erp_width * scale_factor)
-    vam_height, vam_width = vam_image.shape[:2]
-    scaled_img = np.zeros((scaled_erp_height, scaled_erp_width, 3), np.uint8)
-    scaled_img[int(scaled_erp_height / 2 - vam_height / 2):int(scaled_erp_height / 2 + vam_height / 2), int(scaled_erp_width / 2 - vam_width / 2):int(scaled_erp_width / 2 + vam_width / 2), :] = vam_image
 
-    des_size = [erp_width, erp_height]
-    erp_img = cv2.resize(scaled_img, des_size, interpolation=cv2.INTER_AREA)
+    dst_map_u, dst_map_v = cv2.convertMaps(coor_x_arr.astype(np.float32), coor_y_arr.astype(np.float32), cv2.CV_16SC2)
+    fov_result = cv2.remap(curr_display_frame, dst_map_u, dst_map_v, cv2.INTER_LINEAR)
 
-    return erp_img
+    return fov_result
 
 
-def vam_2_ori_erp(vam_image, server_motion, user_data):
+def _3d_polar_coord_to_pixel_coord(_3d_polar_coord, curr_motion, user_data):
     """
-    Generate the original erp image
+    For the freedom approach, generate corresponding pixel coordinates from 3d polar coordinates
+
     Parameters
     ----------
-    vam_image: current available viewport image
-    server_motion: server motion
-    user_data:
-
+    _3d_polar_coord: array
+        3d polar coordinate
+    curr_motion: dict
+        motion for generating the display frame, with format {yaw, pitch, scale}
+    user_data: dict
+        user related parameters and information
     Returns
     -------
-    The original erp image
+    coor_x_arr: array
+        horizontal pixel coordinates
+    coor_y_arr: array
+        vertical pixel coordinates
     """
-    scale = server_motion['scale']
 
-    erp_width = user_data['video_info']['width']
-    erp_height = user_data['video_info']['height']
-    scale_factor = user_data['config_params']['scale_factors'][scale]
-
-    recovered_erp_img = recover_erp_img(vam_image, erp_height, erp_width, scale_factor)
-
-    # target image coordinates in the dst image
-    u = np.linspace(0.5, erp_width - 0.5, erp_width) * np.pi * 2 / erp_width
-    v = np.linspace(0.5, erp_height - 0.5, erp_height) * np.pi / erp_height
-
-    # Convert the image coordinates to coordinates in 3D
-    x = np.outer(np.sin(v), np.cos(u))
-    y = np.outer(np.sin(v), np.sin(u))
-    z = np.outer(np.cos(v), np.ones(np.size(u)))
-
-    # rotation angles
-    a, b, r = [float(server_motion['yaw']), -float(server_motion['pitch']), 0]  # the rotation matrix needs a negative sign
-
-    # inverse rotation matrix
+    config_params = user_data['config_params']
+    server_scale = curr_motion['scale']
+    a, b, r = [curr_motion['yaw'], -curr_motion['pitch'], 0]
     rot_a = np.array([np.cos(a) * np.cos(b), np.sin(a) * np.cos(b), -np.sin(b)])
     rot_b = np.array([np.cos(a) * np.sin(b) * np.sin(r) - np.sin(a) * np.cos(r),
                       np.sin(a) * np.sin(b) * np.sin(r) + np.cos(a) * np.cos(r), np.cos(b) * np.sin(r)])
     rot_c = np.array([np.cos(a) * np.sin(b) * np.cos(r) + np.sin(a) * np.sin(r),
                       np.sin(a) * np.sin(b) * np.cos(r) - np.cos(a) * np.sin(r), np.cos(b) * np.cos(r)])
 
-    # rotate the image to the correct place
+    u, v = np.split(_3d_polar_coord, 2, axis=-1)
+    u = u.reshape(u.shape[:2])
+    v = v.reshape(v.shape[:2])
+
+    u = np.pi + u
+    v = np.pi / 2 - v
+
+    x = np.sin(v) * np.cos(u)
+    y = np.sin(v) * np.sin(u)
+    z = np.cos(v)
+
     xx = rot_a[0] * x + rot_a[1] * y + rot_a[2] * z
     yy = rot_b[0] * x + rot_b[1] * y + rot_b[2] * z
     zz = rot_c[0] * x + rot_c[1] * y + rot_c[2] * z
+    xx = np.clip(xx, -1, 1)
+    yy = np.clip(yy, -1, 1)
     zz = np.clip(zz, -1, 1)
 
-    # calculate the (u, v) in the original erp map
-    map_u = ((np.arctan2(yy, xx) + 2 * np.pi) % (2 * np.pi)) * erp_width / (2 * np.pi) - 0.5
-    map_v = np.arccos(zz) * erp_height / np.pi - 0.5
+    u = (np.arctan2(yy, xx) + np.pi * 2) % (np.pi * 2) - np.pi
+    v = np.pi / 2 - np.arccos(zz)
 
-    # remap
-    dstMap_u, dstMap_v = cv2.convertMaps(map_u.astype(np.float32), map_v.astype(np.float32), cv2.CV_16SC2)
-    ori_erp_img = cv2.remap(recovered_erp_img, dstMap_u, dstMap_v, cv2.INTER_LINEAR)
+    # calculate Vam coverage
+    view_coverage_width = config_params['crop_factor'][0] / config_params['scale_factors'][server_scale] * (2 * np.pi)
+    view_coverage_height = config_params['crop_factor'][1] / config_params['scale_factors'][server_scale] * np.pi
+    view_coverage_height = view_coverage_height if view_coverage_height <= np.pi else np.pi
+    coor_x_arr = (u / view_coverage_width + 0.5) * config_params['vam_size'][0] - 0.5
+    coor_y_arr = (-v / view_coverage_height + 0.5) * config_params['vam_size'][1] - 0.5
 
-    return ori_erp_img
+    vam_width, vam_height = config_params['vam_size']
+    coor_x_arr = np.clip(coor_x_arr, 0, vam_width - 1)
+    coor_y_arr = np.clip(coor_y_arr, 0, vam_height - 1)
+
+    return coor_x_arr, coor_y_arr
