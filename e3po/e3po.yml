@@ -22,7 +22,7 @@ e3po_settings:
     gop: 60                               # group of pictures
     bf: 0                                 # B frame in ffmpeg
   motion_trace:                           # ---------------- The following are motion trace settings ---------------- #
-    motion_file: release_video_1.txt      # full name of motion trace file
+    motion_file: release_video_1_motion_1.txt      # full name of motion trace file
     sample_frequency: 100                 # the sample frequency of motion trace file
     motion_frequency: 100                 # the update frequency of e3po
     column_idx: 1                         # the user index in the log file
