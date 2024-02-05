@@ -259,9 +259,11 @@ def transcode_video(source_video_uri, src_proj, dst_proj, src_resolution, dst_re
     cmd = f"{ffmpeg_settings['ffmpeg_path']} " \
           f"-start_number 0 " \
           f"-i {osp.join(dst_video_folder, '%d.png')} " \
+          f"-threads {ffmpeg_settings['thread']} " \
           f"-c:v libx264 " \
           f"-preset slow " \
-          f"-pix_fmt yuv420p " \
+          f"-g 30 " \
+          f"-bf 0 " \
           f"-qp {10} " \
           f"-y {transcode_video_uri} " \
           f"-loglevel {ffmpeg_settings['loglevel']}"
@@ -272,7 +274,7 @@ def transcode_video(source_video_uri, src_proj, dst_proj, src_resolution, dst_re
 
 
 def segment_video(ffmpeg_settings, source_video_uri, dst_video_folder, segmentation_info):
-    f"""
+    """
     Segment video tile from the original video
 
     Parameters
