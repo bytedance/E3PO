@@ -93,7 +93,7 @@ class TranscodingData(BaseData):
             curr_frame_idx = int(curr_ts * self.video_info['video_fps'] // 1000.0)
             if curr_frame_idx == last_frame_idx:
                 continue
-            curr_video_frame = extract_frame(self.video_info['uri'], curr_frame_idx)
+            curr_video_frame = extract_frame(self.video_info['uri'], curr_frame_idx, self.ffmpeg_settings)
             last_frame_idx = curr_frame_idx
             dst_video_frame, user_video_spec, user_data = approach.transcode_video(curr_video_frame, curr_frame_idx, self.network_stats, motion_history, user_data, self.video_info)
             dst_video_frame_uri = generate_dst_frame_uri(self.dst_video_folder, curr_frame_idx)
@@ -110,7 +110,7 @@ class TranscodingData(BaseData):
                 continue
             if curr_frame_idx == last_frame_idx:
                 continue
-            curr_video_frame = extract_frame(self.video_info['uri'], curr_frame_idx)
+            curr_video_frame = extract_frame(self.video_info['uri'], curr_frame_idx, self.ffmpeg_settings)
             last_frame_idx = curr_frame_idx
             dst_video_frame, user_video_spec, user_data = approach.transcode_video(curr_video_frame, curr_frame_idx, self.network_stats, motion_history, user_data, self.video_info)
             dst_video_frame_uri = generate_dst_frame_uri(self.dst_video_folder, curr_frame_idx)
