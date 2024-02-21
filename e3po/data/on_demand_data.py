@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, see:
 #    <https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html>
-
+import os
 import os.path as osp
 import importlib
 
@@ -88,5 +88,7 @@ class OnDemandData(BaseData):
                 remove_temp_files(self.dst_video_folder)
                 write_video_json(self.json_path, dst_video_size, chunk_info, user_video_spec)
             remove_temp_video(source_video_uri)
+            if os.path.exists(user_data['transcode_video_uri']):
+                remove_temp_video(user_data['transcode_video_uri'])
 
         self.logger.info(f"on_demand preprocessing end.")

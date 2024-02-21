@@ -176,14 +176,14 @@ def get_curr_display_frames(settings, current_display_chunks, curr_ts, frame_idx
                 settings.dst_video_folder,
                 f'{tile_id}.mp4'
             )
-            tile_frame = extract_frame(tile_video_path, frame_idx % settings.chunk_frame_num)
+            tile_frame = extract_frame(tile_video_path, frame_idx % settings.chunk_frame_num, settings.ffmpeg_settings)
             curr_display_frames.append(tile_frame)
     elif settings.approach_mode == "transcoding":
         tile_video_path = osp.join(
             settings.dst_video_folder,
             f"{settings.approach_folder_name}.mp4"
         )
-        tile_frame = extract_frame(tile_video_path, frame_idx)
+        tile_frame = extract_frame(tile_video_path, frame_idx, settings.ffmpeg_settings)
         curr_display_frames.append(tile_frame)
     else:
         raise ValueError("error when read the approach mode, which should be on_demand or transcoding!")
@@ -217,7 +217,7 @@ def generate_benchmark_result(settings, curr_fov, frame_idx):
     _3d_polar_coord = fov_to_3d_polar_coord(fov_ypr, curr_fov['range_fov'], curr_fov['fov_resolution'])
 
     if not settings.save_benchmark_flag or not os.path.exists(dst_benchmark_frame_uri):
-        src_img = settings.extract_frame('src', '', frame_idx)
+        src_img = extract_frame(settings.ori_video_uri, frame_idx, settings.ffmpeg_settings)
         src_height, src_width = src_img.shape[:2]
         inter_order = get_interpolation(settings.opt['e3po_settings']['metric']['inter_mode'])
         pixel_coord = _3d_polar_coord_to_pixel_coord(_3d_polar_coord, settings.video_info['projection'], [src_height, src_width])
@@ -234,33 +234,21 @@ def generate_benchmark_result(settings, curr_fov, frame_idx):
     return dst_benchmark_frame_uri
 
 
-def extract_frame(video_path, frame_idx):
-    """
-    Given the video path, extract the corresponding video frames and return the frame data.
+def extract_frame(video_uri, frame_idx, ffmpeg_settings):
+    """Extract the video frame of the given index."""
+    frame_uri = osp.join(osp.dirname(video_uri), f"{frame_idx}.png")
+    cmd = f"{ffmpeg_settings['ffmpeg_path']} " \
+          f"-i {video_uri} " \
+          f"-vf select='eq(n\,{frame_idx})' " \
+          f"-vframes 1 " \
+          f"-y {frame_uri} " \
+          f"-loglevel {ffmpeg_settings['loglevel']} "
+    os.system(cmd)
 
-    Parameters
-    ----------
-    video_path: str
-        video path
-    frame_idx: int
-        frame index
+    assert os.path.exists(frame_uri), f"Error: File {frame_uri} does not exist."
+    frame = cv2.imread(frame_uri)
+    os.remove(frame_uri)
 
-    Returns
-    -------
-    frame: array
-        the corresponding frame content with given frame index
-    """
-
-    frame_extractor = cv2.VideoCapture()
-    assert frame_extractor.open(video_path), f"[error] Can't read video[{video_path}]"
-
-    current_frame_index = -1
-    while current_frame_index < frame_idx:
-        ret, frame = frame_extractor.read()
-        if not ret:
-            raise ValueError("Error: Unable to read frame.")
-        current_frame_index += 1
-    frame_extractor.release()
     return frame
 
 

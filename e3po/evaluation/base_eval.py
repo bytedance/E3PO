@@ -18,9 +18,7 @@
 #    <https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html>
 
 import os.path as osp
-import cv2
 import os
-import numpy as np
 import shutil
 from e3po.utils import get_logger
 
@@ -107,7 +105,6 @@ class BaseEvaluation:
         self.frame_extractor = {}       # storing cv2.VideoCapture class objects
         self.frame_idx = {}             # record the sequence number of the current extracted frame
         self.last_frame = {}            # record the last extracted frame for each video.
-        self._init_frame_extractor()
 
         # data indicators to be counted
         self.psnr = []
@@ -184,35 +181,7 @@ class BaseEvaluation:
         self.encoding_params = self.system_opt['encoding_params']
         self.chunk_frame_num = self.video_fps * self.video_info['chunk_duration']
 
+
     def set_base_ts(self, base_ts):
         """Set starting timestamp of client motion trace."""
         self.base_ts = base_ts
-
-    def _init_frame_extractor(self):
-        """Initialize frame extractor for source video."""
-        self.logger.info('[initialize frame extractor] start')
-        video_path = osp.join(self.video_dir, self.system_opt['video']['origin']['video_name'])
-        self.frame_extractor['src_'] = cv2.VideoCapture()
-        self.frame_idx['src_'] = -1
-        assert self.frame_extractor['src_'].open(video_path), f"[error] Can't read video[{video_path}]"
-
-        self.logger.info('[initialize frame extractor] end')
-
-    def extract_frame(self, projection_mode, quality, target_idx):
-        """Extract the video frame of the given index."""
-        ret = False
-        key = f"{projection_mode}_{quality}"
-        while self.frame_idx[key] < target_idx - 1:
-            ret = self.frame_extractor[key].grab()
-            if not ret:
-                break
-            self.frame_idx[key] += 1
-        if self.frame_idx[key] == target_idx - 1:
-            ret, frame = self.frame_extractor[key].read()
-        if ret:
-            self.frame_idx[key] += 1
-            frame = np.array(frame)
-            self.last_frame[key] = frame
-        else:
-            frame = self.last_frame[key]
-        return frame

@@ -21,7 +21,7 @@ import cv2
 import os
 import numpy as np
 import os.path as osp
-from e3po.utils import get_logger
+from e3po.utils import get_logger, extract_frame
 from e3po.utils.misc import get_video_size
 from e3po.utils.projection_utilities import transform_projection
 
@@ -243,11 +243,10 @@ def transcode_video(source_video_uri, src_proj, dst_proj, src_resolution, dst_re
     tmp_cap = cv2.VideoCapture()
     assert tmp_cap.open(source_video_uri), f"[error] Can't read video[{source_video_uri}]"
     frame_count = int(tmp_cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    tmp_cap.release()
+
     for frame_idx in range(frame_count):
-        ret, source_frame = tmp_cap.read()
-        if not ret:
-            print("Error: Unable to read frame.")
-            break
+        source_frame = extract_frame(source_video_uri, frame_idx, ffmpeg_settings)
         pixel_coord = transform_projection(dst_proj, src_proj, dst_resolution, src_resolution)
         dstMap_u, dstMap_v = cv2.convertMaps(pixel_coord[0].astype(np.float32), pixel_coord[1].astype(np.float32), cv2.CV_16SC2)
         transcode_frame = cv2.remap(source_frame, dstMap_u, dstMap_v, cv2.INTER_LINEAR)
