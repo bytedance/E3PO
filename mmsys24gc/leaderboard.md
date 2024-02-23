@@ -1,3 +1,23 @@
+# Testing on 20240221:
+<div align="center">
+
+| $Rank$ |   $Group ~ Name$   |  $S$  | $MSE$  | $Bandwidth~Cost$ | $Storage~Cost$ | $Computation~Cost$ | $Approach~Type$ |
+|:------:|:------------------:|:-----:|:------:|:----------------:|:--------------:|:------------------:|:---------------:|
+|   1    |     360Gatwick     | 7.210 | 17.563 |    3.437E-03     |   7.627E-07    |         0          |    on_demand    |
+|   2    |      Daybreak      | 7.156 | 15.670 |    1.237E-03     |       0        |      3.34E-03      |   transcoding   |
+|   3    |      Apparate      | 6.849 | 20.524 |    2.400E-03     |   6.854E-07    |         0          |    on_demand    |
+|   4    | 360 Security Guard | 6.809 | 16.905 |    1.208E-03     |       0        |      3.34E-03      |   transcoding   |
+|   5    |        erp         | 6.390 | 20.142 |    3.646E-03     |   1.022E-06    |         0          |    on_demand    |
+|   6    |     犀牛鸟          | 6.298 | 21.069 |    3.297E-03     |   6.747E-07    |         0          |    on_demand    |
+|   7    |     custom_eac     | 6.096 | 22.275 |    3.076E-03     |   6.784E-07    |         0          |    on_demand    |
+|   8    |      cubemap       | 5.763 | 24.423 |    2.742E-03     |   6.743E-07    |         0          |    on_demand    |
+|   9    |      freedom       | 4.045 | 34.280 |    8.279E-04     |       0        |      3.34E-03      |   transcoding   |
+
+
+</div>
+
+
+
 # Testing on 20240218:
 <div align="center">
 
