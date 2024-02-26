@@ -69,8 +69,7 @@ def calc_arrival_ts(settings, dl_list, video_size, network_stats):
     """
 
     arrival_list = {}
-    last_chunk_idx = -1
-    last_chunk_size = -1
+
     for row in dl_list:
         chunk_idx = row['chunk_idx']
         chunk_size = 0
@@ -80,7 +79,7 @@ def calc_arrival_ts(settings, dl_list, video_size, network_stats):
         playable_ts = row['decision_data']['system_ts'] + download_delay \
                       + network_stats[0]['rtt'] + network_stats[0]['rendering_delay']
 
-        if chunk_idx != last_chunk_idx:                # new chunk
+        if chunk_idx not in arrival_list.keys():                # new chunk
             tmp_arrival_list = []
             for tile_id in row['decision_data']['tile_info']:
                 tmp_arrival_list.append(
@@ -94,11 +93,7 @@ def calc_arrival_ts(settings, dl_list, video_size, network_stats):
                 'chunk_size': chunk_size,
                 'tile_list': tmp_arrival_list
             }
-            last_chunk_idx = chunk_idx
-            last_chunk_size = chunk_size
         else:                                           # same chunk
-            chunk_size += last_chunk_size
-            last_chunk_size = chunk_size
             for tile_id in row['decision_data']['tile_info']:
                 arrival_list[chunk_idx]['tile_list'].append(
                     {
@@ -106,7 +101,7 @@ def calc_arrival_ts(settings, dl_list, video_size, network_stats):
                         'tile_id': tile_id
                     }
                 )
-            arrival_list[chunk_idx]['chunk_size'] = chunk_size
+            arrival_list[chunk_idx]['chunk_size'] += chunk_size
     settings.logger.info("[decision to playable] end")
 
     return arrival_list
