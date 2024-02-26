@@ -9,7 +9,7 @@
 |   4    |      Apparate      | 7.465 | 17.604 |    2.875E-03     |   1.040E-06    |         0          |    on_demand    |
 |   5    |     bitedance      | 7.385 | 16.820 |    3.451E-03     |   1.015E-06    |         0          |    on_demand    |
 |   6    | 360 Security Guard | 7.181 | 15.305 |    1.406E-03     |       0        |     3.340E-03      |   transcoding   |
-|   7    |     Rhinobird      | 6.748 | 17.443 |   4.398E-03      |   1.008E-06    |         0          |    on_demand    |
+|   7    |     犀牛鸟      | 6.748 | 17.443 |   4.398E-03      |   1.008E-06    |         0          |    on_demand    |
 |   8    |        No.1        | 6.509 | 19.767 |    3.573E-03     |   4.921E-06    |         0          |    on_demand    |
 |   9    |        erp         | 6.390 | 20.142 |    3.646E-03     |   1.022E-06    |         0          |    on_demand    |
 |   10   |     custom_eac     | 6.096 | 22.275 |    3.076E-03     |   6.784E-07    |         0          |    on_demand    |
@@ -17,9 +17,10 @@
 |   12   |      freedom       | 4.045 | 34.280 |    8.279E-04     |       0        |      3.34E-03      |   transcoding   |
 |   13   |   SJTU_medialab    | 3.916 | 875.278|    2.248E-03     |   1.022E-06    |         0          |    on_demand    |
 
+</div>
 
 
-# Testing on 20240225:
+# Testing on 20240224:
 <div align="center">
 
 | $Rank$ |   $Group ~ Name$   |  $S$  | $MSE$  | $Bandwidth~Cost$ | $Storage~Cost$ | $Computation~Cost$ | $Approach~Type$ |
