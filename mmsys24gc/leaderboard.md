@@ -1,3 +1,26 @@
+# Testing on 20240226:
+<div align="center">
+
+| $Rank$ |   $Group ~ Name$   |  $S$  | $MSE$  | $Bandwidth~Cost$ | $Storage~Cost$ | $Computation~Cost$ | $Approach~Type$ |
+|:------:|:------------------:|:-----:|:------:|:----------------:|:--------------:|:------------------:|:---------------:|
+|   1    |       360LCY       | 8.590 | 13.081 |    3.794E-03     |   2.772E-06    |         0          |    on_demand    |
+|   2    |      Daybreak      | 8.213 | 11.248 |    2.088E-03     |       0        |     3.340E-03      |   transcoding   |
+|   3    |       Bingo        | 7.729 | 16.966 |    2.771E-03	  |   1.117E-06    |         0          |    on_demand    |
+|   4    |      Apparate      | 7.557 | 17.062 |    3.040E-03     |   1.082E-06    |         0          |    on_demand    |
+|   5    |        No.1        | 7.551 | 17.022 |    3.057E-03     |   4.921E-06    |         0          |    on_demand    |
+|   6    |     bitedance      | 7.385 | 16.820 |    3.451E-03     |   1.015E-06    |         0          |    on_demand    |
+|   7    |   SJTU_medialab    | 7.368 | 16.884 |    3.475E-03     |   1.022E-06    |         0          |    on_demand    |
+|   8    | 360 Security Guard | 7.181 | 15.305 |    1.406E-03     |       0        |     3.340E-03      |   transcoding   |
+|   9    |     Rhinobird      | 6.748 | 17.443 |   4.398E-03      |   1.008E-06    |         0          |    on_demand    |
+|   10   |        erp         | 6.390 | 20.142 |    3.646E-03     |   1.022E-06    |         0          |    on_demand    |
+|   11   |     custom_eac     | 6.096 | 22.275 |    3.076E-03     |   6.784E-07    |         0          |    on_demand    |
+|   12   |      cubemap       | 5.763 | 24.423 |    2.742E-03     |   6.743E-07    |         0          |    on_demand    |
+|   13   |      freedom       | 4.045 | 34.280 |    8.279E-04     |       0        |      3.34E-03      |   transcoding   |
+
+
+</div>
+
+
 # Testing on 20240225:
 <div align="center">
 
