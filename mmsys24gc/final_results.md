@@ -51,7 +51,7 @@ We congratulate the three teams winning this grand challenge!
 
 <div align="center">
 
-| &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $Rank$ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; | &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $Group ~ Name$ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; |
+| &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $Rank$ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; | &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $Group ~ Name$ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; |
 |:---------:|:-------------------:|
 | 1st Place	|      bitedance      |
 | 2nd Place	|      Bingo          |
