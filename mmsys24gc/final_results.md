@@ -36,7 +36,7 @@ We also performed an extra round for the top three teams using two additional se
 
 <div align="center">
 
-| &emsp; $Rank$ &emsp; | &emsp;  $Group ~ Name$  &emsp; |  &emsp; $Avg ~Score$ &emsp; | &emsp;$Video4 ~S1$ &emsp; | &emsp; $Video4 ~S2$ &emsp; | 
+| &emsp; $Rank$ &emsp; | &emsp;  $Group ~ Name$  &emsp; |  &emsp; $Avg ~Score$ &emsp; | &emsp; $Video4 ~S1$ &emsp; | &emsp; $Video4 ~S2$ &emsp; | 
 |:------:|:------------------:|:--------------:|:-------------:|:------------:|
 | 1	     |  bitedance         | 4.032 |	4.221 |	3.842 |
 | 2	     |  Bingo             | 3.839 |	4.100 |	3.579 |
@@ -51,12 +51,11 @@ We congratulate the three teams winning this grand challenge!
 
 <div align="center">
 
-| &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $Rank$ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; | &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $Group ~ Name$ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; |
+| &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $Rank$ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; | &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $Group ~ Name$ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; |
 |:---------:|:-------------------:|
 | 1st Place	|      bitedance      |
 | 2nd Place	|      Bingo          |
-| 3rd Place |      360LCY	        |
-
+| 3rd Place |      360LCY	      |
 
 </div>
 
