@@ -51,11 +51,11 @@ We congratulate the three teams winning this grand challenge!
 
 <div align="center">
 
-| &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $Rank$ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; | &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; $Group ~ Name$ &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; |
-|:---------:|:-------------------:|
-| 1st Place	|      bitedance      |
-| 2nd Place	|      Bingo          |
-| 3rd Place |      360LCY	      |
+|  &emsp;&emsp; $Rank$ &emsp;&emsp; | &emsp;&emsp; $Group ~ Name$ &emsp;&emsp; | $ Affiliation $ |
+|:---------:|:-------------------:| :-------------------: |
+| 1st Place	|      Bitedance      | Beijing University of Posts and Telecommunications |
+| 2nd Place	|      Bingo          | Communication University of China |
+| 3rd Place |      360LCY	      | Kingston University |
 
 </div>
 
