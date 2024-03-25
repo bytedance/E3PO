@@ -55,7 +55,7 @@ class TranscodingEvaluation(BaseEvaluation):
         video_size = read_video_json(self.video_json_path)
         arrival_list = calc_arrival_ts(self, dl_list, video_size, self.network_stats)
 
-        pre_downloading_duration = arrival_list[0]['tile_list'][0]['playable_ts']
+        pre_downloading_duration = arrival_list[1]['tile_list'][0]['playable_ts']
         self.set_base_ts(pre_downloading_duration)
         motion_record = pre_processing_client_log(self.system_opt)
         motion_clock = generate_motion_clock(self, motion_record)
