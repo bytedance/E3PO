@@ -220,7 +220,11 @@ def generate_display_result(curr_display_frames, current_display_chunks, curr_fo
         user_data = init_user(user_data, video_info)
 
     client_fov = [float(curr_fov['curr_motion']['yaw']), float(curr_fov['curr_motion']['pitch']), 0]
-    server_fov = get_server_fov(video_size, frame_idx)
+
+    frame_idx_temp = frame_idx
+    if frame_idx_temp > len(current_display_chunks) - 1:
+        frame_idx_temp = len(current_display_chunks) - 1
+    server_fov = get_server_fov(video_size, frame_idx_temp)
 
     # generate client image
     _3d_polar_coord = fov_to_3d_polar_coord(client_fov, curr_fov['range_fov'], curr_fov['fov_resolution'])
