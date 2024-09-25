@@ -188,7 +188,8 @@ def get_curr_display_frames(settings, current_display_chunks, curr_ts, frame_idx
             settings.dst_video_folder,
             f"{settings.approach_folder_name}.mp4"
         )
-        frame_idx = len(current_display_chunks) - 1
+        if frame_idx > len(current_display_chunks) - 1:
+            frame_idx = len(current_display_chunks) - 1
         tile_frame = extract_frame(tile_video_path, frame_idx, settings.ffmpeg_settings)
         curr_display_frames.append(tile_frame)
     else:
