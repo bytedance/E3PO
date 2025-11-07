@@ -25,6 +25,9 @@ from copy import deepcopy
 from e3po.utils.json import get_video_json_size
 from e3po.utils.projection_utilities import \
     fov_to_3d_polar_coord, _3d_polar_coord_to_pixel_coord
+from e3po.utils.misc import get_video_size
+from e3po.utils.network_trace import update_network
+import subprocess
 
 
 def update_curr_fov(curr_fov, curr_motion):
@@ -48,7 +51,7 @@ def update_curr_fov(curr_fov, curr_motion):
     return curr_fov
 
 
-def calc_arrival_ts(settings, dl_list, video_size, network_stats):
+def calc_arrival_ts(settings, dl_list, video_size, network_record):
     """
     Calculate the available timestamp of downloaded video tiles
 
@@ -60,8 +63,9 @@ def calc_arrival_ts(settings, dl_list, video_size, network_stats):
         the decided and downloaded tile list
     video_size: dict
         the video size after video preprocessing
-    network_stats: dict
-        the network status of current timestamp
+    network_record : list of dict
+        Full list of network state records. Each record is a dictionary containing at least
+        the 'start_ms' field, indicating when the record becomes active.
 
     Returns
     -------
@@ -70,15 +74,45 @@ def calc_arrival_ts(settings, dl_list, video_size, network_stats):
     """
 
     arrival_list = {}
+    rendering_delay = settings.system_opt['network_trace']['rendering_delay']
+
+    network_history = []
+    network_last_idx = 0
+    curr_network_ts = 0
+    last_chunk_complete_time = 0    # Time when the previous chunk finished downloading
 
     for row in dl_list:
         chunk_idx = row['chunk_idx']
         chunk_size = 0
         for tile_id in row['decision_data']['tile_info']:
             chunk_size += get_video_json_size(video_size, chunk_idx, tile_id)
-        download_delay = chunk_size / network_stats[0]['bandwidth'] / 1000
-        playable_ts = row['decision_data']['system_ts'] + download_delay \
-                      + network_stats[0]['rtt'] + network_stats[0]['rendering_delay']
+
+        need_download_size = chunk_size         # Size of the chunk that needs to be downloaded
+        curr_ts = row['decision_data']['system_ts']
+        if curr_network_ts < curr_ts:
+            curr_network_ts = curr_ts
+        if last_chunk_complete_time < curr_ts:  # The previous chunk completed downloading before this one
+            last_chunk_complete_time = curr_ts
+
+        while need_download_size > 0:           # The current chunk has not finished downloading
+            network_history, network_last_idx = update_network(curr_network_ts, network_last_idx, network_history,
+                                                               network_record)
+            network_stats = network_history[-1]  # Get the current available bandwidth
+            max_download_size = network_stats['throughput_MBps'] * min(network_stats['start_ms'] + network_stats['duration_ms'] - last_chunk_complete_time,
+                                                                       network_stats['duration_ms']) * 1000     # In Bytes
+
+            if max_download_size >= need_download_size: # Current available bandwidth can complete the download
+                download_delay = chunk_size / network_stats['throughput_MBps'] / 1000   # In ms
+                chunk_complete_time = last_chunk_complete_time + download_delay
+                need_download_size = 0
+                last_chunk_complete_time = chunk_complete_time
+            else:
+                need_download_size -= max_download_size
+                last_chunk_complete_time = network_stats['start_ms'] + network_stats['duration_ms']
+                curr_network_ts = network_stats['start_ms'] + network_stats['duration_ms']
+
+        download_delay = chunk_complete_time - row['decision_data']['system_ts']
+        playable_ts = row['decision_data']['system_ts'] + download_delay + network_stats['rtt_ms'] + rendering_delay
 
         if chunk_idx not in arrival_list.keys():                # new chunk
             tmp_arrival_list = []
@@ -259,55 +293,7 @@ def extract_frame(video_uri, frame_idx, ffmpeg_settings):
     return frame
 
 
-def calculate_gc_score(settings, total_bw, video_size):
-    """
-    Calculate the final grand challenge score
-
-    Parameters
-    ----------
-    settings: dict
-        system configuration information
-    total_bw: int
-        the calculated bandwidth usage of different approaches
-    video_size:
-        the video size of preprocessed video
-
-    Returns
-    -------
-    gc_score: float
-        the calculated final grand challenge score of different approaches
-    """
-
-    total_storage = 0
-
-    for tile_id in video_size.keys():
-        total_storage += video_size[tile_id]['video_size']
-
-    total_storage = round(total_storage / 1000 / 1000 / 1000, 6)  # GB
-    total_bw = round(total_bw / 1000 / 1000 / 1000, 6)  # GB
-
-    if settings.opt['approach_type'] == 'on_demand':
-        total_calc = 0
-    elif settings.opt['approach_type'] == 'transcoding':
-        total_calc = settings.video_info['duration']    # (s)
-        total_storage = 0
-    else:
-        raise ValueError("error when read the approach mode!")
-
-    mse = round(np.average(settings.mse), 3)
-    w_1 = settings.gc_metrics['gc_w1']
-    w_2 = settings.gc_metrics['gc_w2']
-    w_3 = settings.gc_metrics['gc_w3']
-    alpha = settings.gc_metrics['gc_alpha']
-    beta = settings.gc_metrics['gc_beta']
-
-    gc_score = 1 / (alpha * mse + beta * (w_1*total_bw + w_2*total_storage + w_3*total_calc))
-    cost = [w_1*total_bw, w_2*total_storage, w_3*total_calc]
-
-    return gc_score, cost
-
-
-def write_dict(settings, max_bandwidth, total_size, gc_score, cost, avg_psnr, avg_ssim, avg_mse):
+def write_dict(settings, max_bandwidth, total_size, metric_360PI, cost, avg_psnr, avg_ssim, avg_mse, avg_vmaf, gc_score):
     """
     Organize the calculated results into the required dictionary format
 
@@ -320,6 +306,7 @@ def write_dict(settings, max_bandwidth, total_size, gc_score, cost, avg_psnr, av
     avg_bandwidth = round(total_size / (settings.video_info['duration']
                                         + settings.pre_download_duration / 1000) / 125 / 1000, 3)
     total_transfer_size = round(total_size / 1000 / 1000, 6)
+    metric_360PI = round(metric_360PI, 6)
     gc_score = round(gc_score, 6)
 
     misc_dict = {
@@ -328,8 +315,10 @@ def write_dict(settings, max_bandwidth, total_size, gc_score, cost, avg_psnr, av
         "AVG PSNR": f"{avg_psnr}dB",
         "AVG SSIM": f"{avg_ssim}",
         "AVG MSE": f"{avg_mse}",
+        "AVG VMAF": f"{avg_vmaf}",
         "Cost": f"{cost}",
         'Total transfer size': f"{total_transfer_size}MB",
+        '360PI': f"{metric_360PI}",
         'GC Score': f"{gc_score}"
     }
 
@@ -451,7 +440,197 @@ def evaluate_misc(settings, arrival_list, video_size):
     avg_ssim = round(np.average(settings.ssim), 3)
     avg_mse = round(np.average(settings.mse), 3)
 
-    gc_score, cost = calculate_gc_score(settings, total_size, video_size)
-    misc_dict = write_dict(settings, max_bandwidth, total_size, gc_score, cost, avg_psnr, avg_ssim, avg_mse)
+    gc_score = calculate_gc_score(settings, total_size, video_size)
+
+    # calculate average vmaf
+    avg_vmaf = calculate_vmaf(settings.benchmark_img_path, settings.result_img_path)
+
+    # calculate 360PI metric
+    metric_360PI, cost = calculate_metric_360PI(settings, total_size, video_size, avg_vmaf)
+
+    # write results into JSON file
+    misc_dict = write_dict(settings, max_bandwidth, total_size, metric_360PI, cost, avg_psnr, avg_ssim, avg_mse, avg_vmaf, gc_score)
 
     return [misc_dict]
+
+
+def calculate_metric_360PI(settings, total_bw, video_size, vmaf):
+    """
+    Calculate the final grand challenge score
+
+    Parameters
+    ----------
+    settings: dict
+        system configuration information
+    total_bw: int
+        the calculated bandwidth usage of different approaches
+    video_size:
+        the video size of preprocessed video
+
+    Returns
+    -------
+    metirc_360PI: float
+        the calculated final metric of different approaches
+    """
+
+    # calculate the storage
+    total_storage = 0
+    for tile_id in video_size.keys():
+        total_storage += video_size[tile_id]['video_size']
+    total_storage = round(total_storage / 1000 / 1000 / 1000, 6)  # GB
+
+    # calculate the bandwidth
+    total_bw = round(total_bw / 1000 / 1000 / 1000, 6)  # GB
+
+    # calculate the computation
+    if settings.opt['approach_type'] == 'on_demand':
+        total_calc = 0
+    elif settings.opt['approach_type'] == 'transcoding':
+        total_calc = settings.video_info['duration']    # (s)
+        total_storage = 0
+    else:
+        raise ValueError("error when read the approach mode!")
+
+    # calculate the total cost
+    w_1 = settings.gc_metrics['gc_w1']
+    w_2 = settings.gc_metrics['gc_w2']
+    w_3 = settings.gc_metrics['gc_w3']
+    cost = w_1*total_bw + w_2*total_storage + w_3*total_calc
+
+    # calculate the parameters of original video
+    video_duration = settings.video_info['duration']
+    cost_ori, vmaf_ori = calc_ori_video_para(settings.ori_video_uri, w_1, w_2, w_3, video_duration)            # fixme, the ori_video_ori should be a parameter
+
+    # calculate the defined metric
+    metric_360PI = calculate_distance(settings, cost, vmaf, cost_ori, vmaf_ori)
+
+    return metric_360PI, [cost]
+
+
+def calculate_vmaf(benchmark_img_path, result_img_path):
+    """
+    Parameters
+    ----------
+    benchmark_img_path
+    result_img_path
+
+    Returns
+    -------
+    The calculated VMAF value.
+    """
+    command = [
+        'ffmpeg',
+        '-i', result_img_path+"/%d.png",
+        '-i', benchmark_img_path+"/%d.png",
+        '-filter_complex',
+        'libvmaf=model=version=vmaf_4k_v0.6.1:log_path=erp.log',
+        '-f', 'null',
+        '-'
+    ]
+
+    # execute the ffmpeg command and get the output result.
+    result = subprocess.run(command, capture_output=True, text=True)
+
+    # get the vmaf Score
+    for line in result.stderr.split('\n'):
+        if 'VMAF score' in line:
+            vmaf_score = float(line.split(':')[1].strip())
+            return vmaf_score
+
+    return None
+
+
+def calculate_distance(settings, cost, vmaf, cost_ori, vmaf_ori):
+    """
+    Parameters
+    ----------
+    settings:
+    cost: the calculated cost of current approach
+    vmaf: the calculated vmaf of current approach
+    cost_ori: the calculated cost of source video
+    vmaf_ori: the calculated vmaf of source video
+
+    Returns
+    -------
+    The calculated distance between the point (cost, point) to the ground truth line.
+    """
+    trans_para = settings.system_opt['metric']['trans_para'] * 1000
+
+    distance = abs(trans_para * cost - vmaf + (vmaf_ori - trans_para * cost_ori)) / np.sqrt(trans_para ** 2 + 1)
+
+    # determine whether the dot is above or below the ground truth line
+    vmaf_line = trans_para * (cost - cost_ori) + vmaf_ori
+    if vmaf < vmaf_line:
+        distance = - distance
+
+    return distance
+
+
+def calc_ori_video_para(ori_video_uri, w_1, w_2, w_3, video_duration):
+    """
+    Parameters
+    ----------
+    ori_video_uri: the uri of source video
+    w_1: the weight parameter for calculating bandwidth cost
+    w_2: the weight parameter for calculating storage cost
+    w_3: the weight parameter for calculating computation cost
+    video_duration: the video duration of source video
+
+    Returns
+    -------
+    The calculated cost and vmaf values of source video, as the upper bound
+    """
+
+    vmaf_ori = 100
+    video_size = get_video_size(ori_video_uri)
+    video_storage = round(video_size / 1000 / 1000 / 1000, 6)              # GB
+    video_bw = round(video_size / 1000 / 1000 / 1000, 6)                   # GB
+    cost_ori = w_1 * video_bw + w_2 * video_storage + w_3 * video_duration
+
+    return cost_ori, vmaf_ori
+
+def calculate_gc_score(settings, total_bw, video_size):
+    """
+    Calculate the final grand challenge score
+
+    Parameters
+    ----------
+    settings: dict
+        system configuration information
+    total_bw: int
+        the calculated bandwidth usage of different approaches
+    video_size:
+        the video size of preprocessed video
+
+    Returns
+    -------
+    gc_score: float
+        the calculated final grand challenge score of different approaches
+    """
+
+    total_storage = 0
+
+    for tile_id in video_size.keys():
+        total_storage += video_size[tile_id]['video_size']
+
+    total_storage = round(total_storage / 1000 / 1000 / 1000, 6)  # GB
+    total_bw = round(total_bw / 1000 / 1000 / 1000, 6)  # GB
+
+    if settings.opt['approach_type'] == 'on_demand':
+        total_calc = 0
+    elif settings.opt['approach_type'] == 'transcoding':
+        total_calc = settings.video_info['duration']    # (s)
+        total_storage = 0
+    else:
+        raise ValueError("error when read the approach mode!")
+
+    mse = round(np.average(settings.mse), 3)
+    w_1 = settings.gc_metrics['gc_w1']
+    w_2 = settings.gc_metrics['gc_w2']
+    w_3 = settings.gc_metrics['gc_w3']
+    alpha = settings.gc_metrics['gc_alpha']
+    beta = settings.gc_metrics['gc_beta']
+
+    gc_score = 1 / (alpha * mse + beta * (w_1*total_bw + w_2*total_storage + w_3*total_calc))
+
+    return gc_score

@@ -22,7 +22,7 @@ from e3po.utils.registry import evaluation_registry
 from .base_eval import BaseEvaluation
 from e3po.utils.json import read_decision_json, read_video_json
 from e3po.utils.evaluation_utilities import *
-from e3po.utils import pre_processing_client_log, write_evaluation_json
+from e3po.utils import pre_processing_client_log, pre_processing_network_log, write_evaluation_json
 from e3po.utils.psnr_ssim import calculate_psnr_ssim_mse
 from e3po.utils.misc import generate_motion_clock, generate_dst_frame_uri
 
@@ -53,7 +53,8 @@ class TranscodingEvaluation(BaseEvaluation):
         evaluation_result = []
         dl_list = read_decision_json(self.decision_json_path)
         video_size = read_video_json(self.video_json_path)
-        arrival_list = calc_arrival_ts(self, dl_list, video_size, self.network_stats)
+        network_record = pre_processing_network_log(self.system_opt)
+        arrival_list = calc_arrival_ts(self, dl_list, video_size, network_record)
 
         pre_downloading_duration = arrival_list[1]['tile_list'][0]['playable_ts']
         self.set_base_ts(pre_downloading_duration)

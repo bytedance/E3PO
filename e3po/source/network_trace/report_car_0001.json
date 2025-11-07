@@ -1,0 +1,2342 @@
+[
+    {
+        "duration_ms": 741,
+        "throughput_MBps": 1.81,
+        "rtt_ms": 57.702507046839564
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.81,
+        "rtt_ms": 52.49281082467949
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 4.54,
+        "rtt_ms": 50.284056187919084
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.54,
+        "rtt_ms": 51.53955612766012
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 5.23,
+        "rtt_ms": 45.323352455859045
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 5.01,
+        "rtt_ms": 40.89271949159627
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.61,
+        "rtt_ms": 47.51317481241918
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.47,
+        "rtt_ms": 44.94954676605558
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.01,
+        "rtt_ms": 44.71246880328817
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 2.53,
+        "rtt_ms": 37.765424197423094
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 2.26,
+        "rtt_ms": 59.99330382575913
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.68,
+        "rtt_ms": 76.28918138125223
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 2.69,
+        "rtt_ms": 56.266925499872485
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 2.25,
+        "rtt_ms": 62.70065518710021
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.26,
+        "rtt_ms": 42.972305803127696
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.86,
+        "rtt_ms": 38.27036402567346
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.39,
+        "rtt_ms": 43.26719035196758
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.52,
+        "rtt_ms": 65.01922405328378
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.47,
+        "rtt_ms": 43.070089598072066
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 2.86,
+        "rtt_ms": 42.18405810304209
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 3.17,
+        "rtt_ms": 42.470804020119374
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.91,
+        "rtt_ms": 37.30336296375132
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.0,
+        "rtt_ms": 55.150114873603194
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.59,
+        "rtt_ms": 43.99400307709942
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 5.41,
+        "rtt_ms": 65.67356114084178
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.66,
+        "rtt_ms": 65.35217378052764
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.37,
+        "rtt_ms": 48.459425237019246
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.93,
+        "rtt_ms": 54.7458761947241
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.07,
+        "rtt_ms": 47.44166840996469
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.76,
+        "rtt_ms": 53.424303421040996
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 5.76,
+        "rtt_ms": 59.50246336176216
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 6.56,
+        "rtt_ms": 51.17691957424852
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 6.09,
+        "rtt_ms": 67.86037388678764
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 6.3,
+        "rtt_ms": 43.362099077558405
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.97,
+        "rtt_ms": 67.87653115059386
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.84,
+        "rtt_ms": 59.573734196201485
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 4.08,
+        "rtt_ms": 48.36992861508017
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.8,
+        "rtt_ms": 44.602076463401204
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.16,
+        "rtt_ms": 61.010319244676275
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 5.57,
+        "rtt_ms": 39.49838996356574
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 7.16,
+        "rtt_ms": 48.17065086673149
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.97,
+        "rtt_ms": 54.88988367085655
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.26,
+        "rtt_ms": 46.929547907174886
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.04,
+        "rtt_ms": 43.99159560649387
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 6.15,
+        "rtt_ms": 66.59067767476782
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 5.41,
+        "rtt_ms": 46.62853646466884
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.24,
+        "rtt_ms": 57.42562038568328
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.38,
+        "rtt_ms": 45.134504855734974
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 4.85,
+        "rtt_ms": 49.32216815260326
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 7.08,
+        "rtt_ms": 35.668749900963725
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.57,
+        "rtt_ms": 43.47400391626407
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 5.72,
+        "rtt_ms": 35.44684795675886
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.83,
+        "rtt_ms": 59.306088587101264
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 7.02,
+        "rtt_ms": 60.45015667438186
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 4.33,
+        "rtt_ms": 45.69950993346694
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.42,
+        "rtt_ms": 40.725029523002625
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.69,
+        "rtt_ms": 86.33249251337703
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.24,
+        "rtt_ms": 65.08060626561672
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 5.44,
+        "rtt_ms": 56.325964494185314
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.54,
+        "rtt_ms": 47.71065065164511
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.56,
+        "rtt_ms": 57.51705788682736
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.3,
+        "rtt_ms": 45.93404734236864
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.09,
+        "rtt_ms": 51.977039759658396
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.2,
+        "rtt_ms": 60.02023949645136
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 4.03,
+        "rtt_ms": 59.65905574339459
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.68,
+        "rtt_ms": 45.815191668305886
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.57,
+        "rtt_ms": 58.597696319683095
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 5.23,
+        "rtt_ms": 69.65629800660935
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.97,
+        "rtt_ms": 67.05852456295588
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.05,
+        "rtt_ms": 54.17224129098668
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.25,
+        "rtt_ms": 60.022901779675685
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.17,
+        "rtt_ms": 45.69281824554626
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.7,
+        "rtt_ms": 40.928312617264424
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.4,
+        "rtt_ms": 54.64402521259708
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 3.35,
+        "rtt_ms": 53.98784380083414
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.02,
+        "rtt_ms": 52.451631732496274
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 5.05,
+        "rtt_ms": 58.66368445769111
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 3.84,
+        "rtt_ms": 40.942255544902885
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.65,
+        "rtt_ms": 45.111911531042644
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.22,
+        "rtt_ms": 66.5391556163043
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.68,
+        "rtt_ms": 55.51830922893095
+    },
+    {
+        "duration_ms": 1002,
+        "throughput_MBps": 5.2,
+        "rtt_ms": 51.01508778695584
+    },
+    {
+        "duration_ms": 998,
+        "throughput_MBps": 5.07,
+        "rtt_ms": 50.08963572453006
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.28,
+        "rtt_ms": 49.20349524102145
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.46,
+        "rtt_ms": 59.22369442720402
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.61,
+        "rtt_ms": 49.58598722856079
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.58,
+        "rtt_ms": 55.69735996582409
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.89,
+        "rtt_ms": 45.229279847763955
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.97,
+        "rtt_ms": 45.21784734722931
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.48,
+        "rtt_ms": 42.430557499554155
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.25,
+        "rtt_ms": 58.97069864567284
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.38,
+        "rtt_ms": 47.00928610390907
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.89,
+        "rtt_ms": 49.89928198293422
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.25,
+        "rtt_ms": 36.80287632034803
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.41,
+        "rtt_ms": 55.254270934202815
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.95,
+        "rtt_ms": 65.61606742095717
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.33,
+        "rtt_ms": 43.45428449457234
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.35,
+        "rtt_ms": 65.73467236573465
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.36,
+        "rtt_ms": 67.02002565711868
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.38,
+        "rtt_ms": 40.05292543705655
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 3.61,
+        "rtt_ms": 39.84927520423398
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.7,
+        "rtt_ms": 54.89664009781146
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.74,
+        "rtt_ms": 37.73068016117981
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.99,
+        "rtt_ms": 58.21333994570994
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.46,
+        "rtt_ms": 56.00368971455815
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.92,
+        "rtt_ms": 47.492163557896085
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 3.8,
+        "rtt_ms": 52.3661044939364
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.42,
+        "rtt_ms": 68.58650901836933
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.21,
+        "rtt_ms": 50.1001962959229
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.81,
+        "rtt_ms": 37.46483260735301
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.73,
+        "rtt_ms": 40.45664467112111
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.63,
+        "rtt_ms": 65.19316743855278
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 2.43,
+        "rtt_ms": 38.83348807699021
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 3.18,
+        "rtt_ms": 35.82869214788924
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.63,
+        "rtt_ms": 58.03477593939173
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.94,
+        "rtt_ms": 69.41358627503554
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.08,
+        "rtt_ms": 51.06782462780184
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.53,
+        "rtt_ms": 51.82006020509831
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.78,
+        "rtt_ms": 56.99961219761518
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.47,
+        "rtt_ms": 55.242636145279945
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 3.81,
+        "rtt_ms": 38.260318237106574
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.45,
+        "rtt_ms": 54.45779193376585
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.33,
+        "rtt_ms": 47.02790497711194
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.84,
+        "rtt_ms": 50.22723335652082
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.6,
+        "rtt_ms": 45.633283126066935
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.23,
+        "rtt_ms": 45.538245767802586
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.91,
+        "rtt_ms": 46.848517097387465
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.74,
+        "rtt_ms": 48.46848077761493
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.7,
+        "rtt_ms": 52.5312009005463
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.45,
+        "rtt_ms": 48.33789503992753
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.18,
+        "rtt_ms": 41.61274442735465
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.25,
+        "rtt_ms": 54.576343868380334
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 4.54,
+        "rtt_ms": 53.166001732556595
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 5.21,
+        "rtt_ms": 41.061255000790524
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 4.01,
+        "rtt_ms": 52.42778613823075
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.62,
+        "rtt_ms": 55.79396825189293
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.86,
+        "rtt_ms": 45.948497468624566
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 4.01,
+        "rtt_ms": 55.016423868016
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.27,
+        "rtt_ms": 54.14410553146189
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.7,
+        "rtt_ms": 70.94194951453298
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.01,
+        "rtt_ms": 66.23933926351697
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.59,
+        "rtt_ms": 44.042220365066406
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.96,
+        "rtt_ms": 58.403527746281476
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.79,
+        "rtt_ms": 49.21393374998721
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.36,
+        "rtt_ms": 56.547465817230034
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.44,
+        "rtt_ms": 46.50031729670413
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.2,
+        "rtt_ms": 40.32922710707527
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.48,
+        "rtt_ms": 45.133001238071
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.29,
+        "rtt_ms": 63.9082363193491
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.97,
+        "rtt_ms": 46.70302132676131
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.23,
+        "rtt_ms": 53.91263673013018
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.54,
+        "rtt_ms": 50.56513110348762
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.67,
+        "rtt_ms": 35.643309633369256
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.23,
+        "rtt_ms": 42.26565498339908
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.19,
+        "rtt_ms": 51.71598167320006
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.55,
+        "rtt_ms": 51.35599708230889
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 5.6,
+        "rtt_ms": 63.02663715398262
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.34,
+        "rtt_ms": 52.183565661025845
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 5.81,
+        "rtt_ms": 54.8546198680784
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.53,
+        "rtt_ms": 61.679227784786
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.25,
+        "rtt_ms": 47.41600888291708
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.08,
+        "rtt_ms": 63.82274048701951
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.23,
+        "rtt_ms": 56.006600893778874
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.12,
+        "rtt_ms": 56.38003110272675
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.12,
+        "rtt_ms": 40.03833418716293
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.95,
+        "rtt_ms": 59.15855430283449
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.05,
+        "rtt_ms": 67.9133111978149
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 7.33,
+        "rtt_ms": 48.93181332774605
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.43,
+        "rtt_ms": 50.44071194094988
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.79,
+        "rtt_ms": 59.63870240957249
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.19,
+        "rtt_ms": 49.30154558204607
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.96,
+        "rtt_ms": 38.430362833876366
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.49,
+        "rtt_ms": 70.28369494274284
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.18,
+        "rtt_ms": 41.66667372861985
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.56,
+        "rtt_ms": 46.569196892213846
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.22,
+        "rtt_ms": 50.75405122985479
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.44,
+        "rtt_ms": 50.193904662303254
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 4.78,
+        "rtt_ms": 65.74183697436709
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 3.91,
+        "rtt_ms": 61.67327846407568
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.01,
+        "rtt_ms": 67.04049422395235
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.39,
+        "rtt_ms": 39.33909624557408
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.91,
+        "rtt_ms": 50.03987294566801
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.74,
+        "rtt_ms": 59.82937698005435
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.61,
+        "rtt_ms": 64.99357226235246
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 3.18,
+        "rtt_ms": 59.52371942793008
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.33,
+        "rtt_ms": 54.330705375099924
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.36,
+        "rtt_ms": 50.90077594184468
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 4.16,
+        "rtt_ms": 60.12572128705725
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.83,
+        "rtt_ms": 65.82044202833518
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 3.44,
+        "rtt_ms": 52.40655099279941
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.08,
+        "rtt_ms": 58.410714668079144
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.95,
+        "rtt_ms": 55.85288706827672
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.09,
+        "rtt_ms": 39.42776662564512
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 2.63,
+        "rtt_ms": 58.256471320430414
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 2.29,
+        "rtt_ms": 50.277422311879135
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 1.81,
+        "rtt_ms": 50.7705003648564
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.51,
+        "rtt_ms": 64.44183469683227
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.51,
+        "rtt_ms": 50.147263718306796
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.41,
+        "rtt_ms": 48.24558172200551
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.52,
+        "rtt_ms": 65.98266478986771
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.62,
+        "rtt_ms": 56.12174472493989
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 1.41,
+        "rtt_ms": 64.75956469215495
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 1.39,
+        "rtt_ms": 57.298554314088015
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.29,
+        "rtt_ms": 46.23437130771213
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.98,
+        "rtt_ms": 56.69891867120653
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.32,
+        "rtt_ms": 55.30649419472615
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.28,
+        "rtt_ms": 50.67475260186764
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.01,
+        "rtt_ms": 46.941589179805376
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.88,
+        "rtt_ms": 44.057914762909654
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 1.09,
+        "rtt_ms": 48.14336062486021
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 1.26,
+        "rtt_ms": 40.191709467539184
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 1.3,
+        "rtt_ms": 42.373059100016455
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 1.02,
+        "rtt_ms": 36.44312400342245
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.0,
+        "rtt_ms": 42.472298131191614
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.0,
+        "rtt_ms": 60.75785854016548
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.6,
+        "rtt_ms": 56.8509953856194
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 0.85,
+        "rtt_ms": 53.21108624037254
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.0,
+        "rtt_ms": 36.54732511898891
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 0.02,
+        "rtt_ms": 51.210824396817415
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.82,
+        "rtt_ms": 35.64985610536308
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.87,
+        "rtt_ms": 48.47929852432551
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 0.92,
+        "rtt_ms": 69.9118715101172
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.19,
+        "rtt_ms": 49.26960419593474
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 0.0,
+        "rtt_ms": 44.651731233469604
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.0,
+        "rtt_ms": 61.22594123473243
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.0,
+        "rtt_ms": 51.9580116059294
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 1.24,
+        "rtt_ms": 48.82811049719346
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.81,
+        "rtt_ms": 40.304681041104104
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.33,
+        "rtt_ms": 49.95316195417751
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 0.27,
+        "rtt_ms": 46.156229626008816
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.0,
+        "rtt_ms": 52.69369885732871
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.0,
+        "rtt_ms": 50.030736483770255
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.0,
+        "rtt_ms": 43.0950059784538
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.36,
+        "rtt_ms": 61.128131074648266
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 0.21,
+        "rtt_ms": 57.609720624548814
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.37,
+        "rtt_ms": 39.76368295454223
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.62,
+        "rtt_ms": 54.11910821302802
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.29,
+        "rtt_ms": 43.83219051417502
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 0.1,
+        "rtt_ms": 47.68129473373198
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.12,
+        "rtt_ms": 37.59846683381918
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.12,
+        "rtt_ms": 42.017235129357005
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.32,
+        "rtt_ms": 41.70043634635775
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.27,
+        "rtt_ms": 56.91460129132644
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 0.27,
+        "rtt_ms": 40.03350680527376
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.22,
+        "rtt_ms": 57.88157870460415
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 0.24,
+        "rtt_ms": 45.877915322801705
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.37,
+        "rtt_ms": 48.67595544126563
+    },
+    {
+        "duration_ms": 1009,
+        "throughput_MBps": 0.23,
+        "rtt_ms": 71.22654411360634
+    },
+    {
+        "duration_ms": 990,
+        "throughput_MBps": 0.27,
+        "rtt_ms": 42.79279986738829
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.3,
+        "rtt_ms": 61.67500144379456
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.39,
+        "rtt_ms": 47.29760731493647
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.44,
+        "rtt_ms": 63.22492651820244
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 0.66,
+        "rtt_ms": 42.48191004707287
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.83,
+        "rtt_ms": 69.86538309158834
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 0.93,
+        "rtt_ms": 45.21103788050026
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 1.14,
+        "rtt_ms": 43.43110133281108
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 1.39,
+        "rtt_ms": 58.1470909480108
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.18,
+        "rtt_ms": 38.70859979436645
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 1.36,
+        "rtt_ms": 47.216470066586666
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 1.96,
+        "rtt_ms": 46.153924745493526
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.59,
+        "rtt_ms": 39.394070767143084
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.0,
+        "rtt_ms": 53.32132948823802
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.15,
+        "rtt_ms": 47.72158276482226
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 1.98,
+        "rtt_ms": 49.05741175951401
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 0.0,
+        "rtt_ms": 50.48612532934947
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.53,
+        "rtt_ms": 52.11729569143111
+    },
+    {
+        "duration_ms": 1002,
+        "throughput_MBps": 1.15,
+        "rtt_ms": 48.95384011826948
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 0.8,
+        "rtt_ms": 68.31049327481747
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 1.07,
+        "rtt_ms": 40.201775084767746
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.07,
+        "rtt_ms": 42.84985338663047
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.73,
+        "rtt_ms": 46.056127761715075
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.61,
+        "rtt_ms": 61.21514730856518
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.57,
+        "rtt_ms": 42.49087009167414
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.63,
+        "rtt_ms": 54.80452749938958
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.62,
+        "rtt_ms": 68.57459937842087
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 0.43,
+        "rtt_ms": 42.778964059572154
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.39,
+        "rtt_ms": 51.57786755492318
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 0.36,
+        "rtt_ms": 36.99079034735794
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 0.41,
+        "rtt_ms": 60.21132754536649
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 1.47,
+        "rtt_ms": 48.97706923906854
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.39,
+        "rtt_ms": 43.36058597881187
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.41,
+        "rtt_ms": 61.3214929941675
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.24,
+        "rtt_ms": 50.45941255764581
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.11,
+        "rtt_ms": 61.52118916195423
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.46,
+        "rtt_ms": 64.67675406722637
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 1.93,
+        "rtt_ms": 44.44224331101129
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 1.18,
+        "rtt_ms": 46.54489221427227
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 3.46,
+        "rtt_ms": 43.99147210985443
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.35,
+        "rtt_ms": 47.832045233116496
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.36,
+        "rtt_ms": 40.39677811836232
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.23,
+        "rtt_ms": 47.01844968380391
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.15,
+        "rtt_ms": 40.044783069575416
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.5,
+        "rtt_ms": 51.624727539282915
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.16,
+        "rtt_ms": 49.955973258814005
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.85,
+        "rtt_ms": 51.224904208093925
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.11,
+        "rtt_ms": 39.32254622573876
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 2.96,
+        "rtt_ms": 42.45695267665529
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.57,
+        "rtt_ms": 54.80667816770347
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 2.92,
+        "rtt_ms": 46.866580697280504
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.76,
+        "rtt_ms": 55.88808230418326
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.14,
+        "rtt_ms": 50.547093782502444
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.98,
+        "rtt_ms": 49.454022806824
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 3.8,
+        "rtt_ms": 61.19349970146761
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.36,
+        "rtt_ms": 42.2174337398272
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.01,
+        "rtt_ms": 59.686549879556395
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 4.92,
+        "rtt_ms": 59.51941637054483
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.38,
+        "rtt_ms": 64.30357881975345
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.41,
+        "rtt_ms": 53.05772866633403
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.72,
+        "rtt_ms": 61.69258086290003
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.15,
+        "rtt_ms": 43.46831841190928
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.27,
+        "rtt_ms": 57.39837968858691
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.44,
+        "rtt_ms": 61.477113842671926
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.42,
+        "rtt_ms": 56.67043348058659
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.17,
+        "rtt_ms": 57.02150342165669
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 2.09,
+        "rtt_ms": 59.07353634295777
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 7.13,
+        "rtt_ms": 49.87842282066593
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 4.44,
+        "rtt_ms": 49.30044757916289
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.74,
+        "rtt_ms": 53.458715298625954
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.59,
+        "rtt_ms": 52.232121628748786
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.93,
+        "rtt_ms": 56.23313663806192
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.53,
+        "rtt_ms": 45.23714664446225
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.05,
+        "rtt_ms": 55.48300456755465
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.32,
+        "rtt_ms": 47.76150996793631
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 5.58,
+        "rtt_ms": 51.7630902607324
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.29,
+        "rtt_ms": 50.35694225698211
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.75,
+        "rtt_ms": 55.28557209463014
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.29,
+        "rtt_ms": 52.36624464966634
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.84,
+        "rtt_ms": 72.51957730986207
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 3.76,
+        "rtt_ms": 43.77558797974177
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.57,
+        "rtt_ms": 52.72026061130092
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.95,
+        "rtt_ms": 42.84446439670935
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.04,
+        "rtt_ms": 48.17824586846274
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.35,
+        "rtt_ms": 52.529225581090046
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.98,
+        "rtt_ms": 43.08538383597474
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 1.79,
+        "rtt_ms": 51.935132710894315
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.21,
+        "rtt_ms": 59.15165015318871
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.88,
+        "rtt_ms": 43.149566508067565
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.67,
+        "rtt_ms": 50.44490008588735
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.52,
+        "rtt_ms": 52.02461598998311
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.9,
+        "rtt_ms": 65.17025187424335
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 3.7,
+        "rtt_ms": 50.0100319581505
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.82,
+        "rtt_ms": 48.83333737089976
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.73,
+        "rtt_ms": 58.29548527118558
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.63,
+        "rtt_ms": 61.78873808935241
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.68,
+        "rtt_ms": 49.72819978537159
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.73,
+        "rtt_ms": 47.77171511863772
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.69,
+        "rtt_ms": 52.035752692477814
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.84,
+        "rtt_ms": 49.97032207400292
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.79,
+        "rtt_ms": 45.46339049796198
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 4.2,
+        "rtt_ms": 35.40348969949383
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.11,
+        "rtt_ms": 44.13557793787255
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.2,
+        "rtt_ms": 53.70606754539463
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.99,
+        "rtt_ms": 60.86007288230551
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.99,
+        "rtt_ms": 43.878864301507946
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.05,
+        "rtt_ms": 54.86435056834818
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.0,
+        "rtt_ms": 42.92331679070523
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.41,
+        "rtt_ms": 60.02731508735785
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.12,
+        "rtt_ms": 46.34507464455695
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.06,
+        "rtt_ms": 56.725277783731364
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 3.96,
+        "rtt_ms": 49.328536046862155
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.82,
+        "rtt_ms": 45.077640829893866
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.4,
+        "rtt_ms": 49.50006617827683
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 5.16,
+        "rtt_ms": 56.9956789930607
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 5.45,
+        "rtt_ms": 55.690851163491395
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 6.02,
+        "rtt_ms": 38.23656063305934
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.04,
+        "rtt_ms": 56.83095356938375
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 6.1,
+        "rtt_ms": 37.75411119402367
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.87,
+        "rtt_ms": 58.06470755085335
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.59,
+        "rtt_ms": 40.7774839081524
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.36,
+        "rtt_ms": 38.81683936368877
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.86,
+        "rtt_ms": 47.438968535176556
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 6.65,
+        "rtt_ms": 55.46663133015529
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 6.82,
+        "rtt_ms": 63.24367714565493
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 6.77,
+        "rtt_ms": 46.95300580982546
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.39,
+        "rtt_ms": 42.03119788524782
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 6.94,
+        "rtt_ms": 46.125202996291414
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.72,
+        "rtt_ms": 44.187307609591215
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.95,
+        "rtt_ms": 47.51700896350542
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 8.33,
+        "rtt_ms": 43.210180849553744
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 9.11,
+        "rtt_ms": 63.82681630677037
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 9.22,
+        "rtt_ms": 56.62916187959658
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 8.56,
+        "rtt_ms": 46.30740961843616
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 8.72,
+        "rtt_ms": 45.88619529613095
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 9.82,
+        "rtt_ms": 45.35536316741113
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 9.87,
+        "rtt_ms": 49.869484653102894
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 9.61,
+        "rtt_ms": 51.177805740614765
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 9.18,
+        "rtt_ms": 36.85877590949674
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 8.41,
+        "rtt_ms": 63.437876221536555
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 8.71,
+        "rtt_ms": 51.57593242815019
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 8.48,
+        "rtt_ms": 52.7200903345161
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 8.65,
+        "rtt_ms": 54.52951719178596
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 9.97,
+        "rtt_ms": 37.82725164258744
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 10.02,
+        "rtt_ms": 45.519086477852795
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 10.89,
+        "rtt_ms": 62.24644368414519
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 10.87,
+        "rtt_ms": 54.82396388330282
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 10.59,
+        "rtt_ms": 54.29599398120372
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 9.11,
+        "rtt_ms": 48.42866761013736
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 9.86,
+        "rtt_ms": 60.35237317061469
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 9.39,
+        "rtt_ms": 40.22993538685518
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 9.73,
+        "rtt_ms": 43.386080789504035
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 10.56,
+        "rtt_ms": 56.498692002565704
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 10.83,
+        "rtt_ms": 45.68146908749951
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 11.21,
+        "rtt_ms": 44.42701741292896
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 10.19,
+        "rtt_ms": 52.132200704191035
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.36,
+        "rtt_ms": 73.08628155197783
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 8.05,
+        "rtt_ms": 47.68113002381765
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.7,
+        "rtt_ms": 64.5899745350577
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 8.08,
+        "rtt_ms": 49.06489081839693
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 9.88,
+        "rtt_ms": 57.590452754488986
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 6.68,
+        "rtt_ms": 38.62760659111649
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 6.8,
+        "rtt_ms": 49.40440083061969
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 3.65,
+        "rtt_ms": 56.005415263823515
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.0,
+        "rtt_ms": 54.450136281807154
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.53,
+        "rtt_ms": 59.10692685825301
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 8.52,
+        "rtt_ms": 38.97659824485065
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.26,
+        "rtt_ms": 51.10815923460257
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 7.62,
+        "rtt_ms": 48.12998097239047
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 7.76,
+        "rtt_ms": 44.66950846648827
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 12.42,
+        "rtt_ms": 47.197355568953796
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 10.65,
+        "rtt_ms": 70.40002668552845
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 10.25,
+        "rtt_ms": 45.150247626976
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 10.15,
+        "rtt_ms": 40.461684011692824
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 9.86,
+        "rtt_ms": 47.01214053155279
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 9.73,
+        "rtt_ms": 58.09155508564242
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 9.74,
+        "rtt_ms": 55.66212161559546
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 8.93,
+        "rtt_ms": 47.741125735265626
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 10.28,
+        "rtt_ms": 49.54135197980186
+    },
+    {
+        "duration_ms": 1006,
+        "throughput_MBps": 11.19,
+        "rtt_ms": 51.63134377900852
+    },
+    {
+        "duration_ms": 994,
+        "throughput_MBps": 12.88,
+        "rtt_ms": 62.50502838129041
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 11.12,
+        "rtt_ms": 48.41916715864135
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 11.31,
+        "rtt_ms": 47.46479434944579
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 10.85,
+        "rtt_ms": 41.93410688926879
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 10.47,
+        "rtt_ms": 43.355137241779325
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 8.75,
+        "rtt_ms": 65.19228304904853
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 8.3,
+        "rtt_ms": 42.15889004432928
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.72,
+        "rtt_ms": 55.899878334085784
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 9.86,
+        "rtt_ms": 49.002277617513776
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.88,
+        "rtt_ms": 44.917533867752276
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 5.43,
+        "rtt_ms": 49.37996797616685
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 5.42,
+        "rtt_ms": 60.493291524378805
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.42,
+        "rtt_ms": 56.97258261259422
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 5.29,
+        "rtt_ms": 35.574190250760765
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 7.95,
+        "rtt_ms": 50.677728577497035
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.81,
+        "rtt_ms": 41.162257027330995
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 4.54,
+        "rtt_ms": 69.12258496864844
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.74,
+        "rtt_ms": 35.062010476657846
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 4.33,
+        "rtt_ms": 48.54492064073711
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 4.49,
+        "rtt_ms": 54.305598241963956
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 5.91,
+        "rtt_ms": 57.425272324822345
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.05,
+        "rtt_ms": 51.54116209898787
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 7.11,
+        "rtt_ms": 45.21066793419418
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 8.05,
+        "rtt_ms": 55.486508651864206
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 8.99,
+        "rtt_ms": 55.258119185391195
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.88,
+        "rtt_ms": 46.214512819015944
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.66,
+        "rtt_ms": 59.81599659867332
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 8.3,
+        "rtt_ms": 46.52754952539049
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 8.81,
+        "rtt_ms": 53.447250236402624
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 8.44,
+        "rtt_ms": 48.9389818961994
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.72,
+        "rtt_ms": 62.5067087137617
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.6,
+        "rtt_ms": 58.78254039881166
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.6,
+        "rtt_ms": 60.20851623428976
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.93,
+        "rtt_ms": 48.488975314313116
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.18,
+        "rtt_ms": 52.54734632395162
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 6.44,
+        "rtt_ms": 50.629751306522174
+    },
+    {
+        "duration_ms": 999,
+        "throughput_MBps": 6.8,
+        "rtt_ms": 61.16775340714501
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 6.25,
+        "rtt_ms": 50.62037429047418
+    },
+    {
+        "duration_ms": 1000,
+        "throughput_MBps": 7.59,
+        "rtt_ms": 50.83867913349552
+    },
+    {
+        "duration_ms": 1001,
+        "throughput_MBps": 11.01,
+        "rtt_ms": 58.5731925494579
+    }
+]

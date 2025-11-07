@@ -24,6 +24,7 @@ from .logger import get_logger
 from .json import write_evaluation_json, read_decision_json, read_video_json, get_video_json_size
 from .psnr_ssim import calculate_psnr_ssim_mse
 from .evaluation_utilities import extract_frame
+from .network_trace import pre_processing_network_log
 
 __all__ = [
     # options.py
@@ -31,6 +32,9 @@ __all__ = [
 
     # motion_trace.py
     'pre_processing_client_log',
+
+    # network_trace.py
+    'pre_processing_network_log',
 
     # misc.py
     'scan_file_name',

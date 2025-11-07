@@ -43,7 +43,6 @@ class TranscodingDecision(BaseDecision):
             'video_fps': self.system_opt['video']['video_fps'],
             'range_fov': self.system_opt['metric']['range_fov']
         }
-        self.rtt = self.system_opt['network_trace']['rtt']
 
     def make_decision(self):
         """

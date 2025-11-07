@@ -61,6 +61,8 @@ def get_opt():
         opt['e3po_settings']['video']['origin']['video_dir'] = osp.join(project_dir[:-1], 'source', 'video')
     opt['e3po_settings']['motion_trace']['motion_file'] = \
         osp.join(project_dir[:-1], 'source', 'motion_trace', opt['e3po_settings']['motion_trace']['motion_file'])
+    opt['e3po_settings']['network_trace']['network_file'] = \
+        osp.join(project_dir[:-1], 'source', 'network_trace', opt['e3po_settings']['network_trace']['network_file'])
 
     # Initialize logger.
     os.makedirs(osp.join(
