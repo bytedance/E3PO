@@ -27,10 +27,10 @@ e3po_settings:
     motion_frequency: 100                 # the update frequency of e3po
     column_idx: 1                         # the user index in the log file
   network_trace:                          # ---------------- The following are network trace settings --------------- #
-    rtt: 30                               # Round-Trip Time, in milliseconds
-    bandwidth: 100                        # in MBps
+    network_file: report_car_0001.json    # full name of network trace file
+    network_scale_ratio: 0.8              # the bandwidth scale ratio
     rendering_delay: 10                   # rendering delay of each frame, in millisecond
-    pre_download_duration: 0.3            # in second
+    pre_download_duration: 1              # in second
   log:                                    # --------------------- The following are log settings -------------------- #
     save_log_file: True                   # whether to save log file
     console_log_level: ~                  # log level of command line output, defalut: info
@@ -54,7 +54,4 @@ e3po_settings:
     gc_w3: 0.000334                       # parameter w3 for calculating grand challenge score
     gc_alpha: 0.006                       # parameter alpha for calculating grand challenge score
     gc_beta: 10                           # parameter beta for calculating grand challenge score
-
-
-
-
+    trans_para: 4.2                       # trans_para represents the translation relation from cost to vmaf

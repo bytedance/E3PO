@@ -20,12 +20,13 @@
 import importlib
 from .base_data import BaseData
 from e3po.utils.registry import data_registry
-from e3po.utils import pre_processing_client_log
+from e3po.utils import pre_processing_client_log, pre_processing_network_log
 from e3po.utils import update_motion, extract_frame, generate_dst_frame_uri, save_video_frame
 from e3po.utils.data_utilities import update_chunk_info, encode_dst_video, get_video_frame_sizes,\
     remove_temp_files
 from e3po.utils.json import write_video_json, update_video_json
 from e3po.utils.misc import generate_motion_clock
+from e3po.utils.network_trace import update_network
 
 
 @data_registry.register()
@@ -58,14 +59,9 @@ class TranscodingData(BaseData):
             'video_fps': self.system_opt['video']['video_fps'],
             'uri': self.ori_video_uri
         }
-        self.rtt = self.system_opt['network_trace']['rtt']
 
         # user related information
-        self.network_stats = [{
-            'rtt': self.system_opt['network_trace']['rtt'],
-            'bandwidth': self.system_opt['network_trace']['bandwidth'],
-            'curr_ts': -1
-        }]
+        self.network_stats = []
 
     def make_preprocessing(self):
         """
@@ -81,21 +77,26 @@ class TranscodingData(BaseData):
         user_data = approach.video_analysis(user_data, self.video_info)
         motion_record = pre_processing_client_log(self.system_opt)
         motion_clock = generate_motion_clock(self, motion_record)
+        network_record = pre_processing_network_log(self.system_opt)
 
         motion_history = []
         motion_history = update_motion(0, 0, motion_history, motion_record[0])
+        network_stats = []
+        network_stats, network_last_idx = update_network(0, 0, network_stats, network_record)
+
         last_frame_idx = -1
-        pre_downlode_duration = self.rtt
+        pre_downlode_duration = network_record[0]['rtt_ms']
         update_interval = int(1000 / self.system_opt['motion_trace']['motion_frequency'])
 
         # pre_download_duration
         for curr_ts in range(0, int(pre_downlode_duration), update_interval):
-            curr_frame_idx = int(curr_ts * self.video_info['video_fps'] // 1000.0)
+            curr_frame_idx = int(curr_ts * self.video_info['video_fps'] // 1000)
+            network_stats, network_last_idx = update_network(curr_ts, network_last_idx, network_stats, network_record)
             if curr_frame_idx == last_frame_idx:
                 continue
             curr_video_frame = extract_frame(self.video_info['uri'], curr_frame_idx, self.ffmpeg_settings)
             last_frame_idx = curr_frame_idx
-            dst_video_frame, user_video_spec, user_data = approach.transcode_video(curr_video_frame, curr_frame_idx, self.network_stats, motion_history, user_data, self.video_info)
+            dst_video_frame, user_video_spec, user_data = approach.transcode_video(curr_video_frame, curr_frame_idx, network_stats, motion_history, user_data, self.video_info)
             dst_video_frame_uri = generate_dst_frame_uri(self.dst_video_folder, curr_frame_idx)
             save_video_frame(dst_video_frame_uri, dst_video_frame)
             frame_info = update_chunk_info(self, curr_frame_idx)
@@ -105,14 +106,15 @@ class TranscodingData(BaseData):
         for motion_ts in motion_clock:
             curr_ts = motion_ts + pre_downlode_duration
             motion_history = update_motion(motion_ts, curr_ts, motion_history, motion_record[motion_ts])
-            curr_frame_idx = int(curr_ts * self.video_info['video_fps'] // 1000.0)
+            curr_frame_idx = int(curr_ts * self.video_info['video_fps'] // 1000)
+            network_stats, network_last_idx = update_network(curr_ts, network_last_idx, network_stats, network_record)
             if curr_frame_idx >= int(self.video_info['video_fps']) * int(self.video_info['duration']):
                 continue
             if curr_frame_idx == last_frame_idx:
                 continue
             curr_video_frame = extract_frame(self.video_info['uri'], curr_frame_idx, self.ffmpeg_settings)
             last_frame_idx = curr_frame_idx
-            dst_video_frame, user_video_spec, user_data = approach.transcode_video(curr_video_frame, curr_frame_idx, self.network_stats, motion_history, user_data, self.video_info)
+            dst_video_frame, user_video_spec, user_data = approach.transcode_video(curr_video_frame, curr_frame_idx, network_stats, motion_history, user_data, self.video_info)
             dst_video_frame_uri = generate_dst_frame_uri(self.dst_video_folder, curr_frame_idx)
             save_video_frame(dst_video_frame_uri, dst_video_frame)
             frame_info = update_chunk_info(self, curr_frame_idx)

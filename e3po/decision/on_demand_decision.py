@@ -22,11 +22,11 @@ from e3po.utils.registry import decision_registry
 from .base_decision import BaseDecision
 from e3po.utils.json import read_video_json
 import os.path as osp
-from e3po.utils import pre_processing_client_log
+from e3po.utils import pre_processing_client_log, pre_processing_network_log
 from e3po.utils.json import write_decision_json
 from e3po.utils.misc import generate_motion_clock
 from e3po.utils.misc import update_motion
-
+from e3po.utils.network_trace import update_network
 
 @decision_registry.register()
 class OnDemandDecision(BaseDecision):
@@ -52,11 +52,8 @@ class OnDemandDecision(BaseDecision):
         self.video_size = read_video_json(video_size_json_uri)
 
         # user related parameters
-        self.network_stats = [{
-            'rtt': self.system_opt['network_trace']['rtt'],
-            'bandwidth': self.system_opt['network_trace']['bandwidth'],
-            'curr_ts': -1
-        }]
+        self.network_stats = []
+
         self.video_info = {
             'width': self.system_opt['video']['origin']['width'],
             'height': self.system_opt['video']['origin']['height'],
@@ -81,18 +78,22 @@ class OnDemandDecision(BaseDecision):
         motion_record = pre_processing_client_log(self.system_opt)
         motion_clock = generate_motion_clock(self, motion_record)
 
+        network_record = pre_processing_network_log(self.system_opt)
+        network_stats = []
+
         approach = importlib.import_module(self.approach_module_name)
         user_data = None
         # pre_download_duration
         motion_history = update_motion(0, curr_ts, motion_history, motion_record[0])
-        dl_list, user_data = approach.download_decision(self.network_stats, motion_history, self.video_size, curr_ts, user_data, self.video_info)
+        network_stats, network_last_idx = update_network(curr_ts, 0, network_stats, network_record)
+        dl_list, user_data = approach.download_decision(network_stats, motion_history, self.video_size, curr_ts, user_data, self.video_info)
         write_decision_json(self.decision_json_uri, curr_ts, dl_list)
 
         # after pre_download_duration
         for motion_ts in motion_clock:
             curr_ts = motion_ts + self.pre_download_duration
             motion_history = update_motion(motion_ts, curr_ts, motion_history, motion_record[motion_ts])
-            dl_list, user_data = approach.download_decision(self.network_stats, motion_history, self.video_size, curr_ts, user_data, self.video_info)
+            dl_list, user_data = approach.download_decision(network_stats, motion_history, self.video_size, curr_ts, user_data, self.video_info)
             write_decision_json(self.decision_json_uri, curr_ts, dl_list)
 
         self.logger.info(f"on_demand decision end.")

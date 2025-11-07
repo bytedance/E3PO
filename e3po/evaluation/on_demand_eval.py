@@ -19,7 +19,7 @@
 
 import importlib
 from e3po.utils.registry import evaluation_registry
-from e3po.utils import pre_processing_client_log, write_evaluation_json
+from e3po.utils import pre_processing_client_log, pre_processing_network_log, write_evaluation_json
 from e3po.utils.json import read_decision_json, read_video_json
 from e3po.utils.psnr_ssim import calculate_psnr_ssim_mse
 from .base_eval import BaseEvaluation
@@ -54,7 +54,8 @@ class OnDemandEvaluation(BaseEvaluation):
         evaluation_result = []
         dl_list = read_decision_json(self.decision_json_path)
         video_size = read_video_json(self.video_json_path)
-        arrival_list = calc_arrival_ts(self, dl_list, video_size, self.network_stats)
+        network_record = pre_processing_network_log(self.system_opt)
+        arrival_list = calc_arrival_ts(self, dl_list, video_size, network_record)
 
         self.set_base_ts(self.pre_download_duration)
         motion_record = pre_processing_client_log(self.system_opt)

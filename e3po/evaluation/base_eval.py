@@ -167,12 +167,9 @@ class BaseEvaluation:
             'chunk_duration': self.system_opt['video']['chunk_duration'],
             'video_fps': self.system_opt['video']['video_fps']
         }
-        self.network_stats = [{
-            'rtt': self.system_opt['network_trace']['rtt'],
-            'bandwidth': self.system_opt['network_trace']['bandwidth'],
-            'rendering_delay': self.system_opt['network_trace']['rendering_delay'],
-            'curr_ts': -1
-        }]
+
+        self.network_stats = []
+
         self.curr_fov = {
             'curr_motion': None,
             'range_fov': self.system_opt['metric']['range_fov'],
@@ -180,7 +177,6 @@ class BaseEvaluation:
         }
         self.encoding_params = self.system_opt['encoding_params']
         self.chunk_frame_num = self.video_fps * self.video_info['chunk_duration']
-
 
     def set_base_ts(self, base_ts):
         """Set starting timestamp of client motion trace."""
